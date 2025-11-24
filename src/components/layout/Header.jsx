@@ -1,56 +1,55 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { NAV_LINKS, UNIVERSITY_INFO } from '../../constants';
 
 const Header = () => {
   const location = useLocation();
 
-  // Sur la page d'accueil, on ne montre pas le header
+  // Don't show header on home page
   if (location.pathname === '/') {
     return null;
   }
 
-  const navigation = [
-    {
-      name: 'Emploi du temp',
-      href: '/student',
-      current: location.pathname === '/student',
-    },
-    {
-      name: 'Administration',
-      href: '/login',
-      current: location.pathname === '/login',
-    },
-  ];
+  // Filter navigation links based on current path
+  const visibleLinks = NAV_LINKS.filter((link) => {
+    if (link.hideOn && link.hideOn.includes(location.pathname)) {
+      return false;
+    }
+    return true;
+  });
 
   return (
-    <header className='bg-white border-b border-gray-200'>
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <img src='logo.jpg' alt='Logo' />
-        <div className='flex justify-between items-center h-16'>
-          {/* Logo à gauche */}
-          <div className='flex items-center'>
-            <div className='text-xl font-bold text-gray-900'>
-              UNIVERSITÉ DE YAOUNDÉ II
-            </div>
+    <header className='bg-gray-200 py-4 px-6 md:px-12 rounded-t-lg'>
+      <div className='max-w-7xl mx-auto flex justify-between items-center'>
+        {/* Logo and University Name */}
+        <div className='flex items-center space-x-4 grow'>
+          <div className='w-12 h-12 bg-white rounded-full border border-gray-300 flex items-center justify-center'>
+            <span className='text-xs text-gray-400'>Logo</span>
           </div>
-
-          {/* Navigation à droite - seulement 2 liens */}
-          <nav className='flex space-x-8'>
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`inline-flex items-center px-3 py-2 text-sm font-medium border-b-2 ${
-                  item.current
-                    ? 'border-blue-500 text-gray-900'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
+          <span className='text-gray-700 font-semibold text-sm hidden sm:block'>
+            {UNIVERSITY_INFO.name}
+          </span>
         </div>
+
+        {/* Navigation */}
+        <nav
+          aria-label='Navigation principale'
+          className='flex text-gray-700 font-medium ml-auto space-x-10'
+        >
+          {visibleLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`hover:text-blue-600 transition-colors ${
+                location.pathname === link.to
+                  ? 'text-blue-600 font-semibold'
+                  : ''
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
       </div>
     </header>
   );
