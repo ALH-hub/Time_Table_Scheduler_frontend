@@ -118,8 +118,9 @@ src/
 - **Primary**: Blue (#1e40af) → Purple (#7c3aed)
 - **Secondary**: Pink (#ec4899)
 - **Accent**: Orange (#f59e0b)
-- **Background**: Professional abstract tech-themed image with dark overlay
-  - Image: Modern abstract pattern with purple and blue tech elements
+- **Background**: Professional university building with tech aesthetic
+  - Image: Modern university campus building with glass/steel architecture
+  - Lighting: Blue and purple tech lighting effects
   - Overlay: Semi-transparent gradient for text readability
   - Effect: Fixed background that stays in place during scrolling
 - **Card Effects**: Glassmorphism with semi-transparent white backgrounds
@@ -146,15 +147,16 @@ src/
 ## Recent Changes - Sprint 2 Enhancements ✨
 
 ### Premium Design Upgrade
-1. ✨ **Professional Background Image** - Abstract tech-themed design (NEW!)
-   - Beautiful purple and blue abstract pattern
+1. ✨ **Professional University Building Background** - Modern campus aesthetic (UPDATED!)
+   - Real university campus architecture with glass and steel elements
+   - Blue and purple tech-inspired lighting effects
+   - Professional, recognizable educational institution feel
    - Fixed background that stays in place during scroll
-   - Semi-transparent dark overlay for text readability
-   - Gives real website aesthetic
+   - Semi-transparent dark overlay for perfect text readability
 2. Glassmorphism effects on all major containers with perfect contrast
 3. Enhanced CSS with fixed background image and overlay system
 4. Redesigned Home page with premium hero section and feature cards
-5. All pages use professional glassmorphism aesthetic with new background
+5. All pages use professional glassmorphism aesthetic with university-themed background
 
 ### Advanced Features Added (Sprint 2) 🚀
 1. **Course Detail Modal** - Click any course to view full details in a beautiful modal
