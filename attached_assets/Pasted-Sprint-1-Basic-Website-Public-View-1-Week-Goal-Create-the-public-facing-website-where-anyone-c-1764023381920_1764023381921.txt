@@ -1,0 +1,77 @@
+Sprint 1: Basic Website & Public View (1 Week)
+Goal: Create the public-facing website where anyone can view timetables without login
+Tasks to Complete:
+Task 1: Build Landing Page
+●​ Create a welcoming homepage with your school's name and logo
+●​ Add a brief description of what the timetable system does
+●​ Include a navigation menu with: Home, View Timetables, Admin Login
+●​ Make it look clean and professional with your school colors
+Task 2: Create Public Timetable View
+●​ Build a page where visitors can view existing timetables
+●​ Add dropdown filters to select Department → Class → Week
+●​ Display a simple weekly grid showing classes, times, and rooms
+●​ Make it read-only (no editing allowed)
+Task 3: Implement Basic Navigation
+●​ Connect all pages with a consistent navigation menu
+●​ Ensure users can move between Home → Timetables → Login easily
+●​ Add a footer with school contact information
+Task 4: Setup Basic Data Storage
+●​ Create simple arrays to store sample timetable data
+●​ Include sample departments, classes, and weekly schedules
+●​ Make sure the public view displays this sample data correctly
+What You'll Have After Sprint 1:
+●​ A working website where anyone can visit and view sample timetables●​ Basic navigation between pages
+●​ No login required for viewing
+●​ Clean, professional appearance
+Sprint 2: Admin System & Basic Editing (1 Week)
+Goal: Add admin login and simple timetable modification features
+Tasks to Complete:
+Task 1: Build Login System
+●​ Create an admin login page with username/password fields
+●​ Implement simple authentication (hardcoded admin credentials)
+●​ Add logout functionality
+●​ Show different menus for logged-in vs logged-out users
+Task 2: Create Admin Dashboard
+●​ Build a simple admin panel that appears after login
+●​ Include quick links: "Edit Timetables", "View All Schedules"
+●​ Show basic admin statistics (number of classes, departments, etc.)
+●​ Add a clear "Logout" button
+Task 3: Implement Basic Timetable Editor
+●​ Create an edit mode for the timetable grid
+●​ Add "Edit" buttons that appear only when admin is logged in
+●​ Allow clicking on timetable slots to change their content
+●​ Include save/cancel buttons for edits
+Task 4: Add Simple Data Management
+●​ Create forms to add new departments and classes
+●​ Build basic data validation (required fields, etc.)
+●​ Connect the editor to save changes to your data storageWhat You'll Have After Sprint 2:
+●​ Admins can log in securely
+●​ Different interface for admins vs public users
+●​ Basic timetable editing capabilities
+●​ Ability to add new departments and classes
+Sprint 3: Enhanced Features & Polish (1 Week)
+Goal: Improve the user experience and add final touches
+Tasks to Complete:
+Task 1: Add Conflict Detection
+●​ Implement basic conflict checking when editing timetables
+●​ Show warning messages if two classes are scheduled at same time
+●​ Highlight conflicting timetable slots in red
+●​ Prevent saving when conflicts exist
+Task 2: Create Export Functionality
+●​ Add "Print Timetable" button that formats for printing
+●​ Create "Export as PDF" feature for sharing
+●​ Build "Export as Image" for easy social media sharing
+Task 3: Improve User Interface
+●​ Add loading animations when pages are processing
+●​ Include success/error messages for user actions
+●​ Improve mobile phone display
+●​ Add helpful tooltips and instructions
+Task 4: Testing & Bug Fixing
+●​ Test all features on different devices and browsers
+●​ Fix any display issues or broken functionality●​ Add error handling for invalid user inputs
+●​ Ensure the public view remains read-only for non-admins
+What You'll Have After Sprint 3:
+●​ Conflict prevention to avoid timetable errors
+●​ Multiple ways to export and share timetables
+●​ Professional, polished user experience
+●​ Reliable system ready for school use

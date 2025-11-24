@@ -30,25 +30,26 @@ const Header = () => {
             </div>
           </div>
 
-        {/* Navigation */}
-        <nav
-          aria-label='Navigation principale'
-          className='flex text-gray-700 font-medium ml-auto space-x-10'
-        >
-          {visibleLinks.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className={`hover:text-blue-600 transition-colors ${
-                location.pathname === link.to
-                  ? 'text-blue-600 font-semibold'
-                  : ''
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
+          {/* Navigation */}
+          <nav
+            aria-label='Navigation principale'
+            className='flex text-gray-700 font-medium ml-auto space-x-10'
+          >
+            {visibleLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`hover:text-blue-600 transition-colors ${
+                  location.pathname === link.to
+                    ? 'text-blue-600 font-semibold'
+                    : ''
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
       </div>
     </header>
   );
