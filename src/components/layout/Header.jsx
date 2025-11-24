@@ -30,7 +30,7 @@ const Header = () => {
           {/* Logo à gauche */}
           <div className='flex items-center'>
             <div className='text-xl font-bold text-gray-900'>
-              UNIVERSITÉ DE YAOUNDÉ II
+              UNIVERSITÉ DE YAOUNDÉ I
             </div>
           </div>
 
