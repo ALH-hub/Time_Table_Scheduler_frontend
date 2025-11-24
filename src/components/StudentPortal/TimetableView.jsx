@@ -1,16 +1,18 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { Select } from '../common';
 import { DAYS_OF_WEEK, TIME_SLOTS } from '../../constants';
 import { timetableData } from '../../data/timetableData';
 import CourseDetailModal from './CourseDetailModal';
 import CourseSearch from './CourseSearch';
 import { PrintIcon, DownloadIcon } from '../icons';
+import html2pdf from 'html2pdf.js';
 
 const TimetableView = ({ selectedProgram, departments, weeks }) => {
   const [selectedWeek, setSelectedWeek] = useState('week1');
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const tableRef = useRef(null);
 
   // Get all courses for the selected program and week
   const allCourses = useMemo(() => {
@@ -75,6 +77,21 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
     window.URL.revokeObjectURL(url);
   };
 
+  const handleDownloadPDF = () => {
+    if (!tableRef.current) return;
+
+    const element = tableRef.current;
+    const opt = {
+      margin: 10,
+      filename: `emploi_du_temps_${selectedProgram}_${selectedWeek}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { orientation: 'landscape', unit: 'mm', format: 'a4' },
+    };
+
+    html2pdf().set(opt).from(element).save();
+  };
+
   return (
     <div>
       {/* Search Section */}
@@ -123,7 +140,7 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
         </div>
 
         {/* Action Buttons */}
-        <div className='flex gap-3'>
+        <div className='flex flex-wrap gap-3'>
           <button
             onClick={handlePrint}
             className='flex items-center gap-2 px-4 py-2 bg-white border-2 border-blue-300 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors'
@@ -133,18 +150,26 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
             <span className='hidden sm:inline'>Imprimer</span>
           </button>
           <button
-            onClick={handleDownloadCSV}
-            className='flex items-center gap-2 px-4 py-2 bg-white border-2 border-green-300 text-green-600 font-semibold rounded-lg hover:bg-green-50 transition-colors'
-            title='Télécharger'
+            onClick={handleDownloadPDF}
+            className='flex items-center gap-2 px-4 py-2 bg-white border-2 border-red-300 text-red-600 font-semibold rounded-lg hover:bg-red-50 transition-colors'
+            title='Télécharger en PDF'
           >
             <DownloadIcon className='w-4 h-4' />
-            <span className='hidden sm:inline'>Télécharger</span>
+            <span className='hidden sm:inline'>PDF</span>
+          </button>
+          <button
+            onClick={handleDownloadCSV}
+            className='flex items-center gap-2 px-4 py-2 bg-white border-2 border-green-300 text-green-600 font-semibold rounded-lg hover:bg-green-50 transition-colors'
+            title='Télécharger en CSV'
+          >
+            <DownloadIcon className='w-4 h-4' />
+            <span className='hidden sm:inline'>Excel</span>
           </button>
         </div>
       </div>
 
       {/* Timetable Grid */}
-      <div className='overflow-x-auto rounded-lg shadow-lg'>
+      <div className='overflow-x-auto rounded-lg shadow-lg' ref={tableRef}>
         <table className='w-full border-collapse'>
           {/* Header */}
           <thead>
