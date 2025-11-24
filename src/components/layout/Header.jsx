@@ -1,26 +1,22 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { NAV_LINKS, UNIVERSITY_INFO } from '../../constants';
 
 const Header = () => {
   const location = useLocation();
 
-  // Sur la page d'accueil, on ne montre pas le header
+  // Don't show header on home page
   if (location.pathname === '/') {
     return null;
   }
 
-  const navigation = [
-    {
-      name: 'Emploi du temp',
-      href: '/student',
-      current: location.pathname === '/student',
-    },
-    {
-      name: 'Administration',
-      href: '/login',
-      current: location.pathname === '/login',
-    },
-  ];
+  // Filter navigation links based on current path
+  const visibleLinks = NAV_LINKS.filter((link) => {
+    if (link.hideOn && link.hideOn.includes(location.pathname)) {
+      return false;
+    }
+    return true;
+  });
 
   return (
     <header className='bg-white border-b border-gray-200'>
@@ -30,27 +26,29 @@ const Header = () => {
           {/* Logo à gauche */}
           <div className='flex items-center'>
             <div className='text-xl font-bold text-gray-900'>
-              UNIVERSITÉ DE YAOUNDÉ I
+              UNIVERSITÉ DE YAOUNDÉ II
             </div>
           </div>
 
-          {/* Navigation à droite - seulement 2 liens */}
-          <nav className='flex space-x-8'>
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={`inline-flex items-center px-3 py-2 text-sm font-medium border-b-2 ${
-                  item.current
-                    ? 'border-blue-500 text-gray-900'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
-        </div>
+        {/* Navigation */}
+        <nav
+          aria-label='Navigation principale'
+          className='flex text-gray-700 font-medium ml-auto space-x-10'
+        >
+          {visibleLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`hover:text-blue-600 transition-colors ${
+                location.pathname === link.to
+                  ? 'text-blue-600 font-semibold'
+                  : ''
+              }`}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
       </div>
     </header>
   );
