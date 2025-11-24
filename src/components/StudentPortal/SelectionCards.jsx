@@ -18,7 +18,7 @@ export const FacultyCard = ({ faculty, onSelect }) => (
           {faculty.name}
         </div>
         <div className='text-sm text-blue-600 font-semibold'>
-          📚 {faculty.departments?.length || 0} départements
+          {faculty.departments?.length || 0} départements
         </div>
       </div>
       <ArrowRightIcon className='text-blue-500 font-bold ml-4 text-xl' />
@@ -41,7 +41,7 @@ export const DepartmentCard = ({ department, onSelect }) => (
           {department.name}
         </div>
         <div className='text-sm text-green-600 font-semibold'>
-          📋 {department.programs?.length || 0} programmes
+          {department.programs?.length || 0} programmes
         </div>
       </div>
       <ArrowRightIcon className='text-green-500 font-bold ml-4 text-xl' />

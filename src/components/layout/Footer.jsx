@@ -7,15 +7,15 @@ const Footer = () => {
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 text-center md:text-left'>
           <div>
-            <p className='font-bold text-lg mb-1 text-purple-300'>📍 {UNIVERSITY_INFO.name}</p>
+            <p className='font-bold text-lg mb-1 text-purple-300'>{UNIVERSITY_INFO.name}</p>
             <p className='text-gray-400 text-sm'>Système de Gestion Moderne</p>
           </div>
           <div>
-            <p className='font-bold text-lg mb-1 text-purple-300'>📧 Contact</p>
+            <p className='font-bold text-lg mb-1 text-purple-300'>Contact</p>
             <p className='text-gray-400 text-sm'>{UNIVERSITY_INFO.contact}</p>
           </div>
           <div>
-            <p className='font-bold text-lg mb-1 text-purple-300'>📍 Adresse</p>
+            <p className='font-bold text-lg mb-1 text-purple-300'>Adresse</p>
             <p className='text-gray-400 text-sm'>{UNIVERSITY_INFO.address}</p>
           </div>
         </div>

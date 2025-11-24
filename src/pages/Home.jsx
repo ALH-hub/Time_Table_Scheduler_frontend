@@ -19,10 +19,10 @@ const Home = () => {
           <h2 className='text-2xl text-blue-100 mb-10 font-semibold'>{APP_INFO.tagline}</h2>
           <div className='flex flex-col md:flex-row justify-center items-center gap-6'>
             <Button to='/student' size='lg'>
-              📅 Consulter les emplois du temps
+              Consulter les emplois du temps
             </Button>
             <Button to='/login' size='lg' variant='secondary'>
-              🔐 Connexion Admin
+              Connexion Admin
             </Button>
           </div>
         </div>
@@ -34,17 +34,14 @@ const Home = () => {
           </div>
           <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 max-w-4xl mx-auto'>
             <div className='bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-xl p-6 shadow-lg card-hover'>
-              <div className='text-3xl mb-2'>👥</div>
               <h3 className='text-lg font-bold mb-2'>Pour les Étudiants</h3>
               <p className='text-sm text-blue-100'>Consultez votre emploi du temps facilement</p>
             </div>
             <div className='bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-xl p-6 shadow-lg card-hover'>
-              <div className='text-3xl mb-2'>⚙️</div>
               <h3 className='text-lg font-bold mb-2'>Pour l&apos;Administration</h3>
               <p className='text-sm text-purple-100'>Gérez les emplois du temps facilement</p>
             </div>
             <div className='bg-gradient-to-br from-pink-500 to-pink-600 text-white rounded-xl p-6 shadow-lg card-hover'>
-              <div className='text-3xl mb-2'>📊</div>
               <h3 className='text-lg font-bold mb-2'>Efficace & Rapide</h3>
               <p className='text-sm text-pink-100'>Interface moderne et intuitive</p>
             </div>

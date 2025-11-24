@@ -45,7 +45,7 @@ const TimetableGrid = ({ schedule = [] }) => {
             {TIME_SLOTS.map((timeSlot) => (
               <tr key={timeSlot}>
                 <td className='bg-gradient-to-r from-gray-200 to-gray-100 p-4 text-center font-bold border-2 border-gray-300 whitespace-nowrap text-gray-800'>
-                  ⏰ {timeSlot}
+                  {timeSlot}
                 </td>
                 {DAYS_OF_WEEK.map((day) => {
                   const course = getCourseForSlot(day, timeSlot);

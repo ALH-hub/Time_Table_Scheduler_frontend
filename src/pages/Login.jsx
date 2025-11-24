@@ -52,7 +52,7 @@ const Login = () => {
         <main className='py-12 px-6 flex justify-center grow bg-gradient-to-b from-gray-50 to-white'>
           <div className='p-8 rounded-2xl shadow-lg max-w-sm w-full bg-white border-2 border-purple-100'>
             <div className='gradient-primary text-white rounded-lg p-4 mb-6 text-center'>
-              <h2 className='text-2xl font-bold'>🔐 Accès Administration</h2>
+              <h2 className='text-2xl font-bold'>Accès Administration</h2>
               <p className='text-purple-100 text-sm mt-1'>Authentification Sécurisée</p>
             </div>
 
@@ -88,7 +88,7 @@ const Login = () => {
                   disabled={isSubmitting}
                   className='w-full font-bold'
                 >
-                  {isSubmitting ? '⏳ Connexion...' : '✅ Se connecter'}
+                  {isSubmitting ? 'Connexion...' : 'Se connecter'}
                 </Button>
 
                 <Link
