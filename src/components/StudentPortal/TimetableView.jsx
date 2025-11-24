@@ -1,10 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Select } from '../common';
 import { DAYS_OF_WEEK, TIME_SLOTS } from '../../constants';
 import { timetableData } from '../../data/timetableData';
+import CourseDetailModal from './CourseDetailModal';
+import CourseSearch from './CourseSearch';
+import { PrintIcon, DownloadIcon } from '../icons';
 
 const TimetableView = ({ selectedProgram, departments, weeks }) => {
   const [selectedWeek, setSelectedWeek] = useState('week1');
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Get all courses for the selected program and week
+  const allCourses = useMemo(() => {
+    if (!selectedProgram || !timetableData[selectedProgram]) return [];
+    return timetableData[selectedProgram][selectedWeek] || [];
+  }, [selectedProgram, selectedWeek]);
+
+  // Filter courses based on search term
+  const filteredCourses = useMemo(() => {
+    if (!searchTerm.trim()) return allCourses;
+    return allCourses.filter(
+      (course) =>
+        course.course.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.teacher.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.room.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+  }, [allCourses, searchTerm]);
+
+  // Track which courses match the filter
+  const filteredCourseIds = new Set(
+    filteredCourses.map((c) => `${c.day}-${c.time}`),
+  );
 
   const getCourseForSlot = (day, timeSlot) => {
     if (!selectedProgram || !timetableData[selectedProgram]) return null;
@@ -28,27 +56,90 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
     }
   };
 
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handleDownloadCSV = () => {
+    let csv = 'Jour,Heure,Cours,Enseignant,Salle,Type\n';
+    allCourses.forEach((course) => {
+      csv += `${course.day},${course.time},"${course.course}","${course.teacher}",${course.room},"${course.type}"\n`;
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `emploi_du_temps_${selectedProgram}_${selectedWeek}.csv`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  };
+
   return (
     <div>
-      {/* Filters */}
-      <div className='flex flex-wrap gap-4 mb-8 justify-start bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg'>
-        <div className='flex-1 min-w-[200px]'>
-          <label className='block text-sm font-semibold text-gray-700 mb-2'>Semaine</label>
-          <select
-            value={selectedWeek}
-            onChange={(e) => setSelectedWeek(e.target.value)}
-            className='w-full px-4 py-2 border-2 border-blue-300 rounded-lg focus:outline-none focus:border-blue-600 transition-colors'
-          >
-            <option value='week1'>Semaine 1</option>
-            <option value='week2'>Semaine 2</option>
-            <option value='week3'>Semaine 3</option>
-            <option value='week4'>Semaine 4</option>
-          </select>
-        </div>
-        <div className='flex items-end'>
-          <div className='text-sm text-gray-600 font-semibold bg-white px-4 py-2 rounded-lg border border-gray-200'>
-            Programme: <span className='text-blue-600'>{selectedProgram}</span>
+      {/* Search Section */}
+      <div className='mb-6'>
+        <label className='block text-sm font-semibold text-gray-700 mb-3'>
+          Rechercher un cours
+        </label>
+        <CourseSearch
+          courses={allCourses}
+          onFilteredCoursesChange={(filtered) => {
+            setSearchTerm('');
+          }}
+        />
+        <input
+          type='text'
+          placeholder='Rechercher par cours, enseignant ou salle...'
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className='w-full px-4 py-2 border-2 border-blue-300 rounded-lg focus:outline-none focus:border-blue-600 transition-colors'
+        />
+      </div>
+
+      {/* Filters and Actions */}
+      <div className='flex flex-wrap gap-4 mb-8 justify-between bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg'>
+        <div className='flex flex-wrap gap-4'>
+          <div className='flex-1 min-w-[200px]'>
+            <label className='block text-sm font-semibold text-gray-700 mb-2'>
+              Semaine
+            </label>
+            <select
+              value={selectedWeek}
+              onChange={(e) => setSelectedWeek(e.target.value)}
+              className='w-full px-4 py-2 border-2 border-blue-300 rounded-lg focus:outline-none focus:border-blue-600 transition-colors'
+            >
+              <option value='week1'>Semaine 1</option>
+              <option value='week2'>Semaine 2</option>
+              <option value='week3'>Semaine 3</option>
+              <option value='week4'>Semaine 4</option>
+            </select>
           </div>
+          <div className='flex items-end'>
+            <div className='text-sm text-gray-600 font-semibold bg-white px-4 py-2 rounded-lg border border-gray-200'>
+              Programme: <span className='text-blue-600'>{selectedProgram}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className='flex gap-3'>
+          <button
+            onClick={handlePrint}
+            className='flex items-center gap-2 px-4 py-2 bg-white border-2 border-blue-300 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors'
+            title='Imprimer'
+          >
+            <PrintIcon className='w-4 h-4' />
+            <span className='hidden sm:inline'>Imprimer</span>
+          </button>
+          <button
+            onClick={handleDownloadCSV}
+            className='flex items-center gap-2 px-4 py-2 bg-white border-2 border-green-300 text-green-600 font-semibold rounded-lg hover:bg-green-50 transition-colors'
+            title='Télécharger'
+          >
+            <DownloadIcon className='w-4 h-4' />
+            <span className='hidden sm:inline'>Télécharger</span>
+          </button>
         </div>
       </div>
 
@@ -81,31 +172,40 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
                 </td>
                 {DAYS_OF_WEEK.map((day) => {
                   const course = getCourseForSlot(day, timeSlot);
+                  const courseId = `${day}-${timeSlot}`;
+                  const isFiltered = !searchTerm || filteredCourseIds.has(courseId);
                   return (
                     <td
-                      key={`${day}-${timeSlot}`}
-                      className='border-2 border-gray-300 p-2 min-h-[120px] align-top bg-gray-50 hover:bg-gray-100 transition-colors'
+                      key={courseId}
+                      className={`border-2 border-gray-300 p-2 min-h-[120px] align-top transition-colors ${
+                        isFiltered ? 'bg-gray-50 hover:bg-gray-100' : 'bg-gray-300 opacity-30'
+                      }`}
                     >
-                      {course ? (
-                        <div className={`p-3 rounded-lg h-full ${getCourseStyle(course.type)}`}>
-                          <div className='font-bold text-sm text-gray-900 mb-1'>
+                      {course && isFiltered ? (
+                        <div
+                          onClick={() => {
+                            setSelectedCourse(course);
+                            setIsModalOpen(true);
+                          }}
+                          className={`p-3 rounded-lg h-full cursor-pointer transform transition-all hover:scale-105 hover:shadow-lg ${getCourseStyle(
+                            course.type,
+                          )}`}
+                        >
+                          <div className='font-bold text-sm text-gray-900 mb-1 line-clamp-2'>
                             {course.course}
                           </div>
-                          <div className='text-xs text-gray-700 mb-1'>
-                            <span className='font-semibold'>Enseignant:</span> {course.teacher}
+                          <div className='text-xs text-gray-700 mb-1 line-clamp-1'>
+                            <span className='font-semibold'>Ens:</span> {course.teacher.split(' ')[0]}
                           </div>
-                          <div className='text-xs text-gray-700 mb-1'>
+                          <div className='text-xs text-gray-700 mb-1 line-clamp-1'>
                             <span className='font-semibold'>Salle:</span> {course.room}
                           </div>
-                          <div className='text-xs font-semibold text-gray-600 border-t pt-1 mt-1'>
-                            {course.type}
-                          </div>
                         </div>
-                      ) : (
+                      ) : !course && isFiltered ? (
                         <div className='text-gray-400 italic text-center text-sm h-full flex items-center justify-center'>
                           -
                         </div>
-                      )}
+                      ) : null}
                     </td>
                   );
                 })}
@@ -116,7 +216,7 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
       </div>
 
       {/* Legend */}
-      <div className='mt-6 grid grid-cols-1 md:grid-cols-3 gap-4'>
+      <div className='mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 mb-6'>
         <div className='flex items-center gap-2 p-3 bg-blue-50 rounded-lg border-l-4 border-blue-600'>
           <div className='w-4 h-4 bg-blue-300 rounded'></div>
           <span className='text-sm text-gray-700'>Cours Magistral</span>
@@ -130,6 +230,16 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
           <span className='text-sm text-gray-700'>Travaux Dirigés</span>
         </div>
       </div>
+
+      {/* Course Detail Modal */}
+      <CourseDetailModal
+        course={selectedCourse}
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedCourse(null);
+        }}
+      />
     </div>
   );
 };

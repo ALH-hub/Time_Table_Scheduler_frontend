@@ -140,28 +140,119 @@ src/
 - Course type legend with color coding
 - Professional shadows and depth layers
 
-## Recent Changes - Premium Design Upgrade ✨
+## Recent Changes - Sprint 2 Enhancements ✨
+
+### Premium Design Upgrade
 1. Professional dark blue gradient background (entire app)
 2. Glassmorphism effects on all major containers
-3. Enhanced CSS with:
-   - Fixed background gradient with depth layers
-   - Radial gradient overlays for visual interest
-   - Glass-effect cards with backdrop blur
-   - Smooth transitions and hover effects
-4. Redesigned Home page with:
-   - Premium hero section with animated blur effects
-   - Numbered feature cards (1, 2, 3) with gradient borders
-   - Enhanced hover states with overlay effects
-5. Updated StudentPortal with glass-effect styling
-6. Premium Login page design
-7. All pages now use professional glassmorphism aesthetic
+3. Enhanced CSS with fixed background gradients, radial overlays
+4. Redesigned Home page with premium hero section and feature cards
+5. All pages use professional glassmorphism aesthetic
 
-## Next Steps (Sprint 2)
+### Advanced Features Added (Sprint 2) 🚀
+1. **Course Detail Modal** - Click any course to view full details in a beautiful modal
+   - Shows: Course name, Teacher, Room, Time, Day, Type
+   - Copy-to-clipboard functionality
+   - Professional modal design with glassmorphism
+
+2. **Search & Filter Functionality**
+   - Real-time search by course name, teacher, or room
+   - Highlighted matching courses in timetable
+   - Dimmed non-matching courses for better visibility
+   - Dynamic course filtering system
+
+3. **Breadcrumb Navigation**
+   - Visual path showing: Faculty → Department → Program → Timetable
+   - Shows all selected options for current step
+   - Improves user orientation in the wizard
+
+4. **Print Timetable**
+   - One-click print functionality for students
+   - Full timetable export to print-friendly format
+
+5. **Download CSV Export**
+   - Export timetable as CSV file
+   - Filename includes program and week info
+   - Useful for Excel/spreadsheet applications
+
+6. **Interactive Course Cards**
+   - Hover effects with scale transform
+   - Click-to-view details
+   - Color-coded by course type (Lecture=Blue, Lab=Green, TD=Purple)
+   - Abbreviated display for better readability
+
+7. **New Icon Components**
+   - PrintIcon
+   - DownloadIcon
+   - SearchIcon
+   - CloseIcon
+
+## Components Overview
+
+### New Components (Sprint 2)
+- **CourseDetailModal.jsx** - Modal for displaying full course information
+- **CourseSearch.jsx** - Search component for filtering courses
+- **Breadcrumb.jsx** - Navigation breadcrumb component
+
+### Enhanced Components
+- **TimetableView.jsx** - Now with search, print, download, and click-to-view-details
+- **StudentPortal.jsx** - Added breadcrumb navigation display
+
+### Icon Additions
+- Print, Download, Search, Close icons added to icon library
+
+## Component Structure
+```
+src/
+├── components/
+│   ├── StudentPortal/
+│   │   ├── TimetableView.jsx (enhanced with modal + search)
+│   │   ├── CourseDetailModal.jsx (new)
+│   │   ├── CourseSearch.jsx (new)
+│   │   └── SelectionCards.jsx
+│   ├── common/
+│   │   ├── Breadcrumb.jsx (new)
+│   │   ├── Button.jsx
+│   │   ├── Card.jsx
+│   │   ├── Select.jsx
+│   │   └── Input.jsx
+│   ├── icons/
+│   │   └── index.jsx (new icons added)
+│   └── layout/
+│       ├── Header.jsx
+│       └── Footer.jsx
+└── pages/
+    ├── Home.jsx
+    ├── StudentPortal.jsx (enhanced with breadcrumb)
+    ├── Login.jsx
+    ├── Loading.jsx
+    └── NotFound.jsx
+```
+
+## User Interactions - Enhanced
+
+### Timetable Viewing (Step 4)
+1. **Search Courses** - Type to filter by course name, teacher, or room
+2. **Click on Course** - View full course details in modal
+3. **Copy Details** - Copy course info to clipboard from modal
+4. **Print** - Print full timetable with one click
+5. **Download** - Export timetable as CSV file
+6. **Change Week** - View different weeks (Week 1-4)
+7. **See Breadcrumb** - Track navigation path through wizard
+
+### Navigation Flow
+- **Breadcrumb** shows: Étape 1 › Faculté › Département › Programme
+- **Progress Bar** shows visual step completion
+- **Back Button** allows returning to previous steps
+
+## Next Steps (Sprint 3)
 - Admin login system with authentication
 - Admin dashboard with statistics
-- Basic timetable editor
-- Data management forms
-- Save/update functionality
+- Basic timetable editor interface
+- Data persistence layer
+- Email notifications feature
+- Timetable conflict detection
+- Advanced filtering (by time, day, type)
 
 ## Browser Compatibility
 - Chrome/Edge: ✅ Full support

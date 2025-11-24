@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '../components/common';
+import { Button, Breadcrumb } from '../components/common';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import {
@@ -73,6 +73,38 @@ const StudentPortal = () => {
         <Header />
 
         <div className='px-6 py-12 bg-gradient-to-b from-blue-50 to-white'>
+          {/* Breadcrumb Navigation */}
+          {currentStep > 1 && (
+            <div className='flex items-center gap-2 text-sm font-semibold py-4 px-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-100 mb-6 flex-wrap'>
+              <span className='text-blue-700'>Parcours:</span>
+              {currentStep >= 1 && <span className='px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg'>Étape 1</span>}
+              {currentStep >= 2 && (
+                <>
+                  <span className='text-gray-400'>›</span>
+                  <span className='px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg truncate max-w-xs'>
+                    {selectedFaculty?.name.slice(0, 15)}
+                  </span>
+                </>
+              )}
+              {currentStep >= 3 && (
+                <>
+                  <span className='text-gray-400'>›</span>
+                  <span className='px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg truncate max-w-xs'>
+                    {selectedDepartment?.name.slice(0, 15)}
+                  </span>
+                </>
+              )}
+              {currentStep === 4 && (
+                <>
+                  <span className='text-gray-400'>›</span>
+                  <span className='px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg truncate max-w-xs'>
+                    {selectedProgram.slice(0, 20)}
+                  </span>
+                </>
+              )}
+            </div>
+          )}
+
           {/* Progress Indicator */}
           <div className='flex justify-center items-center gap-2 mb-8'>
             {[1, 2, 3, 4].map((step) => (
