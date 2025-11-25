@@ -135,7 +135,7 @@ const AdminDashboard = () => {
                 onClick={() => setActiveTab('overview')}
                 className={`py-4 border-b-2 transition ${
                   activeTab === 'overview'
-                    ? 'border-blue-600 text-blue-600'
+                    ? 'border-gray-900 text-gray-900'
                     : 'border-transparent text-gray-600 hover:text-gray-700'
                 }`}
               >
@@ -145,7 +145,7 @@ const AdminDashboard = () => {
                 onClick={() => setActiveTab('timetables')}
                 className={`py-4 border-b-2 transition ${
                   activeTab === 'timetables'
-                    ? 'border-blue-600 text-blue-600'
+                    ? 'border-gray-900 text-gray-900'
                     : 'border-transparent text-gray-600 hover:text-gray-700'
                 }`}
               >
@@ -155,7 +155,7 @@ const AdminDashboard = () => {
                 onClick={() => setActiveTab('faculty')}
                 className={`py-4 border-b-2 transition ${
                   activeTab === 'faculty'
-                    ? 'border-blue-600 text-blue-600'
+                    ? 'border-gray-900 text-gray-900'
                     : 'border-transparent text-gray-600 hover:text-gray-700'
                 }`}
               >
@@ -165,7 +165,7 @@ const AdminDashboard = () => {
                 onClick={() => setActiveTab('settings')}
                 className={`py-4 border-b-2 transition ${
                   activeTab === 'settings'
-                    ? 'border-blue-600 text-blue-600'
+                    ? 'border-gray-900 text-gray-900'
                     : 'border-transparent text-gray-600 hover:text-gray-700'
                 }`}
               >
@@ -233,7 +233,7 @@ const AdminDashboard = () => {
                 <h2 className='text-xl font-bold text-gray-900'>Manage Timetables</h2>
                 <button 
                   onClick={() => setShowAddForm(!showAddForm)}
-                  className='bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition text-sm font-medium'
+                  className='bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition text-sm font-medium'
                 >
                   {showAddForm ? 'Cancel' : 'Add New Timetable'}
                 </button>
@@ -249,26 +249,26 @@ const AdminDashboard = () => {
                       placeholder='Name'
                       value={newTimetable.name}
                       onChange={(e) => setNewTimetable({...newTimetable, name: e.target.value})}
-                      className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-blue-600'
+                      className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
                     />
                     <input
                       type='text'
                       placeholder='Faculty'
                       value={newTimetable.faculty}
                       onChange={(e) => setNewTimetable({...newTimetable, faculty: e.target.value})}
-                      className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-blue-600'
+                      className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
                     />
                     <input
                       type='number'
                       placeholder='Number of Courses'
                       value={newTimetable.courses}
                       onChange={(e) => setNewTimetable({...newTimetable, courses: e.target.value})}
-                      className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-blue-600'
+                      className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
                     />
                   </div>
                   <button 
                     onClick={handleAddTimetable}
-                    className='mt-4 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition text-sm font-medium'
+                    className='mt-4 bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition text-sm font-medium'
                   >
                     Save
                   </button>
@@ -297,7 +297,7 @@ const AdminDashboard = () => {
                                 type='text'
                                 value={editTimetableData.name}
                                 onChange={(e) => setEditTimetableData({...editTimetableData, name: e.target.value})}
-                                className='w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-blue-600'
+                                className='w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
                               />
                             </td>
                             <td className='px-6 py-4 text-sm'>
@@ -305,7 +305,7 @@ const AdminDashboard = () => {
                                 type='text'
                                 value={editTimetableData.faculty}
                                 onChange={(e) => setEditTimetableData({...editTimetableData, faculty: e.target.value})}
-                                className='w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-blue-600'
+                                className='w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
                               />
                             </td>
                             <td className='px-6 py-4 text-sm'>
@@ -313,7 +313,7 @@ const AdminDashboard = () => {
                                 type='number'
                                 value={editTimetableData.courses}
                                 onChange={(e) => setEditTimetableData({...editTimetableData, courses: e.target.value})}
-                                className='w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-blue-600'
+                                className='w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
                               />
                             </td>
                             <td className='px-6 py-4 text-sm'>
@@ -322,7 +322,7 @@ const AdminDashboard = () => {
                             <td className='px-6 py-4 text-sm space-x-2'>
                               <button 
                                 onClick={handleSaveEditTimetable}
-                                className='text-green-600 hover:text-green-700 text-sm font-medium'
+                                className='text-gray-900 hover:text-gray-700 text-sm font-medium'
                               >
                                 Save
                               </button>
@@ -345,13 +345,13 @@ const AdminDashboard = () => {
                             <td className='px-6 py-4 text-sm space-x-4'>
                               <button 
                                 onClick={() => handleEditTimetable(item.id)}
-                                className='text-blue-600 hover:text-blue-700 text-sm font-medium'
+                                className='text-gray-900 hover:text-gray-700 text-sm font-medium'
                               >
                                 Edit
                               </button>
                               <button 
                                 onClick={() => handleDeleteTimetable(item.id)}
-                                className='text-red-600 hover:text-red-700 text-sm font-medium'
+                                className='text-gray-600 hover:text-gray-700 text-sm font-medium'
                               >
                                 Delete
                               </button>
@@ -373,7 +373,7 @@ const AdminDashboard = () => {
                 <h2 className='text-xl font-bold text-gray-900'>Faculties & Departments</h2>
                 <button 
                   onClick={() => setShowAddFacultyForm(!showAddFacultyForm)}
-                  className='bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition text-sm font-medium'
+                  className='bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition text-sm font-medium'
                 >
                   {showAddFacultyForm ? 'Cancel' : 'Add Faculty'}
                 </button>
@@ -389,26 +389,26 @@ const AdminDashboard = () => {
                       placeholder='Faculty Name'
                       value={newFaculty.name}
                       onChange={(e) => setNewFaculty({...newFaculty, name: e.target.value})}
-                      className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-blue-600'
+                      className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
                     />
                     <input
                       type='number'
                       placeholder='Number of Departments'
                       value={newFaculty.departments}
                       onChange={(e) => setNewFaculty({...newFaculty, departments: e.target.value})}
-                      className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-blue-600'
+                      className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
                     />
                     <input
                       type='number'
                       placeholder='Number of Programs'
                       value={newFaculty.programs}
                       onChange={(e) => setNewFaculty({...newFaculty, programs: e.target.value})}
-                      className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-blue-600'
+                      className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
                     />
                   </div>
                   <button 
                     onClick={handleAddFaculty}
-                    className='mt-4 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition text-sm font-medium'
+                    className='mt-4 bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition text-sm font-medium'
                   >
                     Save
                   </button>
@@ -436,7 +436,7 @@ const AdminDashboard = () => {
                                 type='text'
                                 value={editFacultyData.name}
                                 onChange={(e) => setEditFacultyData({...editFacultyData, name: e.target.value})}
-                                className='w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-blue-600'
+                                className='w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
                               />
                             </td>
                             <td className='px-6 py-4 text-sm'>
@@ -444,7 +444,7 @@ const AdminDashboard = () => {
                                 type='number'
                                 value={editFacultyData.departments}
                                 onChange={(e) => setEditFacultyData({...editFacultyData, departments: e.target.value})}
-                                className='w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-blue-600'
+                                className='w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
                               />
                             </td>
                             <td className='px-6 py-4 text-sm'>
@@ -452,13 +452,13 @@ const AdminDashboard = () => {
                                 type='number'
                                 value={editFacultyData.programs}
                                 onChange={(e) => setEditFacultyData({...editFacultyData, programs: e.target.value})}
-                                className='w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-blue-600'
+                                className='w-full px-2 py-1 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
                               />
                             </td>
                             <td className='px-6 py-4 text-sm space-x-2'>
                               <button 
                                 onClick={handleSaveEditFaculty}
-                                className='text-green-600 hover:text-green-700 text-sm font-medium'
+                                className='text-gray-900 hover:text-gray-700 text-sm font-medium'
                               >
                                 Save
                               </button>
@@ -478,13 +478,13 @@ const AdminDashboard = () => {
                             <td className='px-6 py-4 text-sm space-x-4'>
                               <button 
                                 onClick={() => handleEditFaculty(item.id)}
-                                className='text-blue-600 hover:text-blue-700 text-sm font-medium'
+                                className='text-gray-900 hover:text-gray-700 text-sm font-medium'
                               >
                                 Edit
                               </button>
                               <button 
                                 onClick={() => handleDeleteFaculty(item.id)}
-                                className='text-red-600 hover:text-red-700 text-sm font-medium'
+                                className='text-gray-600 hover:text-gray-700 text-sm font-medium'
                               >
                                 Delete
                               </button>

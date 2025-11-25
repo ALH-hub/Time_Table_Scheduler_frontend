@@ -80,13 +80,13 @@ const StudentPortal = () => {
               <div key={step} className='flex-1 flex items-center'>
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
                   step <= currentStep
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-gray-900 text-white'
                     : 'bg-gray-300 text-gray-600'
                 }`}>
                   {step}
                 </div>
                 {step < 4 && <div className={`flex-1 h-1 mx-2 ${
-                  step < currentStep ? 'bg-blue-600' : 'bg-gray-300'
+                  step < currentStep ? 'bg-gray-900' : 'bg-gray-300'
                 }`}></div>}
               </div>
             ))}
@@ -104,7 +104,7 @@ const StudentPortal = () => {
           {currentStep > 1 && (
             <button
               onClick={handleBack}
-              className='mb-6 text-blue-600 hover:text-blue-700 font-medium flex items-center'
+              className='mb-6 text-gray-900 hover:text-gray-800 font-medium flex items-center'
             >
               <BackIcon className='h-5 w-5 mr-1' />
               Back
