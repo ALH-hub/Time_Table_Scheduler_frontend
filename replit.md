@@ -114,17 +114,15 @@ src/
 
 ## Design System
 
-### Color Palette
-- **Primary**: Blue (#1e40af) → Purple (#7c3aed)
-- **Secondary**: Pink (#ec4899)
-- **Accent**: Orange (#f59e0b)
-- **Background**: Professional university building with tech aesthetic
-  - Image: Modern university campus building with glass/steel architecture
-  - Lighting: Blue and purple tech lighting effects
-  - Overlay: Semi-transparent gradient for text readability
-  - Effect: Fixed background that stays in place during scrolling
-- **Card Effects**: Glassmorphism with semi-transparent white backgrounds
-- **Overlays**: Dark gradient overlay on background for better contrast
+### Color Palette - SIMPLIFIED
+- **Primary**: Blue (#0056b3) - Used for buttons, links, accents
+- **Text**: Dark gray (#1f2937) for main text, Gray (#6b7280) for secondary
+- **Background**: White (#ffffff) throughout
+- **Borders**: Light gray (#e5e7eb)
+- **Accents**: Blue (#2563eb) for hover states and interactive elements
+- **Background Image**: Professional university campus during daytime
+  - Location: Home page hero section only
+  - Effect: Full-screen background with semi-transparent dark overlay
 
 ### Typography
 - Font Family: Segoe UI, Tahoma, Geneva, Verdana
@@ -144,24 +142,55 @@ src/
 - Course type legend with color coding
 - Professional shadows and depth layers
 
-## Recent Changes - Sprint 2 Enhancements ✨
+## Recent Changes - Sprint 3: Complete Site Redesign ✨
 
-### Premium Design Upgrade - Clean & Professional Style
-1. ✨ **Realistic University Campus Background** - Daytime with students (REDESIGNED!)
-   - Real university campus with students, buildings, green areas
-   - Natural sunlight and professional outdoor setting
-   - Recognizable educational institution atmosphere
-   - Similar style to professional university timetable platforms
-   - Fixed background that stays in place during scroll
-   - Light, subtle overlay (white/grey) for perfect text readability
-2. Clean, minimalist glassmorphism effects for modern aesthetic
-3. Enhanced CSS with fixed background image and light neutral overlay system
-4. Redesigned Home page with premium hero section and feature cards
-5. All pages use professional clean aesthetic with realistic campus-themed background
+### COMPLETE REDESIGN - Clean, Minimalist, Professional
+1. ✨ **Entirely Redesigned Website** (MAJOR OVERHAUL!)
+   - Moved from colorful glassmorphism to clean, professional design
+   - All pages now have white/gray color scheme matching professional timetable platforms
+   - Simplified header with UY logo + "UniSchedule" text (no colored gradient)
+   - Professional typography and spacing throughout
+   
+2. **Home Page** - New professional style
+   - White header with simple navigation (Home, Timetables, Admin Login)
+   - Full-screen hero with university campus background image
+   - Clean white CTA buttons (blue/white)
+   - Simple 3-column feature section (For Students, For Administration, Efficient & Fast)
+   - Color legend for department coding at bottom
+   - Professional footer with 3-column layout (About, Quick Links, Contact Info)
 
-### Advanced Features Added (Sprint 2) 🚀
-1. **Course Detail Modal** - Click any course to view full details in a beautiful modal
+3. **Login Page** - Streamlined and clean
+   - White background with subtle gradient
+   - Center-aligned form card
+   - Simple input fields with gray borders
+   - Blue "Sign In" button
+   - "Remember me" checkbox
+   - Professional "Demo access" info box
+
+4. **Student Portal** - Simplified interface
+   - White background throughout
+   - Blue progress indicator (1 → 2 → 3 → 4)
+   - Simple step titles and descriptions
+   - Clean layout for selections and timetables
+   - Reduced animations and effects
+
+5. **Footer** - Professional 3-column layout
+   - About section
+   - Quick Links
+   - Contact Info
+   - Clean gray colors matching whole site aesthetic
+
+### Features Maintained
+1. **All Core Features Preserved** ✓
+   - 4-step wizard for timetable browsing (Faculty → Department → Program → Timetable)
+   - Course Detail Modal - Click any course to view full details
    - Shows: Course name, Teacher, Room, Time, Day, Type
+   - Search and filter functionality
+   - Download options (PDF, CSV, Print)
+   - Breadcrumb navigation
+   - Mobile responsive design
+   - No login required for students
+   - Admin login page included
    - Copy-to-clipboard functionality
    - Professional modal design with glassmorphism
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { NAV_LINKS, UNIVERSITY_INFO } from '../../constants';
+import { NAV_LINKS } from '../../constants';
 
 const Header = () => {
   const location = useLocation();
@@ -19,32 +19,29 @@ const Header = () => {
   });
 
   return (
-    <header className='gradient-primary shadow-lg'>
+    <header className='bg-white shadow-sm border-b border-gray-200'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='flex justify-between items-center h-16'>
           {/* Logo à gauche */}
-          <div className='flex items-center gap-3'>
-            <div className='w-10 h-10 bg-white rounded-lg flex items-center justify-center'>
-              <span className='text-sm font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent'>UY</span>
+          <div className='flex items-center gap-2'>
+            <div className='text-2xl font-bold text-blue-600'>
+              UY
             </div>
-            <div className='text-lg font-extrabold text-white drop-shadow'>
-              UNIVERSITÉ DE YAOUNDÉ I
+            <div className='text-sm font-semibold text-gray-900'>
+              UniSchedule
             </div>
           </div>
 
           {/* Navigation */}
-          <nav
-            aria-label='Navigation principale'
-            className='flex text-white font-semibold ml-auto space-x-8'
-          >
+          <nav className='flex text-gray-700 font-medium ml-auto space-x-8'>
             {visibleLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
-                className={`transition-all duration-300 pb-1 border-b-2 ${
+                className={`transition-colors duration-200 ${
                   location.pathname === link.to
-                    ? 'border-white text-white'
-                    : 'border-transparent text-blue-100 hover:text-white'
+                    ? 'text-blue-600 font-semibold'
+                    : 'text-gray-600 hover:text-blue-600'
                 }`}
               >
                 {link.label}

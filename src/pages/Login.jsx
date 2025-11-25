@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Input } from '../components/common';
+import { Input } from '../components/common';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
-import { BackIcon } from '../components/icons';
 import { useForm } from '../hooks';
 import { validateForm } from '../utils/helpers';
 
@@ -35,82 +34,81 @@ const Login = () => {
     }
 
     setIsSubmitting(true);
-
-    // TODO: Implement actual authentication logic
     setTimeout(() => {
       setIsSubmitting(false);
-      // Navigate to admin dashboard after successful login
       console.log('Login attempt:', values);
     }, 1000);
   };
 
   return (
-    <div className='min-h-screen relative flex flex-col items-center justify-start p-4 sm:p-8'>
-      <div className='max-w-5xl w-full mx-auto glass-effect rounded-3xl overflow-hidden shadow-2xl'>
-        <Header />
+    <div className='min-h-screen bg-white flex flex-col'>
+      <Header />
 
-        <main className='py-20 px-6 flex justify-center grow bg-gradient-to-b from-blue-50 to-white'>
-          <div className='p-8 rounded-2xl shadow-lg max-w-sm w-full glass-effect border border-blue-100'>
-            <div className='gradient-primary text-white rounded-lg p-4 mb-6 text-center'>
-              <h2 className='text-2xl font-bold'>Accès Administration</h2>
-              <p className='text-purple-100 text-sm mt-1'>Authentification Sécurisée</p>
-            </div>
+      <main className='flex-grow flex items-center justify-center px-4 py-20' style={{ backgroundImage: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(249, 250, 251, 0.95) 100%)' }}>
+        <div className='max-w-md w-full bg-white rounded-lg shadow-md p-8 border border-gray-200'>
+          <div className='text-center mb-8'>
+            <h2 className='text-2xl font-bold text-gray-900 mb-2'>Admin Portal</h2>
+            <p className='text-gray-600 text-sm'>Enter your credentials to access the admin dashboard</p>
+          </div>
 
-            <form onSubmit={handleSubmit}>
-              <Input
-                label='Identifiant'
+          <form onSubmit={handleSubmit} className='space-y-6'>
+            <div>
+              <label className='block text-sm font-medium text-gray-900 mb-1'>Username</label>
+              <input
                 type='text'
                 name='identifiant'
                 value={values.identifiant}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={errors.identifiant}
-                required
-                className='mb-4'
+                className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600'
+                placeholder='admin'
               />
+              {errors.identifiant && <p className='text-red-600 text-xs mt-1'>{errors.identifiant}</p>}
+            </div>
 
-              <Input
-                label='Mot de passe'
+            <div>
+              <label className='block text-sm font-medium text-gray-900 mb-1'>Password</label>
+              <input
                 type='password'
                 name='motdepasse'
                 value={values.motdepasse}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                error={errors.motdepasse}
-                required
-                className='mb-8'
+                className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600'
+                placeholder='Enter your password'
               />
-
-              <div className='flex flex-col items-center space-y-4'>
-                <Button
-                  type='submit'
-                  variant='primary'
-                  disabled={isSubmitting}
-                  className='w-full font-bold'
-                >
-                  {isSubmitting ? 'Connexion...' : 'Se connecter'}
-                </Button>
-
-                <Link
-                  to='/'
-                  className='text-sm text-purple-600 hover:text-purple-800 transition-colors flex items-center font-semibold'
-                >
-                  <BackIcon className='h-4 w-4 mr-1' />
-                  Retour à l'accueil
-                </Link>
-              </div>
-            </form>
-            
-            <div className='mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-400 rounded'>
-              <p className='text-xs text-gray-700'>
-                <span className='font-bold'>Accès démo:</span> Utilisez n'importe quels identifiants pour vous connecter
-              </p>
+              {errors.motdepasse && <p className='text-red-600 text-xs mt-1'>{errors.motdepasse}</p>}
             </div>
-          </div>
-        </main>
 
-        <Footer />
-      </div>
+            <div className='flex items-center'>
+              <input type='checkbox' id='remember' className='h-4 w-4 border-gray-300 rounded' />
+              <label htmlFor='remember' className='ml-2 text-sm text-gray-700'>Remember me</label>
+            </div>
+
+            <button
+              type='submit'
+              disabled={isSubmitting}
+              className='w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition'
+            >
+              {isSubmitting ? 'Signing in...' : 'Sign In'}
+            </button>
+          </form>
+
+          <div className='mt-6 text-center'>
+            <Link to='/' className='text-sm text-blue-600 hover:text-blue-700'>
+              Back to home
+            </Link>
+          </div>
+
+          <div className='mt-6 p-3 bg-amber-50 border border-amber-200 rounded'>
+            <p className='text-xs text-amber-800'>
+              <span className='font-semibold'>Demo access:</span> Use any credentials to login
+            </p>
+          </div>
+        </div>
+      </main>
+
+      <Footer />
     </div>
   );
 };

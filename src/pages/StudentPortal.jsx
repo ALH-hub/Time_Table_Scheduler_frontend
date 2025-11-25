@@ -68,56 +68,25 @@ const StudentPortal = () => {
   };
 
   return (
-    <div className='min-h-screen relative flex flex-col items-center justify-start p-4 sm:p-8'>
-      <div className='max-w-5xl w-full mx-auto glass-effect rounded-3xl overflow-hidden shadow-2xl'>
-        <Header />
+    <div className='min-h-screen bg-white flex flex-col'>
+      <Header />
 
-        <div className='px-6 py-12 bg-gradient-to-b from-blue-50 to-white'>
-          {/* Breadcrumb Navigation */}
-          {currentStep > 1 && (
-            <div className='flex items-center gap-2 text-sm font-semibold py-4 px-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-100 mb-6 flex-wrap'>
-              <span className='text-blue-700'>Parcours:</span>
-              {currentStep >= 1 && <span className='px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg'>Étape 1</span>}
-              {currentStep >= 2 && (
-                <>
-                  <span className='text-gray-400'>›</span>
-                  <span className='px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg truncate max-w-xs'>
-                    {selectedFaculty?.name.slice(0, 15)}
-                  </span>
-                </>
-              )}
-              {currentStep >= 3 && (
-                <>
-                  <span className='text-gray-400'>›</span>
-                  <span className='px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg truncate max-w-xs'>
-                    {selectedDepartment?.name.slice(0, 15)}
-                  </span>
-                </>
-              )}
-              {currentStep === 4 && (
-                <>
-                  <span className='text-gray-400'>›</span>
-                  <span className='px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg truncate max-w-xs'>
-                    {selectedProgram.slice(0, 20)}
-                  </span>
-                </>
-              )}
-            </div>
-          )}
+      <main className='flex-grow bg-white'>
+        <div className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
 
           {/* Progress Indicator */}
-          <div className='flex justify-center items-center gap-2 mb-8'>
+          <div className='flex justify-between items-center gap-2 mb-8'>
             {[1, 2, 3, 4].map((step) => (
-              <div key={step} className='flex items-center'>
+              <div key={step} className='flex-1 flex items-center'>
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
                   step <= currentStep
-                    ? 'bg-gradient-to-br from-blue-500 to-purple-500 text-white'
-                    : 'bg-gray-200 text-gray-500'
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-300 text-gray-600'
                 }`}>
                   {step}
                 </div>
-                {step < 4 && <div className={`w-8 h-1 mx-1 ${
-                  step < currentStep ? 'bg-gradient-to-r from-blue-500 to-purple-500' : 'bg-gray-200'
+                {step < 4 && <div className={`flex-1 h-1 mx-2 ${
+                  step < currentStep ? 'bg-blue-600' : 'bg-gray-300'
                 }`}></div>}
               </div>
             ))}
@@ -125,22 +94,21 @@ const StudentPortal = () => {
 
           {/* Step Title and Description */}
           <div className='mb-8 text-center'>
-            <h2 className='text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2'>
+            <h2 className='text-2xl font-bold text-gray-900 mb-2'>
               {STUDENT_PORTAL_STEPS[currentStep - 1].name}
             </h2>
-            <p className='text-lg text-gray-700 font-medium'>{getStepDescription()}</p>
+            <p className='text-gray-600'>{getStepDescription()}</p>
           </div>
 
           {/* Back Button */}
           {currentStep > 1 && (
-            <Button
+            <button
               onClick={handleBack}
-              variant='ghost'
-              className='mb-6 flex items-center'
+              className='mb-6 text-blue-600 hover:text-blue-700 font-medium flex items-center'
             >
               <BackIcon className='h-5 w-5 mr-1' />
-              Retour
-            </Button>
+              Back
+            </button>
           )}
 
           {/* Step 1: Faculties */}
@@ -191,9 +159,9 @@ const StudentPortal = () => {
             />
           )}
         </div>
+      </main>
 
-        <Footer />
-      </div>
+      <Footer />
     </div>
   );
 };

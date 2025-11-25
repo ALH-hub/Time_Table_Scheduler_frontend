@@ -3,25 +3,36 @@ import { UNIVERSITY_INFO, APP_INFO } from '../../constants';
 
 const Footer = () => {
   return (
-    <footer className='bg-gradient-to-r from-gray-800 via-gray-900 to-gray-800 text-white py-8 border-t-4 border-purple-600'>
+    <footer className='bg-white border-t border-gray-200 text-gray-700 py-12 mt-auto'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 text-center md:text-left'>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-12 mb-8'>
           <div>
-            <p className='font-bold text-lg mb-1 text-purple-300'>{UNIVERSITY_INFO.name}</p>
-            <p className='text-gray-400 text-sm'>Système de Gestion Moderne</p>
+            <h4 className='font-bold text-gray-900 mb-3'>About</h4>
+            <p className='text-sm text-gray-600'>UniSchedule provides easy access to university timetables for students, parents, and staff. View course schedules, room assignments, and professor information all in one place.</p>
           </div>
           <div>
-            <p className='font-bold text-lg mb-1 text-purple-300'>Contact</p>
-            <p className='text-gray-400 text-sm'>{UNIVERSITY_INFO.contact}</p>
+            <h4 className='font-bold text-gray-900 mb-3'>Quick Links</h4>
+            <ul className='space-y-2 text-sm'>
+              <li><a href='/' className='text-gray-600 hover:text-blue-600'>Home</a></li>
+              <li><a href='/student' className='text-gray-600 hover:text-blue-600'>View Timetables</a></li>
+              <li><a href='/login' className='text-gray-600 hover:text-blue-600'>Admin Access</a></li>
+            </ul>
           </div>
           <div>
-            <p className='font-bold text-lg mb-1 text-purple-300'>Adresse</p>
-            <p className='text-gray-400 text-sm'>{UNIVERSITY_INFO.address}</p>
+            <h4 className='font-bold text-gray-900 mb-3'>Contact Info</h4>
+            <ul className='space-y-2 text-sm'>
+              <li className='flex items-center gap-2'>
+                <span className='text-gray-600'>{UNIVERSITY_INFO.contact}</span>
+              </li>
+              <li className='flex items-center gap-2'>
+                <span className='text-gray-600'>{UNIVERSITY_INFO.address}</span>
+              </li>
+            </ul>
           </div>
         </div>
-        <div className='border-t border-gray-700 pt-4'>
+        <div className='border-t border-gray-200 pt-6'>
           <p className='text-gray-500 text-xs text-center'>
-            &copy; {APP_INFO.year} Tous droits réservés | Système de Gestion des Emplois du Temps
+            &copy; {APP_INFO.year} University Timetable Scheduler. All rights reserved.
           </p>
         </div>
       </div>
