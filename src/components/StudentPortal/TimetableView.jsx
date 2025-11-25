@@ -46,7 +46,16 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
   };
 
   const getCourseStyle = (type) => {
-    return 'bg-gray-100 border-l-4 border-gray-400';
+    switch (type) {
+      case 'Lecture':
+        return 'bg-blue-50 border-l-4 border-blue-600';
+      case 'Lab Work':
+        return 'bg-emerald-50 border-l-4 border-emerald-600';
+      case 'Tutorial':
+        return 'bg-indigo-50 border-l-4 border-indigo-600';
+      default:
+        return 'bg-gray-50 border-l-4 border-gray-400';
+    }
   };
 
   const handlePrint = () => {
@@ -86,12 +95,12 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
           placeholder='Search by course, teacher or room...'
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500 transition-colors'
+          className='w-full px-4 py-2 border-2 border-blue-300 rounded-lg focus:outline-none focus:border-blue-600 transition-colors'
         />
       </div>
 
       {/* Filters and Actions */}
-      <div className='flex flex-wrap gap-4 mb-8 justify-between bg-gray-50 p-6 rounded-lg'>
+      <div className='flex flex-wrap gap-4 mb-8 justify-between bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg'>
         <div className='flex flex-wrap gap-4'>
           <div className='flex-1 min-w-[200px]'>
             <label className='block text-sm font-semibold text-gray-700 mb-2'>
@@ -100,7 +109,7 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
             <select
               value={selectedWeek}
               onChange={(e) => setSelectedWeek(e.target.value)}
-              className='w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-gray-500 transition-colors'
+              className='w-full px-4 py-2 border-2 border-blue-300 rounded-lg focus:outline-none focus:border-blue-600 transition-colors'
             >
               <option value='week1'>Week 1</option>
               <option value='week2'>Week 2</option>
@@ -110,7 +119,7 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
           </div>
           <div className='flex items-end'>
             <div className='text-sm text-gray-600 font-semibold bg-white px-4 py-2 rounded-lg border border-gray-200'>
-              Program: <span className='text-gray-900'>{selectedProgram}</span>
+              Program: <span className='text-blue-600'>{selectedProgram}</span>
             </div>
           </div>
         </div>
@@ -119,7 +128,7 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
         <div className='flex flex-wrap gap-3'>
           <button
             onClick={handlePrint}
-            className='flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-100 transition-colors'
+            className='flex items-center gap-2 px-4 py-2 bg-white border-2 border-blue-300 text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors'
             title='Print'
           >
             <PrintIcon className='w-4 h-4' />
@@ -127,7 +136,7 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
           </button>
           <button
             onClick={handleDownloadPDF}
-            className='flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-100 transition-colors'
+            className='flex items-center gap-2 px-4 py-2 bg-white border-2 border-red-300 text-red-600 font-semibold rounded-lg hover:bg-red-50 transition-colors'
             title='Download as PDF'
           >
             <DownloadIcon className='w-4 h-4' />
@@ -142,13 +151,13 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
           {/* Header */}
           <thead>
             <tr>
-              <th className='bg-gray-800 text-white p-4 text-center font-bold border border-gray-300 w-24'>
+              <th className='gradient-primary text-white p-4 text-center font-bold border-2 border-gray-300 w-24'>
                 Time
               </th>
               {DAYS_OF_WEEK.map((day) => (
                 <th
                   key={day}
-                  className='bg-gray-800 text-white p-4 text-center font-bold border border-gray-300 flex-1 min-w-32'
+                  className='bg-gradient-to-br from-blue-600 to-purple-600 text-white p-4 text-center font-bold border-2 border-gray-300 flex-1 min-w-32'
                 >
                   <div className='font-extrabold text-sm'>{day}</div>
                 </th>
@@ -159,8 +168,8 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
           {/* Body */}
           <tbody>
             {TIME_SLOTS.map((timeSlot) => (
-              <tr key={timeSlot} className='hover:bg-gray-50 transition-colors'>
-                <td className='bg-gray-200 p-4 text-center font-bold border border-gray-300 text-gray-800 whitespace-nowrap'>
+              <tr key={timeSlot} className='hover:bg-blue-50 transition-colors'>
+                <td className='bg-gradient-to-r from-gray-200 to-gray-100 p-4 text-center font-bold border-2 border-gray-300 text-gray-800 whitespace-nowrap'>
                   {timeSlot}
                 </td>
                 {DAYS_OF_WEEK.map((day) => {
@@ -170,7 +179,7 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
                   return (
                     <td
                       key={courseId}
-                      className={`border border-gray-300 p-2 min-h-[120px] align-top transition-colors ${
+                      className={`border-2 border-gray-300 p-2 min-h-[120px] align-top transition-colors ${
                         isFiltered ? 'bg-gray-50 hover:bg-gray-100' : 'bg-gray-300 opacity-30'
                       }`}
                     >
@@ -210,17 +219,17 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
 
       {/* Legend */}
       <div className='mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 mb-6'>
-        <div className='flex items-center gap-2 p-3 bg-gray-100 rounded-lg border-l-4 border-gray-400'>
-          <div className='w-4 h-4 bg-gray-300 rounded'></div>
-          <span className='text-sm text-gray-700'>Lecture</span>
+        <div className='flex items-center gap-2 p-3 bg-blue-100 rounded-lg border-l-4 border-blue-600'>
+          <div className='w-4 h-4 bg-blue-600 rounded'></div>
+          <span className='text-sm text-blue-900'>Lecture</span>
         </div>
-        <div className='flex items-center gap-2 p-3 bg-gray-100 rounded-lg border-l-4 border-gray-400'>
-          <div className='w-4 h-4 bg-gray-300 rounded'></div>
-          <span className='text-sm text-gray-700'>Lab Work</span>
+        <div className='flex items-center gap-2 p-3 bg-emerald-100 rounded-lg border-l-4 border-emerald-600'>
+          <div className='w-4 h-4 bg-emerald-600 rounded'></div>
+          <span className='text-sm text-emerald-900'>Lab Work</span>
         </div>
-        <div className='flex items-center gap-2 p-3 bg-gray-100 rounded-lg border-l-4 border-gray-400'>
-          <div className='w-4 h-4 bg-gray-300 rounded'></div>
-          <span className='text-sm text-gray-700'>Tutorial</span>
+        <div className='flex items-center gap-2 p-3 bg-indigo-100 rounded-lg border-l-4 border-indigo-600'>
+          <div className='w-4 h-4 bg-indigo-600 rounded'></div>
+          <span className='text-sm text-indigo-900'>Tutorial</span>
         </div>
       </div>
 

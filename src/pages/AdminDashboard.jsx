@@ -122,7 +122,7 @@ const AdminDashboard = () => {
         {/* Dashboard Header */}
         <div className='bg-white border-b border-gray-200'>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
-            <h1 className='text-3xl font-bold text-gray-900'>Administration Dashboard</h1>
+            <h1 className='text-3xl font-bold text-blue-600'>Administration Dashboard</h1>
             <p className='text-gray-600 text-sm mt-1'>Manage timetables and schedules</p>
           </div>
         </div>
@@ -135,7 +135,7 @@ const AdminDashboard = () => {
                 onClick={() => setActiveTab('overview')}
                 className={`py-4 border-b-2 transition ${
                   activeTab === 'overview'
-                    ? 'border-gray-900 text-gray-900'
+                    ? 'border-blue-600 text-blue-600'
                     : 'border-transparent text-gray-600 hover:text-gray-700'
                 }`}
               >
@@ -145,7 +145,7 @@ const AdminDashboard = () => {
                 onClick={() => setActiveTab('timetables')}
                 className={`py-4 border-b-2 transition ${
                   activeTab === 'timetables'
-                    ? 'border-gray-900 text-gray-900'
+                    ? 'border-blue-600 text-blue-600'
                     : 'border-transparent text-gray-600 hover:text-gray-700'
                 }`}
               >
@@ -155,7 +155,7 @@ const AdminDashboard = () => {
                 onClick={() => setActiveTab('faculty')}
                 className={`py-4 border-b-2 transition ${
                   activeTab === 'faculty'
-                    ? 'border-gray-900 text-gray-900'
+                    ? 'border-blue-600 text-blue-600'
                     : 'border-transparent text-gray-600 hover:text-gray-700'
                 }`}
               >
@@ -165,7 +165,7 @@ const AdminDashboard = () => {
                 onClick={() => setActiveTab('settings')}
                 className={`py-4 border-b-2 transition ${
                   activeTab === 'settings'
-                    ? 'border-gray-900 text-gray-900'
+                    ? 'border-blue-600 text-blue-600'
                     : 'border-transparent text-gray-600 hover:text-gray-700'
                 }`}
               >
@@ -180,40 +180,40 @@ const AdminDashboard = () => {
           {/* Overview Tab */}
           {activeTab === 'overview' && (
             <div>
-              <h2 className='text-xl font-bold text-gray-900 mb-6'>Dashboard Overview</h2>
+              <h2 className='text-xl font-bold text-blue-600 mb-6'>Dashboard Overview</h2>
               
               {/* Stats Cards - Clean */}
               <div className='grid grid-cols-1 md:grid-cols-4 gap-4 mb-8'>
                 <div className='bg-white rounded-md border border-gray-200 p-6'>
                   <div className='text-sm text-gray-600 font-medium mb-2'>Total Faculties</div>
-                  <div className='text-3xl font-bold text-gray-900'>5</div>
+                  <div className='text-3xl font-bold text-blue-600'>5</div>
                   <div className='text-xs text-gray-500 mt-2'>Active</div>
                 </div>
                 <div className='bg-white rounded-md border border-gray-200 p-6'>
                   <div className='text-sm text-gray-600 font-medium mb-2'>Total Departments</div>
-                  <div className='text-3xl font-bold text-gray-900'>18</div>
+                  <div className='text-3xl font-bold text-blue-600'>18</div>
                   <div className='text-xs text-gray-500 mt-2'>All departments</div>
                 </div>
                 <div className='bg-white rounded-md border border-gray-200 p-6'>
                   <div className='text-sm text-gray-600 font-medium mb-2'>Programs</div>
-                  <div className='text-3xl font-bold text-gray-900'>42</div>
+                  <div className='text-3xl font-bold text-blue-600'>42</div>
                   <div className='text-xs text-gray-500 mt-2'>Active programs</div>
                 </div>
                 <div className='bg-white rounded-md border border-gray-200 p-6'>
                   <div className='text-sm text-gray-600 font-medium mb-2'>Last Update</div>
-                  <div className='text-2xl font-bold text-gray-900'>Today</div>
+                  <div className='text-2xl font-bold text-blue-600'>Today</div>
                   <div className='text-xs text-gray-500 mt-2'>14:30</div>
                 </div>
               </div>
 
               {/* Recent Activity */}
               <div className='bg-white rounded-md border border-gray-200 p-6'>
-                <h3 className='text-lg font-bold text-gray-900 mb-4'>Recent Timetables</h3>
+                <h3 className='text-lg font-bold text-blue-600 mb-4'>Recent Timetables</h3>
                 <div className='divide-y'>
                   {timetables.slice(0, 3).map((item) => (
                     <div key={item.id} className='py-4 flex justify-between items-center'>
                       <div>
-                        <div className='font-medium text-gray-900'>{item.name}</div>
+                        <div className='font-medium text-blue-600'>{item.name}</div>
                         <div className='text-xs text-gray-500'>{item.faculty}</div>
                       </div>
                       <span className='text-xs px-2 py-1 rounded bg-gray-100 text-gray-700'>
@@ -230,10 +230,10 @@ const AdminDashboard = () => {
           {activeTab === 'timetables' && (
             <div>
               <div className='flex justify-between items-center mb-6'>
-                <h2 className='text-xl font-bold text-gray-900'>Manage Timetables</h2>
+                <h2 className='text-xl font-bold text-blue-600'>Manage Timetables</h2>
                 <button 
                   onClick={() => setShowAddForm(!showAddForm)}
-                  className='bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition text-sm font-medium'
+                  className='bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition text-sm font-medium'
                 >
                   {showAddForm ? 'Cancel' : 'Add New Timetable'}
                 </button>
@@ -242,7 +242,7 @@ const AdminDashboard = () => {
               {/* Add Form */}
               {showAddForm && (
                 <div className='bg-white rounded-md border border-gray-200 p-6 mb-6'>
-                  <h3 className='text-base font-semibold text-gray-900 mb-4'>New Timetable</h3>
+                  <h3 className='text-base font-semibold text-blue-600 mb-4'>New Timetable</h3>
                   <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
                     <input
                       type='text'
@@ -268,7 +268,7 @@ const AdminDashboard = () => {
                   </div>
                   <button 
                     onClick={handleAddTimetable}
-                    className='mt-4 bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition text-sm font-medium'
+                    className='mt-4 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition text-sm font-medium'
                   >
                     Save
                   </button>
@@ -280,11 +280,11 @@ const AdminDashboard = () => {
                 <table className='w-full'>
                   <thead className='bg-gray-50 border-b'>
                     <tr>
-                      <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>Name</th>
-                      <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>Faculty</th>
-                      <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>Courses</th>
-                      <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>Status</th>
-                      <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>Actions</th>
+                      <th className='px-6 py-3 text-left text-sm font-semibold text-blue-600'>Name</th>
+                      <th className='px-6 py-3 text-left text-sm font-semibold text-blue-600'>Faculty</th>
+                      <th className='px-6 py-3 text-left text-sm font-semibold text-blue-600'>Courses</th>
+                      <th className='px-6 py-3 text-left text-sm font-semibold text-blue-600'>Status</th>
+                      <th className='px-6 py-3 text-left text-sm font-semibold text-blue-600'>Actions</th>
                     </tr>
                   </thead>
                   <tbody className='divide-y'>
@@ -322,7 +322,7 @@ const AdminDashboard = () => {
                             <td className='px-6 py-4 text-sm space-x-2'>
                               <button 
                                 onClick={handleSaveEditTimetable}
-                                className='text-gray-900 hover:text-gray-700 text-sm font-medium'
+                                className='text-blue-600 hover:text-gray-700 text-sm font-medium'
                               >
                                 Save
                               </button>
@@ -336,7 +336,7 @@ const AdminDashboard = () => {
                           </>
                         ) : (
                           <>
-                            <td className='px-6 py-4 text-sm text-gray-900 font-medium'>{item.name}</td>
+                            <td className='px-6 py-4 text-sm text-blue-600 font-medium'>{item.name}</td>
                             <td className='px-6 py-4 text-sm text-gray-600'>{item.faculty}</td>
                             <td className='px-6 py-4 text-sm text-gray-600'>{item.courses}</td>
                             <td className='px-6 py-4 text-sm'>
@@ -345,7 +345,7 @@ const AdminDashboard = () => {
                             <td className='px-6 py-4 text-sm space-x-4'>
                               <button 
                                 onClick={() => handleEditTimetable(item.id)}
-                                className='text-gray-900 hover:text-gray-700 text-sm font-medium'
+                                className='text-blue-600 hover:text-gray-700 text-sm font-medium'
                               >
                                 Edit
                               </button>
@@ -370,10 +370,10 @@ const AdminDashboard = () => {
           {activeTab === 'faculty' && (
             <div>
               <div className='flex justify-between items-center mb-6'>
-                <h2 className='text-xl font-bold text-gray-900'>Faculties & Departments</h2>
+                <h2 className='text-xl font-bold text-blue-600'>Faculties & Departments</h2>
                 <button 
                   onClick={() => setShowAddFacultyForm(!showAddFacultyForm)}
-                  className='bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition text-sm font-medium'
+                  className='bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition text-sm font-medium'
                 >
                   {showAddFacultyForm ? 'Cancel' : 'Add Faculty'}
                 </button>
@@ -382,7 +382,7 @@ const AdminDashboard = () => {
               {/* Add Faculty Form */}
               {showAddFacultyForm && (
                 <div className='bg-white rounded-md border border-gray-200 p-6 mb-6'>
-                  <h3 className='text-base font-semibold text-gray-900 mb-4'>New Faculty</h3>
+                  <h3 className='text-base font-semibold text-blue-600 mb-4'>New Faculty</h3>
                   <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
                     <input
                       type='text'
@@ -408,7 +408,7 @@ const AdminDashboard = () => {
                   </div>
                   <button 
                     onClick={handleAddFaculty}
-                    className='mt-4 bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition text-sm font-medium'
+                    className='mt-4 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition text-sm font-medium'
                   >
                     Save
                   </button>
@@ -420,10 +420,10 @@ const AdminDashboard = () => {
                 <table className='w-full'>
                   <thead className='bg-gray-50 border-b'>
                     <tr>
-                      <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>Name</th>
-                      <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>Departments</th>
-                      <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>Programs</th>
-                      <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>Actions</th>
+                      <th className='px-6 py-3 text-left text-sm font-semibold text-blue-600'>Name</th>
+                      <th className='px-6 py-3 text-left text-sm font-semibold text-blue-600'>Departments</th>
+                      <th className='px-6 py-3 text-left text-sm font-semibold text-blue-600'>Programs</th>
+                      <th className='px-6 py-3 text-left text-sm font-semibold text-blue-600'>Actions</th>
                     </tr>
                   </thead>
                   <tbody className='divide-y'>
@@ -458,7 +458,7 @@ const AdminDashboard = () => {
                             <td className='px-6 py-4 text-sm space-x-2'>
                               <button 
                                 onClick={handleSaveEditFaculty}
-                                className='text-gray-900 hover:text-gray-700 text-sm font-medium'
+                                className='text-blue-600 hover:text-gray-700 text-sm font-medium'
                               >
                                 Save
                               </button>
@@ -472,13 +472,13 @@ const AdminDashboard = () => {
                           </>
                         ) : (
                           <>
-                            <td className='px-6 py-4 text-sm text-gray-900 font-medium'>{item.name}</td>
+                            <td className='px-6 py-4 text-sm text-blue-600 font-medium'>{item.name}</td>
                             <td className='px-6 py-4 text-sm text-gray-600'>{item.departments}</td>
                             <td className='px-6 py-4 text-sm text-gray-600'>{item.programs}</td>
                             <td className='px-6 py-4 text-sm space-x-4'>
                               <button 
                                 onClick={() => handleEditFaculty(item.id)}
-                                className='text-gray-900 hover:text-gray-700 text-sm font-medium'
+                                className='text-blue-600 hover:text-gray-700 text-sm font-medium'
                               >
                                 Edit
                               </button>
@@ -502,7 +502,7 @@ const AdminDashboard = () => {
           {/* Settings Tab */}
           {activeTab === 'settings' && (
             <div>
-              <h2 className='text-xl font-bold text-gray-900 mb-6'>Settings</h2>
+              <h2 className='text-xl font-bold text-blue-600 mb-6'>Settings</h2>
               <div className='bg-white rounded-md border border-gray-200 p-6'>
                 <p className='text-gray-600 text-sm'>Feature under development</p>
               </div>

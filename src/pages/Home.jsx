@@ -10,13 +10,13 @@ const Home = () => {
         <div className='w-full px-4 sm:px-6 lg:px-8'>
           <div className='flex justify-between items-center h-16'>
             <div className='flex items-center gap-2'>
-              <div className='text-2xl font-bold text-gray-900'>UY1</div>
+              <div className='text-2xl font-bold text-blue-600'>UY1</div>
               <div className='text-sm font-semibold text-gray-900'>Timetable</div>
             </div>
             <nav className='flex ml-auto gap-20 pr-4'>
-              <a href='#home' className='text-sm font-medium text-gray-700 font-semibold hover:text-gray-900 transition'>Home</a>
-              <Link to='/student' className='text-sm font-medium text-gray-600 hover:text-gray-800 transition'>Timetable</Link>
-              <Link to='/login' className='text-sm font-medium text-gray-600 hover:text-gray-800 transition'>Admin Login</Link>
+              <a href='#home' className='text-sm font-medium text-blue-600 font-semibold hover:text-blue-700 transition'>Home</a>
+              <Link to='/student' className='text-sm font-medium text-gray-600 hover:text-blue-600 transition'>Timetable</Link>
+              <Link to='/login' className='text-sm font-medium text-gray-600 hover:text-blue-600 transition'>Admin Login</Link>
             </nav>
           </div>
         </div>
@@ -29,11 +29,11 @@ const Home = () => {
           <h1 className='text-6xl font-bold mb-6 leading-tight'>Timetable System</h1>
           <p className='text-xl text-white/95 mb-12 font-normal leading-relaxed'>View your classes anytime, anywhere. Simple, fast and always up to date.</p>
           <div className='flex gap-6 justify-center'>
-            <Link to='/student' className='bg-gray-900 text-white px-8 py-4 rounded-md font-semibold hover:bg-gray-800 transition flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105'>
+            <Link to='/student' className='bg-blue-600 text-white px-8 py-4 rounded-md font-semibold hover:bg-blue-700 transition flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105'>
               View Timetables
               <span>→</span>
             </Link>
-            <Link to='/login' className='bg-white text-gray-900 px-8 py-4 rounded-md font-semibold hover:bg-gray-100 transition border-2 border-white shadow-lg hover:shadow-xl transform hover:scale-105'>
+            <Link to='/login' className='bg-white text-gray-900 px-8 py-4 rounded-md font-semibold hover:bg-gray-50 transition border-2 border-white shadow-lg hover:shadow-xl transform hover:scale-105'>
               Admin Access
             </Link>
           </div>
