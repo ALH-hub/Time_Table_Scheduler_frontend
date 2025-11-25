@@ -27,6 +27,9 @@ const Footer = () => {
                 <li>
                   <a href='/login' className='text-gray-600 hover:text-blue-600 transition duration-200'>Admin Access</a>
                 </li>
+                <li>
+                  <a href='https://www.preinscriptions.uninet.cm/' target='_blank' rel='noopener noreferrer' className='text-gray-600 hover:text-blue-600 transition duration-200'>Pre-registration</a>
+                </li>
               </ul>
             </div>
 
@@ -47,8 +50,9 @@ const Footer = () => {
                   <span className='text-gray-600'>{UNIVERSITY_INFO.address}</span>
                 </li>
               </ul>
-              {/* Social Links - LinkedIn Only */}
+              {/* Social Links */}
               <div className='flex gap-4 mt-6'>
+                <a href='https://www.facebook.com/yaounde1universite/' target='_blank' rel='noopener noreferrer' className='text-gray-400 hover:text-blue-600 transition text-lg' title='Facebook'>f</a>
                 <a href='https://cm.linkedin.com/company/uy1' target='_blank' rel='noopener noreferrer' className='text-gray-400 hover:text-blue-600 transition text-lg' title='LinkedIn'>in</a>
               </div>
             </div>
