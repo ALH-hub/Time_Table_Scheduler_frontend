@@ -86,11 +86,11 @@ select:focus-visible {
 
 /* Card animations */
 .card-hover {
-  transition: all 0.2s ease;
+  transition: all 0.2s ease-in-out;
 }
 
 .card-hover:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
 }
 
 /* Simple glass effect */
