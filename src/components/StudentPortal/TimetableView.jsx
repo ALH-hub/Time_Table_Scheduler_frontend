@@ -48,13 +48,13 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
   const getCourseStyle = (type) => {
     switch (type) {
       case 'Cours Magistral':
-        return 'bg-gradient-to-br from-blue-100 to-blue-200 border-l-4 border-blue-600';
+        return 'bg-blue-50 border-l-4 border-blue-600';
       case 'Travaux Pratiques':
-        return 'bg-gradient-to-br from-green-100 to-green-200 border-l-4 border-green-600';
+        return 'bg-emerald-50 border-l-4 border-emerald-600';
       case 'Travaux Dirigés':
-        return 'bg-gradient-to-br from-purple-100 to-purple-200 border-l-4 border-purple-600';
+        return 'bg-indigo-50 border-l-4 border-indigo-600';
       default:
-        return 'bg-gradient-to-br from-gray-100 to-gray-200 border-l-4 border-gray-600';
+        return 'bg-gray-50 border-l-4 border-gray-400';
     }
   };
 
