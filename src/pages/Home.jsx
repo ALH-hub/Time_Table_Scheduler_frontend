@@ -14,10 +14,10 @@ const Home = () => {
               <div className='text-2xl font-bold text-blue-600'>UY</div>
               <div className='text-sm font-semibold text-gray-900'>UniSchedule</div>
             </div>
-            <nav className='flex gap-8 text-sm font-medium text-gray-600'>
-              <a href='#home' className='text-blue-600 font-semibold'>Home</a>
-              <Link to='/student' className='hover:text-blue-600'>Timetables</Link>
-              <Link to='/login' className='hover:text-blue-600'>Admin Login</Link>
+            <nav className='flex gap-16 text-sm font-medium text-gray-600'>
+              <a href='#home' className='text-blue-600 font-semibold'>Accueil</a>
+              <Link to='/student' className='hover:text-blue-600 transition'>Emploi du temps</Link>
+              <Link to='/login' className='hover:text-blue-600 transition'>Connexion Admin</Link>
             </nav>
           </div>
         </div>

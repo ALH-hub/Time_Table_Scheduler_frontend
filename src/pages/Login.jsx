@@ -37,6 +37,7 @@ const Login = () => {
     setTimeout(() => {
       setIsSubmitting(false);
       console.log('Login attempt:', values);
+      navigate('/admin');
     }, 1000);
   };
 

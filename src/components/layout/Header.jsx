@@ -33,7 +33,7 @@ const Header = () => {
           </div>
 
           {/* Navigation */}
-          <nav className='flex text-gray-700 font-medium ml-auto space-x-8'>
+          <nav className='flex text-gray-700 font-medium ml-auto space-x-16'>
             {visibleLinks.map((link) => (
               <Link
                 key={link.to}
