@@ -40,8 +40,12 @@ export const COURSE_TYPES = {
 export const UNIVERSITY_INFO = {
   name: 'Université de Yaoundé I',
   shortName: 'UY1',
-  contact: 'info@uy1.cm',
-  address: 'BP 812 Yaoundé',
+  phone: '(+237) 222 22 13 20',
+  email: 'rectorat@univ-yaounde1.cm',
+  address: 'B.P. 337, Yaoundé',
+  website: 'https://www.uy1.uninet.cm/',
+  students: '15000+',
+  faculties: '5',
 };
 
 // Application metadata

@@ -25,10 +25,10 @@ const Header = () => {
           {/* Logo à gauche */}
           <div className='flex items-center gap-2'>
             <div className='text-2xl font-bold text-blue-600'>
-              UY
+              UY1
             </div>
             <div className='text-sm font-semibold text-gray-900'>
-              UniSchedule
+              Emploi du temps
             </div>
           </div>
 
