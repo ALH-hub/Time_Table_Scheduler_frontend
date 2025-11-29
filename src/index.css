@@ -52,12 +52,22 @@ body::before {
 }
 
 /* Smooth transitions for interactive elements */
-button,
 a,
+button,
 input,
 select,
 .transition-colors {
   transition: all 0.3s ease;
+}
+a
+{
+  padding: 6px 10px;
+  margin-bottom: 10px;
+} 
+a:hover
+{
+  background-color: #003366;
+  color: white;
 }
 
 /* Focus styles for accessibility */

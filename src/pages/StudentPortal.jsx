@@ -68,8 +68,9 @@ const StudentPortal = () => {
   };
 
   return (
-    <div className='min-h-screen bg-white flex flex-col'>
-      <Header />
+    <div className='min-h-screen bg-gray-100 p-7 sm:p-8 flex flex-col items-center'>
+      <div className='max-w-5xl w-full mx-auto bg-white shadow-xl rounded-lg overflow-hidden flex flex-col gap-24'>
+        <Header />
 
       <main className='flex-grow bg-white'>
         <div className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
@@ -113,7 +114,7 @@ const StudentPortal = () => {
 
           {/* Step 1: Faculties */}
           {currentStep === 1 && (
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+            <div className='grid grid-cols-2 md:grid-cols-3 gap-6'>
               {facultiesData.faculties.map((faculty) => (
                 <FacultyCard
                   key={faculty.id}
@@ -126,7 +127,7 @@ const StudentPortal = () => {
 
           {/* Step 2: Departments */}
           {currentStep === 2 && selectedFaculty && (
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+            <div className='grid grid-cols-2 md:grid-cols-3 gap-6'>
               {availableDepartments.map((dept) => (
                 <DepartmentCard
                   key={dept.id}
@@ -139,7 +140,7 @@ const StudentPortal = () => {
 
           {/* Step 3: Programs */}
           {currentStep === 3 && selectedDepartment && (
-            <div className='grid grid-cols-1 gap-4'>
+            <div className='grid grid-cols-2 md:grid-cols-3 gap-6'>
               {availablePrograms.map((program, idx) => (
                 <ProgramCard
                   key={idx}

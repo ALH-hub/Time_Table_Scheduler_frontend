@@ -42,72 +42,69 @@ const Login = () => {
   };
 
   return (
-    <div className='min-h-screen bg-white flex flex-col'>
-      <Header />
+    <div className="min-h-screen bg-linear-to-br from-white via-gray-50 to-blue-50 p-4 sm:p-8 flex flex-col items-center">
+      <div className="max-w-5xl w-full mx-auto bg-white/95 shadow-2xl rounded-lg overflow-hidden flex-1 md:h-[80vh] flex gap-7 flex-col">
+        <Header />
 
-      <main className='flex-grow flex items-center justify-center px-4 py-20 bg-gray-50'>
-        <div className='max-w-md w-full bg-white rounded-md shadow-sm p-8 border border-gray-200'>
-          <div className='text-center mb-8'>
-            <h2 className='text-2xl font-bold text-gray-900 mb-2'>Portail Administration</h2>
-            <p className='text-gray-500 text-sm'>Entrez vos identifiants pour accéder au tableau de bord</p>
-          </div>
+        <main className="py-6 px-6 md:px-12 lg:px-16 flex gap-6 md:gap-10 mx-4 md:mx-10 my-6 md:my-10 justify-center flex-1 overflow-auto items-center">
+          <div className="border border-gray-200 rounded-lg shadow-md max-w-sm w-full bg-white p-6 md:p-10 flex flex-col justify-center items-center gap-6 md:gap-8">
+            <div className="text-center">
+              <h2 className="text-2xl md:text-3xl font-extrabold text-gray-800">
+                Accès administration
+              </h2>
+              <p className="text-sm text-gray-500 mt-2">
+                Connectez-vous pour gérer les emplois du temps
+              </p>
+            </div>
 
-          <form onSubmit={handleSubmit} className='space-y-5'>
-            <div>
-              <label className='block text-sm font-medium text-gray-700 mb-2'>Identifiant</label>
-              <input
-                type='text'
-                name='identifiant'
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <Input
+                label="Identifiant"
+                type="text"
+                name="identifiant"
                 value={values.identifiant}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm'
-                placeholder='admin'
+                error={errors.identifiant}
+                required
+                className="mb-0"
               />
               {errors.identifiant && <p className='text-red-600 text-xs mt-1'>{errors.identifiant}</p>}
             </div>
 
-            <div>
-              <label className='block text-sm font-medium text-gray-700 mb-2'>Mot de passe</label>
-              <input
-                type='password'
-                name='motdepasse'
+              <Input
+                label="Mot de passe"
+                type="password"
+                name="motdepasse"
                 value={values.motdepasse}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm'
-                placeholder='Entrez votre mot de passe'
+                error={errors.motdepasse}
+                required
+                className="mb-0"
               />
-              {errors.motdepasse && <p className='text-red-600 text-xs mt-1'>{errors.motdepasse}</p>}
-            </div>
 
-            <div className='flex items-center'>
-              <input type='checkbox' id='remember' className='h-4 w-4 border-gray-300 rounded' />
-              <label htmlFor='remember' className='ml-2 text-sm text-gray-600'>Se souvenir de moi</label>
-            </div>
+              <div className="flex flex-col items-center space-y-3 mt-2">
+                <Button
+                  type="submit"
+                  variant="primary"
+                  disabled={isSubmitting}
+                  className="w-full py-2"
+                >
+                  {isSubmitting ? 'Connexion...' : 'Se connecter'}
+                </Button>
 
-            <button
-              type='submit'
-              disabled={isSubmitting}
-              className='w-full bg-blue-600 text-white font-medium py-2 rounded-md hover:bg-blue-700 transition text-sm'
-            >
-              {isSubmitting ? 'Connexion...' : 'Se connecter'}
-            </button>
-          </form>
-
-          <div className='mt-6 text-center'>
-            <Link to='/' className='text-sm text-blue-600 hover:text-blue-700 transition'>
-              Retour à l'accueil
-            </Link>
+                <Link
+                  to="/"
+                  className="text-sm text-gray-500 hover:text-blue-600 transition-colors flex items-center"
+                >
+                  <BackIcon className="h-4 w-4 mr-1" />
+                  Retour à l'accueil
+                </Link>
+              </div>
+            </form>
           </div>
-
-          <div className='mt-6 p-3 bg-blue-50 border border-blue-200 rounded-md'>
-            <p className='text-xs text-blue-700'>
-              <span className='font-medium'>Accès démo :</span> Utilisez n'importe quels identifiants
-            </p>
-          </div>
-        </div>
-      </main>
+        </main>
 
       <Footer />
     </div>
