@@ -59,16 +59,11 @@ select,
 .transition-colors {
   transition: all 0.3s ease;
 }
-a
+button
 {
   padding: 6px 10px;
   margin-bottom: 10px;
 } 
-a:hover
-{
-  background-color: #003366;
-  color: white;
-}
 
 /* Focus styles for accessibility */
 button:focus-visible,

@@ -5,7 +5,7 @@ import { timetableData } from '../../data/timetableData';
 import CourseDetailModal from './CourseDetailModal';
 import CourseSearch from './CourseSearch';
 import { PrintIcon, DownloadIcon } from '../icons';
-import html2pdf from 'html2pdf.js';
+// import html2pdf from 'html2pdf.js';
 
 const TimetableView = ({ selectedProgram, departments, weeks }) => {
   const [selectedWeek, setSelectedWeek] = useState('week1');
@@ -101,14 +101,6 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
           placeholder='Semaine'
           options={weeks}
           className='min-w-[200px]'
-        />
-        <Select
-          placeholder='Télécharger'
-          options={[
-            { id: '1', name: 'Pdf'},
-            { id: '1', name: 'Lien'},
-          ]}
-          className='w-2/3'
         />
       </div>
 
