@@ -25,7 +25,7 @@ const Home = () => {
           <h1 className="text-4xl font-extrabold text-gray-900 mb-4">
             {APP_INFO?.name || 'Time Table Scheduler'}
           </h1>
-          <h2 className="text-xl text-gray-900 font-semibold mb-10">
+          <h2 className="text-xl text-green-100 font-semibold mb-10">
             {APP_INFO?.tagline || 'Consultez facilement les emplois du temps'}
           </h2>
 
@@ -44,7 +44,7 @@ const Home = () => {
 
         <section className="py-10 px-6 flex justify-center items-center">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-gray-90 text-lg my-auto mb leading-relaxed">
+            <p className="text-cyan-950 text-lg my-auto mb leading-relaxed">
               The University of Yaoundé I timetable system allows students, teachers and parents to easily view class schedules, classrooms and professional information in one place.
             </p>
           </div>

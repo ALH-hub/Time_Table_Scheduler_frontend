@@ -19,8 +19,8 @@ const Header = () => {
   });
 
   return (
-    <header className="bg-gray-200 py-4 px-6 md:px-12 rounded-t-lg ">
-      <div className="max-w-7xl mx-auto flex justify-between items-center h-24">
+    <header className="bg-gray-200 py-4 px-6 md:px-12 rounded-t-lg">
+      <div className="max-w-5xl w-full mx-6 flex justify-between items-center h-24">
         {/* Logo and UNIVERSITY NAME */}
         <div className="flex items-center space-x-4 grow gap-3">
           <div
