@@ -59,10 +59,6 @@ select,
 .transition-colors {
   transition: all 0.3s ease;
 }
-button {
-  padding: 6px 10px;
-  margin-bottom: 10px;
-}
 
 /* Focus styles for accessibility */
 button:focus-visible,
