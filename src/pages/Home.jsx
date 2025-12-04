@@ -18,14 +18,14 @@ const Home = () => {
         backgroundPosition: 'center',
       }}
     >
-      <div className="max-w-5xl w-full mx-auto shadow-xl rounded-lg overflow-hidden flex-1 flex flex-col">
+      <div className="h-screen max-w-5xl w-full mx-auto shadow-xl rounded-lg overflow-hidden flex-1 flex flex-col">
         <Header currentPath={location.pathname} />
 
         <main className="py-16 px-6 text-center flex-1 flex flex-col justify-center items-center gap-4">
           <h1 className="text-4xl font-extrabold text-gray-900 mb-4">
             {APP_INFO?.name || 'Time Table Scheduler'}
           </h1>
-          <h2 className="text-xl text-gray-900 font-semibold mb-10">
+          <h2 className="text-xl text-green-100 font-semibold mb-10">
             {APP_INFO?.tagline || 'Consultez facilement les emplois du temps'}
           </h2>
 
@@ -44,7 +44,7 @@ const Home = () => {
 
         <section className="py-10 px-6 flex justify-center items-center">
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-gray-90 text-lg my-auto mb leading-relaxed">
+            <p className="text-cyan-950 text-lg my-auto mb leading-relaxed">
               The University of Yaoundé I timetable system allows students, teachers and parents to easily view class schedules, classrooms and professional information in one place.
             </p>
           </div>
@@ -52,7 +52,7 @@ const Home = () => {
       </div>
 
       {/* Footer wrapped in same centered container so it aligns with page content */}
-      <div className="max-w-full w-full mx-auto px-4 sm:px-8">
+      <div className="max-w-full gap-4 w-full mx-auto px-4 sm:px-8">
         <Footer />
       </div>
     </div>

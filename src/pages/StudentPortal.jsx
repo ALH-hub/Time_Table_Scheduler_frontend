@@ -74,7 +74,7 @@ const StudentPortal = () => {
         <main className='flex-1 bg-white'>
           <div className='max-w-6xl'>
             {/* Progress Indicator */}
-            <div className='flex justify-between items-center gap-1 pb-6'>
+            <div className='flex justify-between items-center gap-1 mt-8 pb-10'>
               {[1, 2, 3, 4].map((step) => (
                 <div key={step} className='flex-1 flex items-center'>
                   <div
@@ -118,7 +118,7 @@ const StudentPortal = () => {
 
             {/* Step 1: Faculties */}
             {currentStep === 1 && (
-              <div className='grid grid-cols-2 md:grid-cols-3 gap-6'>
+              <div className='grid grid-cols-2 md:grid-cols-3 gap-7'>
                 {facultiesData.faculties.map((faculty) => (
                   <FacultyCard
                     key={faculty.id}
