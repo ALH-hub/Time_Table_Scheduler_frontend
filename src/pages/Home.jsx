@@ -18,7 +18,7 @@ const Home = () => {
         backgroundPosition: 'center',
       }}
     >
-      <div className="max-w-5xl w-full mx-auto shadow-xl rounded-lg overflow-hidden flex-1 flex flex-col">
+      <div className="h-screen max-w-5xl w-full mx-auto shadow-xl rounded-lg overflow-hidden flex-1 flex flex-col">
         <Header currentPath={location.pathname} />
 
         <main className="py-16 px-6 text-center flex-1 flex flex-col justify-center items-center gap-4">
@@ -52,7 +52,7 @@ const Home = () => {
       </div>
 
       {/* Footer wrapped in same centered container so it aligns with page content */}
-      <div className="max-w-full w-full mx-auto px-4 sm:px-8">
+      <div className="max-w-full gap-4 w-full mx-auto px-4 sm:px-8">
         <Footer />
       </div>
     </div>

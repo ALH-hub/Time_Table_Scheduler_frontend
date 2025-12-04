@@ -43,7 +43,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen w-full bg-linear-to-br from-white via-gray-50 to-blue-50 p-4 sm:p-8 flex flex-col items-center">
-      <div className="max-w-5xl w-full mx-auto bg-white/95 shadow-2xl rounded-lg overflow-hidden flex-1 md:h-[80vh] flex gap-7 flex-col">
+      <div className="w-full mx-auto bg-white/95 shadow-2xl overflow-hidden flex-1 md:h-[80vh] flex gap-7 flex-col">
         <Header />
 
         <main className="py-6 px-6  **:md:px-12 lg:px-16 flex gap-6 md:gap-10 mx-4 md:mx-10 my-6 md:my-10 justify-center flex-1 overflow-auto items-center text-center">
