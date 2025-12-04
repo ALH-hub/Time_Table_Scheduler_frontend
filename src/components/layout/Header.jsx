@@ -34,7 +34,7 @@ const Header = () => {
         {/* Navigation */}
         <nav
           aria-label='Navigation principale'
-          className='flex text-gray-700 font-medium ml-auto space-x-10'
+          className='flex text-gray-700 font-medium ml-auto space-x-10 gap-8'
         >
           {visibleLinks.map((link) => (
             <Link
