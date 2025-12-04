@@ -13,12 +13,13 @@ const Button = ({
   ...props
 }) => {
   const baseStyles =
-    'inline-flex items-center justify-center font-semibold transition-colors rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2';
+    'inline-flex items-center justify-center font-semibold transition-colors rounded-full shadow-md focus:outline-non focus:ring-2 focus:ring-offset-2 px-3 py-2 m-3';
 
   const variants = {
     primary: 'bg-gray-300 text-gray-700 hover:bg-gray-400 focus:ring-gray-400',
+
     secondary:
-      'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 focus:ring-gray-300',
+      'bg-white text-gray-700 px-3 py-2 m-3 border border-gray-300 hover:bg-gray-50 focus:ring-gray-300',
     success: 'bg-green-500 text-white hover:bg-green-600 focus:ring-green-500',
     danger: 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-500',
     ghost: 'bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-300',

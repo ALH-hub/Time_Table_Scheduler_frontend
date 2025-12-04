@@ -3,9 +3,9 @@ import { UNIVERSITY_INFO, APP_INFO } from '../../constants';
 
 const Footer = () => {
   return (
-    <footer className='bg-gray-900 text-white py-6 border-t border-gray-700 w-full h-25 pt-4 '>
-      <div className='mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col gap-2 text-2xl'>
-        <p className='font-semibold text-xl mb-1'>{UNIVERSITY_INFO.name}</p>
+    <footer className='bg-gray-900 text-white py-6 border-t border-gray-700'>
+      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center'>
+        <p className='font-semibold text-xl mb-1 '>{UNIVERSITY_INFO.name}</p>
         <p className='text-gray-400 text-sm mb-3'>
           Système de Gestion des Emplois du Temps
         </p>

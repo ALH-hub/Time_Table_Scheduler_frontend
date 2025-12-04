@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Input } from '../components/common';
+import { Input, Button } from '../components/common';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import { BackIcon } from '../components/icons';
@@ -19,7 +19,6 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation rules
     const validationErrors = validateForm(values, {
       identifiant: { required: true, message: "L'identifiant est requis" },
       motdepasse: {
@@ -35,66 +34,75 @@ const Login = () => {
     }
 
     setIsSubmitting(true);
-
-    // TODO: Implement actual authentication logic
     setTimeout(() => {
       setIsSubmitting(false);
-      // Navigate to admin dashboard after successful login
       console.log('Login attempt:', values);
+      navigate('/admin');
     }, 1000);
   };
 
   return (
-    <div className='min-h-screen bg-gray-100 p-4 sm:p-8 flex flex-col items-center'>
-      <div className='max-w-5xl w-full mx-auto bg-white shadow-xl rounded-lg overflow-hidden'>
+    <div className="min-h-screen bg-gradient-to-br from-white via-gray-50 to-blue-50 p-4 sm:p-8 flex flex-col items-center">
+      <div className="max-w-5xl w-full mx-auto bg-white/95 shadow-2xl rounded-lg overflow-hidden flex-1 md:h-[80vh] flex gap-7 flex-col">
         <Header />
 
-        <main className='py-16 px-6 flex justify-center grow'>
-          <div className='p-10 border border-gray-300 rounded-lg shadow-md max-w-sm w-full bg-gray-50'>
-            <h2 className='text-xl font-bold text-gray-800 mb-6 text-center'>
-              Accès administration
-            </h2>
+        <main className="py-6 px-6 md:px-12 lg:px-16 flex gap-6 md:gap-10 mx-4 md:mx-10 my-6 md:my-10 justify-center flex-1 overflow-auto items-center text-center">
+          <div className="border border-gray-200 rounded-lg shadow-md max-w-sm w-full bg-white p-6 md:p-10 flex flex-col justify-center items-center gap-6 md:gap-8">
+            <div className="text-center">
+              <h2 className="text-2xl md:text-3xl font-extrabold text-gray-800">
+                Accès administration
+              </h2>
+              <p className="text-sm text-gray-500 mt-2">
+                Connectez-vous pour gérer les emplois du temps
+              </p>
+            </div>
 
-            <form onSubmit={handleSubmit}>
-              <Input
-                label='Identifiant'
-                type='text'
-                name='identifiant'
-                value={values.identifiant}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={errors.identifiant}
-                required
-                className='mb-4'
-              />
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
+              <div>
+                <Input
+                  label="Identifiant"
+                  type="text"
+                  name="identifiant"
+                  value={values.identifiant}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={errors.identifiant}
+                  required
+                  className="mb-0"
+                />
+                {errors.identifiant && <p className="text-red-600 text-xs mt-1">{errors.identifiant}</p>}
+              </div>
 
-              <Input
-                label='Mot de passe'
-                type='password'
-                name='motdepasse'
-                value={values.motdepasse}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                error={errors.motdepasse}
-                required
-                className='mb-8'
-              />
+              <div>
+                <Input
+                  label="Mot de passe"
+                  type="password"
+                  name="motdepasse"
+                  value={values.motdepasse}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={errors.motdepasse}
+                  required
+                  className="mb-0"
+                />
+                {errors.motdepasse && <p className="text-red-600 text-xs mt-1">{errors.motdepasse}</p>}
+              </div>
 
-              <div className='flex flex-col items-center space-y-4'>
+              <div className="flex flex-col items-center space-y-3 mt-2 w-full">
                 <Button
-                  type='submit'
-                  variant='primary'
+                  type="submit"
+                  variant="primary"
                   disabled={isSubmitting}
-                  className='w-full'
+                  className="w-full py-2"
                 >
                   {isSubmitting ? 'Connexion...' : 'Se connecter'}
                 </Button>
 
                 <Link
-                  to='/'
-                  className='text-sm text-gray-500 hover:text-blue-600 transition-colors flex items-center'
+                  to="/"
+                  className="text-sm text-gray-500 hover:text-blue-600 transition-colors flex items-center"
                 >
-                  <BackIcon className='h-4 w-4 mr-1' />
+                  <BackIcon className="h-4 w-4 mr-1" />
                   Retour à l'accueil
                 </Link>
               </div>
