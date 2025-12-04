@@ -68,27 +68,32 @@ const StudentPortal = () => {
   };
 
   return (
-    <div className='min-h-screen bg-gray-100 p-4 sm:p-8 flex flex-col items-center'>
-      <div className='max-w-5xl w-full mx-auto bg-white shadow-xl rounded-lg overflow-hidden'>
+    <div className='min-h-screen bg-gray-100 p-10 sm:p-8 flex flex-col items-center'>
+      <div className='max-w-5xl w-full mx-auto bg-white shadow-xl rounded-lg overflow-hidden p-30'>
         <Header />
 
-        <main className='flex-grow bg-white'>
+        <main className='grow bg-white'>
           <div className='max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12'>
-
             {/* Progress Indicator */}
             <div className='flex justify-between items-center gap-2 mb-8'>
               {[1, 2, 3, 4].map((step) => (
                 <div key={step} className='flex-1 flex items-center'>
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
-                    step <= currentStep
-                      ? 'bg-gray-900 text-white'
-                      : 'bg-gray-300 text-gray-600'
-                  }`}>
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
+                      step <= currentStep
+                        ? 'bg-gray-900 text-white'
+                        : 'bg-gray-300 text-gray-600'
+                    }`}
+                  >
                     {step}
                   </div>
-                  {step < 4 && <div className={`flex-1 h-1 mx-2 ${
-                    step < currentStep ? 'bg-gray-900' : 'bg-gray-300'
-                  }`}></div>}
+                  {step < 4 && (
+                    <div
+                      className={`flex-1 h-1 mx-2 ${
+                        step < currentStep ? 'bg-gray-900' : 'bg-gray-300'
+                      }`}
+                    ></div>
+                  )}
                 </div>
               ))}
             </div>
