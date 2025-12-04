@@ -70,7 +70,7 @@ const StudentPortal = () => {
   return (
     <div className='min-h-screen bg-gray-100 flex flex-col items-center pt-22'>
       <Header />
-      <div className='min-h-screen p-4 flex flex-col max-w-5xl w-full bg-white shadow-xl rounded-lg overflow-hidden'>
+      <div className='min-h-[71vh] p-4 flex flex-col max-w-5xl w-full bg-white shadow-xl rounded-lg overflow-hidden'>
         <main className='flex-1 bg-white'>
           <div className='max-w-6xl'>
             {/* Progress Indicator */}
