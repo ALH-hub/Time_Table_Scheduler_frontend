@@ -59,7 +59,7 @@ const Login = () => {
       {/* centered page card */}
       <div className="w-full max-w-5xl mx-auto overflow-hidden flex-1 md:h-[80vh] flex flex-col">
         <main className="w-full py-6 px-6 md:px-12 lg:px-16 flex gap-6 md:gap-10 mx-4 md:mx-10 my-6 md:my-10 justify-center flex-1 overflow-auto items-center text-center">
-          <div className=" border border-gray-50 hover:border-gray-500 rounded-lg max-w-md w-full p-6 md:p-10 flex flex-col justify-center items-center gap-6 md:gap-8">
+          <div className="border border-transparent hover:border-gray-500 shadow-2xl rounded-lg max-w-md w-full p-6 md:p-10 flex flex-col justify-center items-center gap-6 md:gap-8">
             <div className="text-center mt-6 pt-2.5">
               <h2 className="text-2xl md:text-3xl font-extrabold text-gray-700">
                 Accès administration

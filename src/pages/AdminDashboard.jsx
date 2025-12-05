@@ -118,17 +118,26 @@ const AdminDashboard = () => {
     <div className='min-h-screen bg-gray-50 flex flex-col'>
       <Header />
 
+       <div
+        className='min-h-screen flex flex-col items-center pt-22'
+        style={{
+        backgroundImage: "url('/assets/background.jpg')",
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    > 
       <main className='flex-grow'>
         {/* Dashboard Header */}
-        <div className='bg-white border-b border-gray-200'>
-          <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8'>
-            <h1 className='text-3xl font-bold text-blue-600'>Administration Dashboard</h1>
+        <div className='shadow-2xl w-full mt-4 bg-white rounded-xs border-b border-gray-200'>
+          <div className='max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8 py-8'>
+            <h1 className=' pt-3  text-3xl font-bold text-blue-600'>Administration Dashboard</h1>
             <p className='text-gray-600 text-sm mt-1'>Manage timetables and schedules</p>
           </div>
         </div>
 
         {/* Navigation Tabs */}
-        <div className='bg-white border-b border-gray-200'>
+        <div className='border-transparent shadow-2xl border-b border-gray-200'>
           <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
             <nav className='flex gap-12 text-sm font-medium'>
               <button
@@ -136,7 +145,7 @@ const AdminDashboard = () => {
                 className={`py-4 border-b-2 transition ${
                   activeTab === 'overview'
                     ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-600 hover:text-gray-700'
+                    : 'border-transparent text-gray-300 hover:text-gray-700 hover:-translate-y-1'
                 }`}
               >
                 Overview
@@ -146,7 +155,7 @@ const AdminDashboard = () => {
                 className={`py-4 border-b-2 transition ${
                   activeTab === 'timetables'
                     ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-600 hover:text-gray-700'
+                    : 'border-transparent text-gray-300 hover:text-gray-700 hover:-translate-y-1'
                 }`}
               >
                 Timetables
@@ -156,7 +165,7 @@ const AdminDashboard = () => {
                 className={`py-4 border-b-2 transition ${
                   activeTab === 'faculty'
                     ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-600 hover:text-gray-700'
+                    : 'border-transparent text-gray-300 hover:text-gray-700 hover:-translate-y-1'
                 }`}
               >
                 Faculties & Departments
@@ -166,7 +175,7 @@ const AdminDashboard = () => {
                 className={`py-4 border-b-2 transition ${
                   activeTab === 'settings'
                     ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-600 hover:text-gray-700'
+                    : 'border-transparent text-gray-300 hover:text-gray-700 hover:-translate-y-1'
                 }`}
               >
                 Settings
@@ -512,6 +521,7 @@ const AdminDashboard = () => {
       </main>
 
       <Footer />
+    </div>
     </div>
   );
 };
