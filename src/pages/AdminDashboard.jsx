@@ -216,14 +216,14 @@ const AdminDashboard = () => {
               </div>
 
               {/* Recent Activity */}
-              <div className='bg-white rounded-md border border-gray-200 p-6'>
+              <div className='bg-white/10 backdrop-blur-3xl rounded-md  p-6'>
                 <h3 className='text-lg font-bold text-blue-600 mb-4'>Recent Timetables</h3>
                 <div className='divide-y'>
                   {timetables.slice(0, 3).map((item) => (
                     <div key={item.id} className='py-4 flex justify-between items-center'>
                       <div>
                         <div className='font-medium text-blue-600'>{item.name}</div>
-                        <div className='text-xs text-gray-500'>{item.faculty}</div>
+                        <div className='text-xs text-gray-200'>{item.faculty}</div>
                       </div>
                       <span className='text-xs px-2 py-1 rounded bg-gray-100 text-gray-700'>
                         {item.status}
@@ -285,7 +285,7 @@ const AdminDashboard = () => {
               )}
 
               {/* Table */}
-              <div className='bg-white rounded-md border border-gray-200 overflow-hidden'>
+              <div className='bg-white/10 backdrop-blur-3xl rounded-md  overflow-hidden'>
                 <table className='w-full'>
                   <thead className='bg-gray-50 border-b'>
                     <tr>
@@ -345,9 +345,9 @@ const AdminDashboard = () => {
                           </>
                         ) : (
                           <>
-                            <td className='px-6 py-4 text-sm text-blue-600 font-medium'>{item.name}</td>
-                            <td className='px-6 py-4 text-sm text-gray-600'>{item.faculty}</td>
-                            <td className='px-6 py-4 text-sm text-gray-600'>{item.courses}</td>
+                            <td className='px-6 py-4 text-sm text-blue-400 font-medium'>{item.name}</td>
+                            <td className='px-6 py-4 text-sm text-gray-400'>{item.faculty}</td>
+                            <td className='px-6 py-4 text-sm text-gray-400'>{item.courses}</td>
                             <td className='px-6 py-4 text-sm'>
                               <span className='bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs'>{item.status}</span>
                             </td>
@@ -360,7 +360,7 @@ const AdminDashboard = () => {
                               </button>
                               <button 
                                 onClick={() => handleDeleteTimetable(item.id)}
-                                className='text-gray-600 hover:text-gray-700 text-sm font-medium'
+                                className='text-gray-400 hover:text-gray-700 text-sm font-medium'
                               >
                                 Delete
                               </button>
@@ -425,7 +425,7 @@ const AdminDashboard = () => {
               )}
 
               {/* Faculties Table */}
-              <div className='bg-white rounded-md border border-gray-200 overflow-hidden'>
+              <div className='bg-white/10 backdrop-blur-3xl rounded-md overflow-hidden'>
                 <table className='w-full'>
                   <thead className='bg-gray-50 border-b'>
                     <tr>
@@ -482,8 +482,8 @@ const AdminDashboard = () => {
                         ) : (
                           <>
                             <td className='px-6 py-4 text-sm text-blue-600 font-medium'>{item.name}</td>
-                            <td className='px-6 py-4 text-sm text-gray-600'>{item.departments}</td>
-                            <td className='px-6 py-4 text-sm text-gray-600'>{item.programs}</td>
+                            <td className='px-6 py-4 text-sm text-gray-400'>{item.departments}</td>
+                            <td className='px-6 py-4 text-sm text-gray-400'>{item.programs}</td>
                             <td className='px-6 py-4 text-sm space-x-4'>
                               <button 
                                 onClick={() => handleEditFaculty(item.id)}
@@ -493,7 +493,7 @@ const AdminDashboard = () => {
                               </button>
                               <button 
                                 onClick={() => handleDeleteFaculty(item.id)}
-                                className='text-gray-600 hover:text-gray-700 text-sm font-medium'
+                                className='text-gray-400 hover:text-gray-700 text-sm font-medium'
                               >
                                 Delete
                               </button>
