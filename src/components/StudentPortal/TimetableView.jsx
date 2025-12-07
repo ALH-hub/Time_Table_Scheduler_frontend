@@ -1,24 +1,68 @@
 import React, { useState, useMemo, useRef } from 'react';
 import { Select } from '../common';
 import { DAYS_OF_WEEK, TIME_SLOTS } from '../../constants';
-import { timetableData } from '../../data/timetableData';
 import CourseDetailModal from './CourseDetailModal';
 import CourseSearch from './CourseSearch';
 import { PrintIcon, DownloadIcon } from '../icons';
 // import html2pdf from 'html2pdf.js';
 
-const TimetableView = ({ selectedProgram, departments, weeks }) => {
+// Map day numbers to day names (0=Monday, 6=Sunday)
+const DAY_MAP = {
+  0: 'Monday',
+  1: 'Tuesday',
+  2: 'Wednesday',
+  3: 'Thursday',
+  4: 'Friday',
+  5: 'Saturday',
+  6: 'Sunday',
+};
+
+// Convert time to time slot format
+const formatTimeSlot = (startTime, endTime) => {
+  return `${startTime} - ${endTime}`;
+};
+
+// Find matching time slot
+const findTimeSlot = (startTime, endTime) => {
+  const slot = formatTimeSlot(startTime, endTime);
+  return TIME_SLOTS.find((ts) => ts === slot) || slot;
+};
+
+const TimetableView = ({
+  timetable,
+  selectedDepartment,
+  selectedLevel,
+  selectedProgram,
+  weeks,
+}) => {
   const [selectedWeek, setSelectedWeek] = useState('week1');
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const tableRef = useRef(null);
 
-  // Get all courses for the selected program and week
+  // Transform backend slots to frontend format
   const allCourses = useMemo(() => {
-    if (!selectedProgram || !timetableData[selectedProgram]) return [];
-    return timetableData[selectedProgram][selectedWeek] || [];
-  }, [selectedProgram, selectedWeek]);
+    if (!timetable || !timetable.slots) return [];
+
+    return timetable.slots.map((slot) => {
+      const dayName = DAY_MAP[slot.day_of_week] || 'Monday';
+      const timeSlot = findTimeSlot(slot.start_time, slot.end_time);
+
+      return {
+        id: slot.id,
+        course: slot.course?.name || 'Unknown Course',
+        teacher: slot.course?.teacher?.name || 'TBA',
+        room: slot.room?.name || 'TBA',
+        day: dayName,
+        time: timeSlot,
+        type: slot.course?.weekly_sessions > 1 ? 'Lab Work' : 'Lecture',
+        courseData: slot.course,
+        roomData: slot.room,
+        notes: slot.notes,
+      };
+    });
+  }, [timetable]);
 
   // Filter courses based on search term
   const filteredCourses = useMemo(() => {
@@ -37,10 +81,7 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
   );
 
   const getCourseForSlot = (day, timeSlot) => {
-    if (!selectedProgram || !timetableData[selectedProgram]) return null;
-
-    const weekData = timetableData[selectedProgram][selectedWeek];
-    return weekData?.find(
+    return allCourses.find(
       (course) => course.day === day && course.time === timeSlot,
     );
   };
@@ -79,37 +120,32 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
 
   return (
     <div>
-      {/* Filters */}
-      <div className='flex flex-wrap gap-4 justify-start items-center '>
-        <Select
-          placeholder='Départements'
-          options={departments}
-          className='min-w-[200px] font-medium'
-        />
-        <Select
-          placeholder='Niveau'
-          options={[
-            { id: '1', name: 'Licence 1' },
-            { id: '2', name: 'Licence 2' },
-            { id: '3', name: 'Licence 3' },
-            { id: '4', name: 'Master 1' },
-            { id: '5', name: 'Master 2' },
-          ]}
-          className='min-w-[200px] font-medium'
-        />
-        <Select
-          placeholder='Semaine'
-          options={weeks}
-          className='min-w-[200px] font-medium'
-        />
-      </div>
-
       {/* Filters and Actions */}
-      <div className='flex flex-wrap gap-4 mb-4 justify-between  items-center bg-linear-to-r from-blue-50 to-purple-50 p-6 rounded-lg'>
+      <div className='flex flex-wrap gap-4 mb-4 justify-between items-center bg-linear-to-r from-blue-50 to-purple-50 p-6 rounded-lg'>
         <div className='flex flex-wrap gap-4'>
+          {selectedProgram && (
+            <div className='text-sm text-gray-600 font-semibold bg-white px-4 py-2 rounded-lg border border-gray-200'>
+              Program:{' '}
+              <span className='text-blue-600'>{selectedProgram}</span>
+            </div>
+          )}
           <div className='text-sm text-gray-600 font-semibold bg-white px-4 py-2 rounded-lg border border-gray-200'>
-            Program: <span className='text-blue-600'>{selectedProgram}</span>
+            Department:{' '}
+            <span className='text-blue-600'>
+              {selectedDepartment?.name || 'N/A'}
+            </span>
           </div>
+          <div className='text-sm text-gray-600 font-semibold bg-white px-4 py-2 rounded-lg border border-gray-200'>
+            Level:{' '}
+            <span className='text-blue-600'>
+              {selectedLevel?.name || 'N/A'}
+            </span>
+          </div>
+          {timetable && (
+            <div className='text-sm text-gray-600 font-semibold bg-white px-4 py-2 rounded-lg border border-gray-200'>
+              Timetable: <span className='text-blue-600'>{timetable.name}</span>
+            </div>
+          )}
         </div>
 
         {/* Action Buttons */}
@@ -188,7 +224,7 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
                           </div>
                           <div className='text-xs text-gray-700 mb-1 line-clamp-1'>
                             <span className='font-semibold'>Teacher:</span>{' '}
-                            {course.teacher.split(' ')[0]}
+                            {course.teacher}
                           </div>
                           <div className='text-xs text-gray-700 mb-1 line-clamp-1'>
                             <span className='font-semibold'>Room:</span>{' '}
@@ -226,14 +262,16 @@ const TimetableView = ({ selectedProgram, departments, weeks }) => {
       </div>
 
       {/* Course Detail Modal */}
-      <CourseDetailModal
-        course={selectedCourse}
-        isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false);
-          setSelectedCourse(null);
-        }}
-      />
+      {selectedCourse && (
+        <CourseDetailModal
+          course={selectedCourse}
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false);
+            setSelectedCourse(null);
+          }}
+        />
+      )}
     </div>
   );
 };
