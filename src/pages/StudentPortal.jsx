@@ -9,7 +9,6 @@ import {
 } from '../components/StudentPortal/SelectionCards';
 import TimetableView from '../components/StudentPortal/TimetableView';
 import { BackIcon } from '../components/icons';
-import { facultiesData } from '../data/sampleData';
 import { departmentsAPI, levelsAPI, timetablesAPI } from '../utils/api';
 import { useStepNavigation } from '../hooks';
 import { STUDENT_PORTAL_STEPS, WEEKS } from '../constants';
@@ -91,9 +90,10 @@ const getFacultyForDepartment = (deptName, deptCode) => {
 
 const StudentPortal = () => {
   const { currentStep, previousStep, nextStep } = useStepNavigation(1, 4);
-  const [faculties] = useState(facultiesData.faculties);
+  const [faculties, setFaculties] = useState([]);
   const [allDepartments, setAllDepartments] = useState([]);
   const [levels, setLevels] = useState([]);
+  const [deptLevels, setDeptLevels] = useState([]);
   const [selectedFaculty, setSelectedFaculty] = useState(null);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(null);
@@ -110,10 +110,23 @@ const StudentPortal = () => {
           departmentsAPI.getAll(),
           levelsAPI.getAll({ active_only: true }),
         ]);
-        setAllDepartments(
-          Array.isArray(departmentsData) ? departmentsData : [],
-        );
+        const deptArray = Array.isArray(departmentsData) ? departmentsData : [];
+        setAllDepartments(deptArray);
         setLevels(Array.isArray(levelsData) ? levelsData : []);
+        // Build faculties dynamically from departments grouping
+        const facultyMap = new Map();
+        deptArray.forEach((dept) => {
+          const facName = getFacultyForDepartment(dept.name, dept.code);
+          if (!facultyMap.has(facName)) {
+            facultyMap.set(facName, {
+              id: facName,
+              name: facName,
+              departments: [],
+            });
+          }
+          facultyMap.get(facName).departments.push(dept);
+        });
+        setFaculties(Array.from(facultyMap.values()));
       } catch (err) {
         setError(err.response?.data?.error || 'Failed to load data');
         console.error('Error fetching data:', err);
@@ -124,13 +137,8 @@ const StudentPortal = () => {
     fetchData();
   }, []);
 
-  // Filter departments by selected faculty
-  const availableDepartments = selectedFaculty
-    ? allDepartments.filter((dept) => {
-        const facultyForDept = getFacultyForDepartment(dept.name, dept.code);
-        return facultyForDept === selectedFaculty.name;
-      })
-    : [];
+  // Departments available within selected faculty
+  const availableDepartments = selectedFaculty?.departments || [];
 
   const handleFacultySelect = (faculty) => {
     setSelectedFaculty(faculty);
@@ -139,7 +147,34 @@ const StudentPortal = () => {
 
   const handleDepartmentSelect = (department) => {
     setSelectedDepartment(department);
-    nextStep();
+    // When a department is selected, compute available levels (programs)
+    const computeLevelsForDepartment = async () => {
+      setLoading(true);
+      setError('');
+      try {
+        // Fetch courses per level and filter by department
+        const coursesByLevelResponses = await Promise.all(
+          levels.map((lvl) => levelsAPI.getCourses(lvl.id)),
+        );
+        const levelsWithDeptCourses = levels.filter((lvl, idx) => {
+          const data = coursesByLevelResponses[idx];
+          const courses = Array.isArray(data?.courses)
+            ? data.courses
+            : Array.isArray(data)
+            ? data
+            : [];
+          return courses.some((c) => c.department_id === department.id);
+        });
+        setDeptLevels(levelsWithDeptCourses);
+        nextStep();
+      } catch (err) {
+        setError(err.response?.data?.error || 'Failed to load programs');
+        console.error('Error fetching levels/courses:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    computeLevelsForDepartment();
   };
 
   const handleLevelSelect = async (level) => {
@@ -318,13 +353,13 @@ const StudentPortal = () => {
                   <div className='text-center py-12'>
                     <p className='text-gray-600'>Loading programs...</p>
                   </div>
-                ) : levels.length === 0 ? (
+                ) : deptLevels.length === 0 ? (
                   <div className='text-center py-12'>
                     <p className='text-gray-600'>No programs available.</p>
                   </div>
                 ) : (
                   <div className='grid grid-cols-2 md:grid-cols-3 gap-6'>
-                    {levels.map((level) => (
+                    {deptLevels.map((level) => (
                       <ProgramCard
                         key={level.id}
                         program={level.name}
