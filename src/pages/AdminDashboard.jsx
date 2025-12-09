@@ -2,8 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
-import { getFromStorage, authAPI } from '../utils/storage';
-import { timetablesAPI, departmentsAPI } from '../utils/api';
+import { getFromStorage } from '../utils/storage';
+import {
+  authAPI,
+  timetablesAPI,
+  departmentsAPI,
+  slotsAPI,
+  coursesAPI,
+  roomsAPI,
+  teachersAPI,
+  levelsAPI,
+} from '../utils/api';
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -12,6 +21,20 @@ const AdminDashboard = () => {
   const [departments, setDepartments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [selectedTimetableId, setSelectedTimetableId] = useState(null);
+  const [slots, setSlots] = useState([]);
+  const [newSlot, setNewSlot] = useState({
+    day_of_week: '',
+    start_time: '',
+    end_time: '',
+    course_id: '',
+    room_id: '',
+    teacher_id: '',
+  });
+  const [levels, setLevels] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [rooms, setRooms] = useState([]);
+  const [teachers, setTeachers] = useState([]);
 
   const [showAddForm, setShowAddForm] = useState(false);
   const [showAddDepartmentForm, setShowAddDepartmentForm] = useState(false);
@@ -67,6 +90,27 @@ const AdminDashboard = () => {
               : departmentsData.data || [],
           );
         }
+        if (activeTab === 'timetables') {
+          const [levelsData, coursesData, roomsData, teachersData] =
+            await Promise.all([
+              levelsAPI.getAll({ active_only: true }),
+              coursesAPI.getAll(),
+              roomsAPI.getAll(),
+              teachersAPI.getAll(),
+            ]);
+          setLevels(
+            Array.isArray(levelsData) ? levelsData : levelsData.data || [],
+          );
+          setCourses(
+            Array.isArray(coursesData) ? coursesData : coursesData.data || [],
+          );
+          setRooms(Array.isArray(roomsData) ? roomsData : roomsData.data || []);
+          setTeachers(
+            Array.isArray(teachersData)
+              ? teachersData
+              : teachersData.data || [],
+          );
+        }
       } catch (err) {
         setError(err.response?.data?.error || 'Failed to load data');
         console.error('Error fetching data:', err);
@@ -112,6 +156,65 @@ const AdminDashboard = () => {
       setError('');
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to create timetable');
+    }
+  };
+
+  // Slots Functions
+  const loadSlots = async (timetableId) => {
+    try {
+      const data = await slotsAPI.getAll(timetableId);
+      const arr = Array.isArray(data?.slots)
+        ? data.slots
+        : Array.isArray(data)
+        ? data
+        : [];
+      setSlots(arr);
+    } catch (err) {
+      setError(err.response?.data?.error || 'Failed to load slots');
+    }
+  };
+
+  const handleSelectTimetable = async (id) => {
+    setSelectedTimetableId(id);
+    await loadSlots(id);
+  };
+
+  const handleAddSlot = async () => {
+    if (
+      !selectedTimetableId ||
+      !newSlot.day_of_week ||
+      !newSlot.start_time ||
+      !newSlot.end_time ||
+      !newSlot.course_id
+    ) {
+      setError('Timetable, Day, Start, End and Course are required');
+      return;
+    }
+    try {
+      await slotsAPI.create(selectedTimetableId, newSlot);
+      setNewSlot({
+        day_of_week: '',
+        start_time: '',
+        end_time: '',
+        course_id: '',
+        room_id: '',
+        teacher_id: '',
+      });
+      await loadSlots(selectedTimetableId);
+      setError('');
+    } catch (err) {
+      setError(err.response?.data?.error || 'Failed to create slot');
+    }
+  };
+
+  const handleDeleteSlot = async (slotId) => {
+    if (!window.confirm('Delete this slot?')) return;
+    try {
+      await slotsAPI.delete(selectedTimetableId, slotId);
+      await loadSlots(selectedTimetableId);
+      setError('');
+    } catch (err) {
+      setError(err.response?.data?.error || 'Failed to delete slot');
     }
   };
 
@@ -712,6 +815,20 @@ const AdminDashboard = () => {
                                       </button>
                                       <button
                                         onClick={() =>
+                                          handleSelectTimetable(item.id)
+                                        }
+                                        className={`text-sm font-medium ${
+                                          selectedTimetableId === item.id
+                                            ? 'text-green-600'
+                                            : 'text-blue-600'
+                                        } hover:text-gray-700`}
+                                      >
+                                        {selectedTimetableId === item.id
+                                          ? 'Selected'
+                                          : 'Manage Slots'}
+                                      </button>
+                                      <button
+                                        onClick={() =>
                                           handleDeleteTimetable(item.id)
                                         }
                                         className='text-gray-400 hover:text-gray-700 text-sm font-medium'
@@ -727,6 +844,186 @@ const AdminDashboard = () => {
                         </table>
                       )}
                     </div>
+
+                    {/* Slots Management Panel */}
+                    {selectedTimetableId && (
+                      <div className='mt-8 bg-white rounded-md border border-gray-200 p-6'>
+                        <h3 className='text-base font-semibold text-blue-600 mb-4'>
+                          Manage Slots for Timetable #{selectedTimetableId}
+                        </h3>
+                        <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+                          <select
+                            value={newSlot.day_of_week}
+                            onChange={(e) =>
+                              setNewSlot({
+                                ...newSlot,
+                                day_of_week: e.target.value,
+                              })
+                            }
+                            className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
+                          >
+                            <option value=''>Day of Week *</option>
+                            <option value='Monday'>Monday</option>
+                            <option value='Tuesday'>Tuesday</option>
+                            <option value='Wednesday'>Wednesday</option>
+                            <option value='Thursday'>Thursday</option>
+                            <option value='Friday'>Friday</option>
+                            <option value='Saturday'>Saturday</option>
+                          </select>
+                          <input
+                            type='time'
+                            value={newSlot.start_time}
+                            onChange={(e) =>
+                              setNewSlot({
+                                ...newSlot,
+                                start_time: e.target.value,
+                              })
+                            }
+                            placeholder='Start Time *'
+                            className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
+                          />
+                          <input
+                            type='time'
+                            value={newSlot.end_time}
+                            onChange={(e) =>
+                              setNewSlot({
+                                ...newSlot,
+                                end_time: e.target.value,
+                              })
+                            }
+                            placeholder='End Time *'
+                            className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
+                          />
+                          <select
+                            value={newSlot.course_id}
+                            onChange={(e) =>
+                              setNewSlot({
+                                ...newSlot,
+                                course_id: e.target.value,
+                              })
+                            }
+                            className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
+                          >
+                            <option value=''>Course *</option>
+                            {courses.map((c) => (
+                              <option key={c.id} value={c.id}>
+                                {c.code} - {c.name}
+                              </option>
+                            ))}
+                          </select>
+                          <select
+                            value={newSlot.room_id}
+                            onChange={(e) =>
+                              setNewSlot({
+                                ...newSlot,
+                                room_id: e.target.value,
+                              })
+                            }
+                            className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
+                          >
+                            <option value=''>Room</option>
+                            {rooms.map((r) => (
+                              <option key={r.id} value={r.id}>
+                                {r.name || r.code || `Room ${r.id}`}
+                              </option>
+                            ))}
+                          </select>
+                          <select
+                            value={newSlot.teacher_id}
+                            onChange={(e) =>
+                              setNewSlot({
+                                ...newSlot,
+                                teacher_id: e.target.value,
+                              })
+                            }
+                            className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
+                          >
+                            <option value=''>Teacher</option>
+                            {teachers.map((t) => (
+                              <option key={t.id} value={t.id}>
+                                {t.name ||
+                                  t.full_name ||
+                                  `${t.first_name || ''} ${t.last_name || ''}`}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <button
+                          onClick={handleAddSlot}
+                          className='mt-4 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition text-sm font-medium'
+                        >
+                          Add Slot
+                        </button>
+
+                        {/* Slots List */}
+                        <div className='mt-6 bg-white/10 backdrop-blur-3xl rounded-md overflow-hidden'>
+                          {slots.length === 0 ? (
+                            <div className='p-6 text-center text-gray-400'>
+                              No slots yet
+                            </div>
+                          ) : (
+                            <table className='w-full'>
+                              <thead className='bg-gray-50 border-b'>
+                                <tr>
+                                  <th className='px-6 py-3 text-left text-sm font-semibold text-blue-600'>
+                                    Day
+                                  </th>
+                                  <th className='px-6 py-3 text-left text-sm font-semibold text-blue-600'>
+                                    Time
+                                  </th>
+                                  <th className='px-6 py-3 text-left text-sm font-semibold text-blue-600'>
+                                    Course
+                                  </th>
+                                  <th className='px-6 py-3 text-left text-sm font-semibold text-blue-600'>
+                                    Room
+                                  </th>
+                                  <th className='px-6 py-3 text-left text-sm font-semibold text-blue-600'>
+                                    Teacher
+                                  </th>
+                                  <th className='px-6 py-3 text-left text-sm font-semibold text-blue-600'>
+                                    Actions
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody className='divide-y'>
+                                {slots.map((s) => (
+                                  <tr key={s.id} className='hover:bg-gray-50'>
+                                    <td className='px-6 py-4 text-sm text-blue-600 font-medium'>
+                                      {s.day_of_week}
+                                    </td>
+                                    <td className='px-6 py-4 text-sm text-gray-600'>
+                                      {s.start_time} - {s.end_time}
+                                    </td>
+                                    <td className='px-6 py-4 text-sm text-gray-600'>
+                                      {s.course?.code} - {s.course?.name}
+                                    </td>
+                                    <td className='px-6 py-4 text-sm text-gray-600'>
+                                      {s.room?.name || s.room?.code || 'N/A'}
+                                    </td>
+                                    <td className='px-6 py-4 text-sm text-gray-600'>
+                                      {s.teacher?.name ||
+                                        s.teacher?.full_name ||
+                                        'N/A'}
+                                    </td>
+                                    <td className='px-6 py-4 text-sm space-x-4'>
+                                      <button className='text-blue-600 hover:text-gray-700 text-sm font-medium'>
+                                        Edit
+                                      </button>
+                                      <button
+                                        onClick={() => handleDeleteSlot(s.id)}
+                                        className='text-gray-400 hover:text-gray-700 text-sm font-medium'
+                                      >
+                                        Delete
+                                      </button>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
 
