@@ -183,19 +183,35 @@ const StudentPortal = () => {
     setError('');
 
     try {
-      // Find published timetable for this department and level
+      // Fetch published timetables for department with slots
       const timetablesData = await timetablesAPI.getAll({
         department_id: selectedDepartment.id,
+        level_id: level.id,
         status: 'published',
         include_slots: true,
       });
 
+      console.log(timetablesData);
+
       const timetables = Array.isArray(timetablesData) ? timetablesData : [];
 
-      // Find timetable that matches the level
+      // Fetch department courses once to map course_id -> level_id
+      const deptCoursesResp = await departmentsAPI.getCourses(
+        selectedDepartment.id,
+      );
+      const deptCourses = Array.isArray(deptCoursesResp?.courses)
+        ? deptCoursesResp.courses
+        : Array.isArray(deptCoursesResp)
+        ? deptCoursesResp
+        : [];
+      const levelCourseIds = new Set(
+        deptCourses.filter((c) => c.level_id === level.id).map((c) => c.id),
+      );
+
+      // Find timetable whose slots include a course assigned to this level
       const matchingTimetable =
         timetables.find((t) =>
-          t.slots?.some((slot) => slot.course?.level_id === level.id),
+          (t.slots || []).some((slot) => levelCourseIds.has(slot.course_id)),
         ) || timetables[0];
 
       if (!matchingTimetable) {
@@ -206,7 +222,12 @@ const StudentPortal = () => {
         return;
       }
 
-      setSelectedTimetable(matchingTimetable);
+      // If API doesn't expand relations in slots, fetch full timetable by id (include_slots true)
+      const fullTimetable = await timetablesAPI.getById(
+        matchingTimetable.id,
+        true,
+      );
+      setSelectedTimetable(fullTimetable);
       nextStep();
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to load timetable');
