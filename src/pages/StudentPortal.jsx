@@ -98,6 +98,8 @@ const StudentPortal = () => {
   const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [selectedTimetable, setSelectedTimetable] = useState(null);
+  const [selectedAcademicYear, setSelectedAcademicYear] = useState('');
+  const [selectedSemester, setSelectedSemester] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -189,44 +191,26 @@ const StudentPortal = () => {
         level_id: level.id,
         status: 'published',
         include_slots: true,
+        status: 'published',
+        academic_year: selectedAcademicYear || undefined,
+        semester: selectedSemester || undefined,
       });
 
       console.log(timetablesData);
 
-      const timetables = Array.isArray(timetablesData) ? timetablesData : [];
-
-      // Fetch department courses once to map course_id -> level_id
-      const deptCoursesResp = await departmentsAPI.getCourses(
-        selectedDepartment.id,
-      );
-      const deptCourses = Array.isArray(deptCoursesResp?.courses)
-        ? deptCoursesResp.courses
-        : Array.isArray(deptCoursesResp)
-        ? deptCoursesResp
+      const timetablesArray = Array.isArray(timetablesData)
+        ? timetablesData
         : [];
-      const levelCourseIds = new Set(
-        deptCourses.filter((c) => c.level_id === level.id).map((c) => c.id),
-      );
 
-      // Find timetable whose slots include a course assigned to this level
-      const matchingTimetable =
-        timetables.find((t) =>
-          (t.slots || []).some((slot) => levelCourseIds.has(slot.course_id)),
-        ) || timetables[0];
-
-      if (!matchingTimetable) {
-        setError(
-          'No published timetable found for this program. Please contact the administrator.',
+      if (timetablesArray.length === 0) {
+        throw new Error(
+          'No published timetable found for the selected criteria.',
         );
-        setLoading(false);
-        return;
       }
 
-      // If API doesn't expand relations in slots, fetch full timetable by id (include_slots true)
-      const fullTimetable = await timetablesAPI.getById(
-        matchingTimetable.id,
-        true,
-      );
+      // For simplicity, take the first timetable
+      const fullTimetable = timetablesArray[0];
+
       setSelectedTimetable(fullTimetable);
       nextStep();
     } catch (err) {
@@ -370,6 +354,36 @@ const StudentPortal = () => {
             {/* Step 3: Programs (Levels) */}
             {currentStep === 3 && selectedDepartment && (
               <div>
+                {/* Filters for Academic Year and Semester */}
+                <div className='flex flex-wrap gap-4 mb-4 items-center'>
+                  <div>
+                    <label className='block text-sm text-gray-600 mb-1'>
+                      Academic Year
+                    </label>
+                    <input
+                      type='text'
+                      placeholder='e.g. 2024-2025'
+                      value={selectedAcademicYear}
+                      onChange={(e) => setSelectedAcademicYear(e.target.value)}
+                      className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
+                    />
+                  </div>
+                  <div>
+                    <label className='block text-sm text-gray-600 mb-1'>
+                      Semester
+                    </label>
+                    <select
+                      value={selectedSemester}
+                      onChange={(e) => setSelectedSemester(e.target.value)}
+                      className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
+                    >
+                      <option value=''>Any</option>
+                      <option value='Fall'>Fall</option>
+                      <option value='Spring'>Spring</option>
+                      <option value='Summer'>Summer</option>
+                    </select>
+                  </div>
+                </div>
                 {loading ? (
                   <div className='text-center py-12'>
                     <p className='text-gray-600'>Loading programs...</p>
