@@ -45,8 +45,8 @@ const Home = () => {
         </main>
 
         <section className="py-10 px-6 flex justify-center items-center">
-          <div className="bg-gray-950 max-w-3xl mx-auto text-center">
-            <p className="text-gray-50 text-lg my-auto mb leading-relaxed">
+          <div className="bg-gray-900 p-2 max-w-3xl mx-auto text-center">
+            <p className="text-white text-lg my-auto mb leading-relaxed">
               The University of Yaoundé I timetable system allows students, teachers and parents to easily view class schedules, classrooms and professional information in one place.
             </p>
           </div>
