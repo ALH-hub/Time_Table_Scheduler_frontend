@@ -100,61 +100,63 @@ const AdminDashboard = () => {
     }
   }, [navigate]);
 
-  // Fetch data on mount and when tab changes
+  // Fetch all data once on mount
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAllData = async () => {
       setLoading(true);
       setError('');
       try {
-        if (activeTab === 'timetables' || activeTab === 'overview') {
-          const timetablesData = await timetablesAPI.getAll({
-            include_slots: false,
-          });
-          setTimetables(
-            Array.isArray(timetablesData)
-              ? timetablesData
-              : timetablesData.data || [],
-          );
-        }
-        if (activeTab === 'timetable-view') {
-          const timetablesData = await timetablesAPI.getAll({
-            include_slots: true,
-          });
-          setTimetablesWithSlots(
-            Array.isArray(timetablesData)
-              ? timetablesData
-              : timetablesData.data || [],
-          );
-        }
-        if (activeTab === 'faculty' || activeTab === 'overview') {
-          const departmentsData = await departmentsAPI.getAll();
-          setDepartments(
-            Array.isArray(departmentsData)
-              ? departmentsData
-              : departmentsData.data || [],
-          );
-        }
-        if (activeTab === 'timetables' || activeTab === 'timetable-view') {
-          const [levelsData, coursesData, roomsData, teachersData] =
-            await Promise.all([
-              levelsAPI.getAll({ active_only: true }),
-              coursesAPI.getAll(),
-              roomsAPI.getAll(),
-              teachersAPI.getAll(),
-            ]);
-          setLevels(
-            Array.isArray(levelsData) ? levelsData : levelsData.data || [],
-          );
-          setCourses(
-            Array.isArray(coursesData) ? coursesData : coursesData.data || [],
-          );
-          setRooms(Array.isArray(roomsData) ? roomsData : roomsData.data || []);
-          setTeachers(
-            Array.isArray(teachersData)
-              ? teachersData
-              : teachersData.data || [],
-          );
-        }
+        // Fetch all data in parallel
+        const [
+          timetablesData,
+          timetablesWithSlotsData,
+          departmentsData,
+          levelsData,
+          coursesData,
+          roomsData,
+          teachersData,
+        ] = await Promise.all([
+          timetablesAPI.getAll({ include_slots: false }),
+          timetablesAPI.getAll({ include_slots: true }),
+          departmentsAPI.getAll(),
+          levelsAPI.getAll({ active_only: true }),
+          coursesAPI.getAll(),
+          roomsAPI.getAll(),
+          teachersAPI.getAll(),
+        ]);
+
+        // Set timetables without slots
+        setTimetables(
+          Array.isArray(timetablesData)
+            ? timetablesData
+            : timetablesData.data || [],
+        );
+
+        // Set timetables with slots
+        setTimetablesWithSlots(
+          Array.isArray(timetablesWithSlotsData)
+            ? timetablesWithSlotsData
+            : timetablesWithSlotsData.data || [],
+        );
+
+        // Set departments
+        setDepartments(
+          Array.isArray(departmentsData)
+            ? departmentsData
+            : departmentsData.data || [],
+        );
+
+        // Set levels, courses, rooms, teachers
+        setLevels(
+          Array.isArray(levelsData) ? levelsData : levelsData.data || [],
+        );
+        setCourses(
+          Array.isArray(coursesData) ? coursesData : coursesData.data || [],
+        );
+        setRooms(Array.isArray(roomsData) ? roomsData : roomsData.data || []);
+        setTeachers(
+          Array.isArray(teachersData) ? teachersData : teachersData.data || [],
+        );
       } catch (err) {
         setError(err.response?.data?.error || 'Failed to load data');
         console.error('Error fetching data:', err);
@@ -163,8 +165,8 @@ const AdminDashboard = () => {
       }
     };
 
-    fetchData();
-  }, [activeTab]);
+    fetchAllData();
+  }, []); // Empty dependency array - fetch only once on mount
 
   // Timetable Functions
   const handleAddTimetable = async () => {
