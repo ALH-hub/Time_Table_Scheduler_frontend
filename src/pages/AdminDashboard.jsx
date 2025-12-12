@@ -91,6 +91,8 @@ const AdminDashboard = () => {
   const [selectedLevelView, setSelectedLevelView] = useState('');
   const [viewMode, setViewMode] = useState('level'); // 'level', 'department', 'room'
   const [timetablesWithSlots, setTimetablesWithSlots] = useState([]);
+  const [loadingTimetablesWithSlots, setLoadingTimetablesWithSlots] =
+    useState(false);
 
   // Check authentication on mount
   useEffect(() => {
@@ -100,16 +102,15 @@ const AdminDashboard = () => {
     }
   }, [navigate]);
 
-  // Fetch all data once on mount
+  // Fetch essential data first (fast - without slots)
   useEffect(() => {
-    const fetchAllData = async () => {
+    const fetchEssentialData = async () => {
       setLoading(true);
       setError('');
       try {
-        // Fetch all data in parallel
+        // Fetch essential data in parallel (without slots - much faster)
         const [
           timetablesData,
-          timetablesWithSlotsData,
           departmentsData,
           levelsData,
           coursesData,
@@ -117,7 +118,6 @@ const AdminDashboard = () => {
           teachersData,
         ] = await Promise.all([
           timetablesAPI.getAll({ include_slots: false }),
-          timetablesAPI.getAll({ include_slots: true }),
           departmentsAPI.getAll(),
           levelsAPI.getAll({ active_only: true }),
           coursesAPI.getAll(),
@@ -130,13 +130,6 @@ const AdminDashboard = () => {
           Array.isArray(timetablesData)
             ? timetablesData
             : timetablesData.data || [],
-        );
-
-        // Set timetables with slots
-        setTimetablesWithSlots(
-          Array.isArray(timetablesWithSlotsData)
-            ? timetablesWithSlotsData
-            : timetablesWithSlotsData.data || [],
         );
 
         // Set departments
@@ -165,8 +158,40 @@ const AdminDashboard = () => {
       }
     };
 
-    fetchAllData();
+    fetchEssentialData();
   }, []); // Empty dependency array - fetch only once on mount
+
+  // Fetch timetables with slots in background (lazy load - only when needed)
+  useEffect(() => {
+    // Only fetch if timetablesWithSlots is empty and not currently loading
+    if (timetablesWithSlots.length === 0 && !loadingTimetablesWithSlots) {
+      const fetchTimetablesWithSlots = async () => {
+        setLoadingTimetablesWithSlots(true);
+        try {
+          const timetablesWithSlotsData = await timetablesAPI.getAll({
+            include_slots: true,
+          });
+          setTimetablesWithSlots(
+            Array.isArray(timetablesWithSlotsData)
+              ? timetablesWithSlotsData
+              : timetablesWithSlotsData.data || [],
+          );
+        } catch (err) {
+          console.error('Error fetching timetables with slots:', err);
+          // Don't set error here, just log it - this is background loading
+        } finally {
+          setLoadingTimetablesWithSlots(false);
+        }
+      };
+
+      // Fetch in background after initial render (non-blocking)
+      const timer = setTimeout(() => {
+        fetchTimetablesWithSlots();
+      }, 100);
+
+      return () => clearTimeout(timer);
+    }
+  }, [timetablesWithSlots.length, loadingTimetablesWithSlots]);
 
   // Timetable Functions
   const handleAddTimetable = async () => {
@@ -2092,7 +2117,8 @@ const AdminDashboard = () => {
                       )}
                     </div>
 
-                    {loading && activeTab === 'timetable-view' ? (
+                    {loadingTimetablesWithSlots &&
+                    activeTab === 'timetable-view' ? (
                       <div className='text-center py-12 text-gray-600'>
                         Loading timetables...
                       </div>
@@ -2103,7 +2129,7 @@ const AdminDashboard = () => {
                       </div>
                     ) : groupedSlots.size === 0 &&
                       timetablesWithSlots.length === 0 &&
-                      !loading ? (
+                      !loadingTimetablesWithSlots ? (
                       <div className='text-center py-12 text-gray-500'>
                         No timetables available.
                       </div>
