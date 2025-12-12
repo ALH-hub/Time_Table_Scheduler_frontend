@@ -61,9 +61,9 @@ const Login = () => {
 
   return (
     <div
-        className='min-h-screen flex flex-col items-center pt-22'
-        style={{
-        backgroundImage: "url('/assets/background.jpg')",
+      className='min-h-screen flex flex-col items-center pt-22'
+      style={{
+        backgroundImage: "url('background.jpg')",
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
