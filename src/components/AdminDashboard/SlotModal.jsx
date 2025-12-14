@@ -26,7 +26,7 @@ const SlotModal = ({
   return (
     <>
       <div
-        className='fixed inset-0 bg-black bg-opacity-20 backdrop-blur-sm z-50'
+        className='fixed inset-0bg-opacity-20 backdrop-blur-sm z-50'
         onClick={handleCloseSlotModal}
       ></div>
       <div className='fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none'>
