@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Button } from '../components/common';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
@@ -16,7 +15,8 @@ const NotFound = () => {
             Page Not Found
           </h1>
           <p className='text-lg text-gray-600 mb-8 max-w-md'>
-            Sorry, the page you are looking for does not exist or has been moved.
+            Sorry, the page you are looking for does not exist or has been
+            moved.
           </p>
           <div className='flex gap-4'>
             <Button to='/' size='lg'>

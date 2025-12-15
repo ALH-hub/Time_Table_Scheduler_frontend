@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/layout/Footer';
 import { getFromStorage } from '../utils/storage';
@@ -92,6 +92,29 @@ const AdminDashboard = () => {
   const [editingDepartmentId, setEditingDepartmentId] = useState(null);
   const [editTimetableData, setEditTimetableData] = useState({});
   const [editDepartmentData, setEditDepartmentData] = useState({});
+
+  // Use refs to capture values for async operations to prevent race conditions
+  const editingTimetableIdRef = useRef(null);
+  const editTimetableDataRef = useRef({});
+  const editingDepartmentIdRef = useRef(null);
+  const editDepartmentDataRef = useRef({});
+
+  // Keep refs in sync with state
+  useEffect(() => {
+    editingTimetableIdRef.current = editingTimetableId;
+  }, [editingTimetableId]);
+
+  useEffect(() => {
+    editTimetableDataRef.current = editTimetableData;
+  }, [editTimetableData]);
+
+  useEffect(() => {
+    editingDepartmentIdRef.current = editingDepartmentId;
+  }, [editingDepartmentId]);
+
+  useEffect(() => {
+    editDepartmentDataRef.current = editDepartmentData;
+  }, [editDepartmentData]);
 
   // Timetable View Filters
   const [selectedSemester, setSelectedSemester] = useState('');
@@ -752,49 +775,62 @@ const AdminDashboard = () => {
   };
 
   const handleEditTimetable = (id) => {
-    // First clear any existing state
+    // Prevent opening edit modal if already submitting
+    if (isSubmitting) {
+      return;
+    }
+
+    const timetable = timetables.find((t) => t.id === id);
+    if (!timetable) {
+      setError('Timetable not found');
+      return;
+    }
+
     setError('');
     setSuccess('');
-    setEditingTimetableId(null);
-    setEditTimetableData({});
-    setShowEditModal(false);
-
-    // Small delay to ensure state is cleared
-    setTimeout(() => {
-      const timetable = timetables.find((t) => t.id === id);
-      if (!timetable) {
-        setError('Timetable not found');
-        return;
-      }
-
-      setEditingTimetableId(id);
-      setEditTimetableData({ ...timetable });
-      setShowEditModal(true);
-    }, 50);
+    setEditingTimetableId(id);
+    setEditTimetableData({ ...timetable });
+    setShowEditModal(true);
   };
 
   const handleSaveEditTimetable = async () => {
+    // Prevent multiple simultaneous saves
+    if (isSubmitting) {
+      return;
+    }
+
     setError('');
     setSuccess('');
 
+    // Capture values from refs to prevent race conditions
+    // Refs always have the latest values and won't change during async operations
+    const timetableIdToUpdate = editingTimetableIdRef.current;
+    const dataToUpdate = { ...editTimetableDataRef.current };
+
     // Validation
-    if (!editTimetableData.name?.trim()) {
+    if (!dataToUpdate.name?.trim()) {
       setError('Timetable name is required');
       return;
     }
-    if (!editTimetableData.department_id) {
+    if (!dataToUpdate.department_id) {
       setError('Please select a department');
       return;
     }
-    if (!editTimetableData.week_start) {
+    if (!dataToUpdate.week_start) {
       setError('Week start date is required');
+      return;
+    }
+
+    if (!timetableIdToUpdate) {
+      setError('No timetable selected for editing');
       return;
     }
 
     setIsSubmitting(true);
     try {
-      await timetablesAPI.update(editingTimetableId, editTimetableData);
-      setSuccess(`Timetable "${editTimetableData.name}" updated successfully!`);
+      // Use captured values from refs, not state variables
+      await timetablesAPI.update(timetableIdToUpdate, dataToUpdate);
+      setSuccess(`Timetable "${dataToUpdate.name}" updated successfully!`);
       setEditingTimetableId(null);
       setEditTimetableData({});
       setShowEditModal(false);
@@ -818,6 +854,10 @@ const AdminDashboard = () => {
   };
 
   const handleCancelEditTimetable = () => {
+    // Prevent canceling if currently submitting
+    if (isSubmitting) {
+      return;
+    }
     setEditingTimetableId(null);
     setEditTimetableData({});
     setShowEditModal(false);
@@ -865,13 +905,23 @@ const AdminDashboard = () => {
   };
 
   const handleSaveEditDepartment = async () => {
-    if (!editDepartmentData.name) {
+    // Capture values from refs to prevent race conditions
+    const departmentIdToUpdate = editingDepartmentIdRef.current;
+    const dataToUpdate = { ...editDepartmentDataRef.current };
+
+    if (!dataToUpdate.name) {
       setError('Department name is required');
       return;
     }
 
+    if (!departmentIdToUpdate) {
+      setError('No department selected for editing');
+      return;
+    }
+
     try {
-      await departmentsAPI.update(editingDepartmentId, editDepartmentData);
+      // Use captured values from refs, not state variables
+      await departmentsAPI.update(departmentIdToUpdate, dataToUpdate);
       setEditingDepartmentId(null);
       setEditDepartmentData({});
       // Refresh departments
