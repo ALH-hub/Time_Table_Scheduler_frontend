@@ -24,12 +24,15 @@ const SlotModal = ({
   }
 
   return (
-    <>
+    <div
+      className='fixed inset-0 z-50'
+      key={`slot-modal-${selectedTimetableId}-${editingSlotId || 'new'}`}
+    >
       <div
-        className='fixed inset-0 bg-opacity-80 backdrop-blur-sm z-50'
+        className='fixed inset-0 bg-opacity-50 backdrop-blur-sm'
         onClick={handleCloseSlotModal}
-      ></div>
-      <div className='fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none'>
+      />
+      <div className='fixed inset-0 flex items-center justify-center p-4 pointer-events-none'>
         <div
           className='bg-white rounded-lg shadow-2xl max-w-2xl w-full border border-gray-200 transform transition-all max-h-[90vh] overflow-y-auto pointer-events-auto'
           onClick={(e) => e.stopPropagation()}
@@ -54,7 +57,6 @@ const SlotModal = ({
                 <select
                   value={newSlot.day_of_week}
                   onChange={(e) => {
-                    console.log(e.target.value, 'slot day from slot modal');
                     setNewSlot({
                       ...newSlot,
                       day_of_week: parseInt(e.target.value),
@@ -456,7 +458,7 @@ const SlotModal = ({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

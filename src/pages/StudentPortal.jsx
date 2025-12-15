@@ -201,7 +201,9 @@ const StudentPortal = () => {
 
     try {
       // Create cache key based on selection criteria
-      const cacheKey = `${selectedDepartment.id}-${level.id}-${selectedAcademicYear || 'any'}-${selectedSemester || 'any'}`;
+      const cacheKey = `${selectedDepartment.id}-${level.id}-${
+        selectedAcademicYear || 'any'
+      }-${selectedSemester || 'any'}`;
 
       // Check if timetable data is already cached
       if (timetableCacheRef.current.has(cacheKey)) {
@@ -221,8 +223,6 @@ const StudentPortal = () => {
         academic_year: selectedAcademicYear || undefined,
         semester: selectedSemester || undefined,
       });
-
-      console.log(timetablesData);
 
       const timetablesArray = Array.isArray(timetablesData)
         ? timetablesData
