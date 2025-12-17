@@ -21,27 +21,27 @@ const Loading = () => {
   }, [navigate]);
 
   return (
-    <div className='min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 flex flex-col items-center justify-center p-4'>
-      <div className='text-center'>
-        <div className='mb-8'>
-          <div className='w-20 h-20 mx-auto bg-linear-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mb-6 shadow-lg'>
-            <span className='text-4xl font-extrabold text-white'>UY</span>
+    <div className='min-h-screen bg-linear-to-br from-blue-50 via-purple-50 to-pink-50 flex flex-col items-center justify-center p-4 sm:p-6'>
+      <div className='text-center w-full max-w-md'>
+        <div className='mb-6 sm:mb-8'>
+          <div className='w-16 h-16 sm:w-20 sm:h-20 mx-auto bg-linear-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mb-4 sm:mb-6 shadow-lg'>
+            <span className='text-3xl sm:text-4xl font-extrabold text-white'>UY</span>
           </div>
-          <h1 className='text-4xl font-extrabold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2'>
+          <h1 className='text-3xl sm:text-4xl font-extrabold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2'>
             Unischeduler
           </h1>
-          <p className='text-lg text-gray-600'>
+          <p className='text-base sm:text-lg text-gray-600 px-4'>
             Système de Gestion des Emplois du Temps
           </p>
         </div>
 
-        <div className='mt-12 w-full max-w-md'>
+        <div className='mt-8 sm:mt-12 w-full'>
           <div className='mb-4'>
-            <div className='flex justify-between items-center mb-2'>
-              <span className='text-sm font-semibold text-gray-700'>
+            <div className='flex justify-between items-center mb-2 px-2'>
+              <span className='text-xs sm:text-sm font-semibold text-gray-700'>
                 Chargement en cours...
               </span>
-              <span className='text-sm font-semibold text-purple-600'>
+              <span className='text-xs sm:text-sm font-semibold text-purple-600'>
                 {Math.round(progress)}%
               </span>
             </div>
@@ -52,7 +52,7 @@ const Loading = () => {
               ></div>
             </div>
           </div>
-          <p className='text-sm text-gray-500'>Veuillez patienter...</p>
+          <p className='text-xs sm:text-sm text-gray-500'>Veuillez patienter...</p>
         </div>
       </div>
 

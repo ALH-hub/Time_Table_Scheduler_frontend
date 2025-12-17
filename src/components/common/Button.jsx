@@ -12,7 +12,7 @@ const Button = ({
   ...props
 }) => {
   const baseStyles =
-    'inline-flex text-gray-700 items-center justify-center font-semibold transition-colors rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 px-4 py-3';
+    'inline-flex text-gray-700 items-center justify-center font-semibold transition-all duration-200 ease-in-out rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 px-4 py-3 transform hover:scale-105 active:scale-95 hover:shadow-lg';
 
   const variants = {
     primary: 'bg-gray-900 text-white hover:bg-gray-800 focus:ring-gray-900',
@@ -23,7 +23,7 @@ const Button = ({
   };
 
   const classes = `${baseStyles} ${variants[variant]} ${
-    disabled ? 'opacity-50 cursor-not-allowed' : ''
+    disabled ? 'opacity-50 cursor-not-allowed hover:scale-100 active:scale-100' : ''
   } ${className}`;
 
   if (to) {

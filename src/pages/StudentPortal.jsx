@@ -284,17 +284,17 @@ const StudentPortal = () => {
   };
 
   return (
-    <div className='min-h-screen mt-7 bg-gray-100 flex flex-col items-center pt-22'>
+    <div className='min-h-screen mt-7 bg-gray-100 flex flex-col items-center pt-16 sm:pt-22'>
       <Header />
-      <div className='min-h-[71vh] p-4 flex flex-col max-w-5xl w-full bg-white shadow-xl rounded-lg overflow-hidden'>
+      <div className='min-h-[71vh] p-3 sm:p-4 md:p-6 flex flex-col max-w-5xl w-full bg-white shadow-xl rounded-lg overflow-hidden mx-2 sm:mx-4'>
         <main className='flex-1 bg-white'>
           <div className='max-w-6xl'>
             {/* Progress Indicator */}
-            <div className='flex justify-between items-center gap-1 mt-8 pb-10'>
+            <div className='flex justify-between items-center gap-1 mt-4 sm:mt-8 pb-6 sm:pb-10 px-2 sm:px-0'>
               {[1, 2, 3, 4].map((step) => (
                 <div key={step} className='flex-1 flex items-center'>
                   <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
+                    className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm flex-shrink-0 ${
                       step <= currentStep
                         ? 'bg-gray-900 text-white'
                         : 'bg-gray-300 text-gray-600'
@@ -304,7 +304,7 @@ const StudentPortal = () => {
                   </div>
                   {step < 4 && (
                     <div
-                      className={`flex-1 h-1 ${
+                      className={`flex-1 h-1 mx-1 ${
                         step < currentStep ? 'bg-gray-900' : 'bg-gray-300'
                       }`}
                     ></div>
@@ -314,11 +314,11 @@ const StudentPortal = () => {
             </div>
 
             {/* Step Title and Description */}
-            <div className='text-center mb-8'>
-              <h2 className='text-2xl font-bold text-gray-900'>
+            <div className='text-center mb-6 sm:mb-8 px-4'>
+              <h2 className='text-xl sm:text-2xl font-bold text-gray-900'>
                 {STUDENT_PORTAL_STEPS[currentStep - 1]?.name || 'Loading...'}
               </h2>
-              <p className='text-gray-600'>{getStepDescription()}</p>
+              <p className='text-sm sm:text-base text-gray-600 mt-2'>{getStepDescription()}</p>
             </div>
 
             {/* Error Message */}
@@ -332,16 +332,16 @@ const StudentPortal = () => {
             {currentStep > 1 && (
               <button
                 onClick={handleBack}
-                className='text-gray-900 hover:text-gray-800 font-medium flex items-center gap-2 mb-4'
+                className='text-gray-900 hover:text-gray-800 font-medium flex items-center gap-2 mb-4 transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 hover:translate-x-[-2px] rounded-md px-2 py-1'
               >
-                <BackIcon className='h-5 w-5 text-gray-900' />
+                <BackIcon className='h-5 w-5 text-gray-900 transition-transform duration-200 group-hover:translate-x-[-2px]' />
                 Back
               </button>
             )}
 
             {/* Step 1: Faculties */}
             {currentStep === 1 && (
-              <div className='grid grid-cols-2 md:grid-cols-3 gap-7'>
+              <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-7 px-4'>
                 {loading ? (
                   <div className='text-center py-12'>
                     <p className='text-gray-600'>Loading faculties...</p>
@@ -377,7 +377,7 @@ const StudentPortal = () => {
                     </p>
                   </div>
                 ) : (
-                  <div className='grid grid-cols-2 md:grid-cols-3 gap-6'>
+                  <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 px-4'>
                     {availableDepartments.map((dept) => (
                       <DepartmentCard
                         key={dept.id}
@@ -394,8 +394,8 @@ const StudentPortal = () => {
             {currentStep === 3 && selectedDepartment && (
               <div>
                 {/* Filters for Academic Year and Semester */}
-                <div className='flex flex-wrap gap-4 mb-4 items-center'>
-                  <div>
+                <div className='flex flex-col sm:flex-row flex-wrap gap-4 mb-4 items-start sm:items-end px-4'>
+                  <div className='flex-1 min-w-[200px]'>
                     <label className='block text-sm text-gray-600 mb-1'>
                       Academic Year
                     </label>
@@ -404,17 +404,17 @@ const StudentPortal = () => {
                       placeholder='e.g. 2024-2025'
                       value={selectedAcademicYear}
                       onChange={(e) => setSelectedAcademicYear(e.target.value)}
-                      className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
+                      className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
                     />
                   </div>
-                  <div>
+                  <div className='flex-1 min-w-[200px]'>
                     <label className='block text-sm text-gray-600 mb-1'>
                       Semester
                     </label>
                     <select
                       value={selectedSemester}
                       onChange={(e) => setSelectedSemester(e.target.value)}
-                      className='px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
+                      className='w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:border-gray-500'
                     >
                       <option value=''>Any</option>
                       <option value='Fall'>Fall</option>
@@ -432,7 +432,7 @@ const StudentPortal = () => {
                     <p className='text-gray-600'>No timetables available.</p>
                   </div>
                 ) : (
-                  <div className='grid grid-cols-2 md:grid-cols-3 gap-6'>
+                  <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 px-4'>
                     {deptLevels.map((level) => (
                       <ProgramCard
                         key={level.id}

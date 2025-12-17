@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 
 const TimetablesTab = ({
   timetables,
@@ -21,16 +21,68 @@ const TimetablesTab = ({
   dayNumberToName,
   handleDeleteSlot,
 }) => {
+  const [selectedDepartmentFilter, setSelectedDepartmentFilter] = useState('');
+
+  // Get department name by ID
+  const getDepartmentName = (departmentId) => {
+    const dept = departments.find((d) => d.id === departmentId);
+    return dept ? dept.name : 'N/A';
+  };
+
+  // Filter timetables by selected department
+  const filteredTimetables = useMemo(() => {
+    if (!selectedDepartmentFilter) return timetables;
+    return timetables.filter(
+      (timetable) =>
+        timetable.department_id &&
+        Number(timetable.department_id) === Number(selectedDepartmentFilter),
+    );
+  }, [timetables, selectedDepartmentFilter]);
+
+  // Group timetables by department
+  const groupedTimetables = useMemo(() => {
+    const groups = new Map();
+    filteredTimetables.forEach((timetable) => {
+      const deptId = timetable.department_id || 'unassigned';
+      const deptName = getDepartmentName(timetable.department_id);
+      if (!groups.has(deptId)) {
+        groups.set(deptId, {
+          departmentId: deptId,
+          departmentName: deptName,
+          timetables: [],
+        });
+      }
+      groups.get(deptId).timetables.push(timetable);
+    });
+    return Array.from(groups.values()).sort((a, b) =>
+      a.departmentName.localeCompare(b.departmentName),
+    );
+  }, [filteredTimetables, departments]);
+
   return (
     <div>
-      <div className='flex justify-between items-center mb-6'>
+      <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6'>
         <h2 className='text-xl font-bold text-gray-900'>Manage Timetables</h2>
-        <button
-          onClick={() => setShowAddForm(!showAddForm)}
-          className='bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition text-sm font-medium'
-        >
-          {showAddForm ? 'Cancel' : 'Add New Timetable'}
-        </button>
+        <div className='flex flex-col sm:flex-row gap-3 w-full sm:w-auto'>
+          <select
+            value={selectedDepartmentFilter}
+            onChange={(e) => setSelectedDepartmentFilter(e.target.value)}
+            className='px-4 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent bg-white'
+          >
+            <option value=''>All Departments</option>
+            {departments.map((dept) => (
+              <option key={dept.id} value={dept.id}>
+                {dept.name} ({timetables.filter((t) => t.department_id === dept.id).length})
+              </option>
+            ))}
+          </select>
+          <button
+            onClick={() => setShowAddForm(!showAddForm)}
+            className='bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-all duration-200 ease-in-out text-sm font-medium whitespace-nowrap transform hover:scale-105 active:scale-95 hover:shadow-lg'
+          >
+            {showAddForm ? 'Cancel' : 'Add New Timetable'}
+          </button>
+        </div>
       </div>
 
       {/* Add Form */}
@@ -209,14 +261,14 @@ const TimetablesTab = ({
                 });
                 setError('');
               }}
-              className='px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition text-sm font-medium'
+              className='px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-all duration-200 ease-in-out text-sm font-medium transform hover:scale-105 active:scale-95'
             >
               Cancel
             </button>
             <button
               onClick={handleAddTimetable}
               disabled={isSubmitting}
-              className='px-6 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2'
+              className='px-6 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-all duration-200 ease-in-out text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:active:scale-100 flex items-center gap-2 transform hover:scale-105 active:scale-95 hover:shadow-lg'
             >
               {isSubmitting ? (
                 <>
@@ -252,83 +304,188 @@ const TimetablesTab = ({
 
       {/* Timetables Display */}
       <div className='bg-white/10 backdrop-blur-3xl rounded-md overflow-hidden'>
-        {timetables.length === 0 ? (
+        {filteredTimetables.length === 0 ? (
           <div className='p-8 text-center text-gray-400'>
-            No timetables found
+            {selectedDepartmentFilter
+              ? 'No timetables found for selected department'
+              : 'No timetables found'}
           </div>
         ) : (
           <>
             {/* Desktop Table View */}
             <div className='hidden lg:block'>
-              <table className='w-full'>
-                <thead className='bg-gray-50 border-b'>
-                  <tr>
-                    <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>
-                      Name
-                    </th>
-                    <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>
-                      Department
-                    </th>
-                    <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>
-                      Level
-                    </th>
-                    <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>
-                      Academic Year
-                    </th>
-                    <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>
-                      Status
-                    </th>
-                    <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>
-                      Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className='divide-y'>
-                  {timetables.map((item) => (
-                    <tr key={item.id} className='hover:bg-gray-50'>
-                      <td className='px-6 py-4 text-sm text-gray-900 font-medium'>
-                        {item.name}
-                      </td>
-                      <td className='px-6 py-4 text-sm text-gray-600'>
-                        {departments.find((d) => d.id === item.department_id)
-                          ?.name || 'N/A'}
-                      </td>
-                      <td className='px-6 py-4 text-sm text-gray-600'>
-                        {item.level_name ||
-                          levels.find((l) => l.id === item.level_id)?.name ||
-                          'N/A'}
-                      </td>
-                      <td className='px-6 py-4 text-sm text-gray-600'>
-                        {item.academic_year || 'N/A'}
-                      </td>
-                      <td className='px-6 py-4 text-sm'>
-                        <span
-                          className={`px-2 py-1 rounded text-xs font-medium ${
-                            item.status === 'published'
-                              ? 'bg-green-100 text-green-700'
-                              : item.status === 'draft'
-                              ? 'bg-yellow-100 text-yellow-700'
-                              : 'bg-gray-100 text-gray-700'
-                          }`}
-                        >
-                          {item.status}
-                        </span>
-                      </td>
-                      <td className='px-6 py-4 text-sm'>
-                        <div className='flex items-center gap-3'>
+              {groupedTimetables.map((group) => (
+                <div key={group.departmentId} className='mb-6'>
+                  <div className='bg-gray-100 px-6 py-3 border-b border-gray-200'>
+                    <h3 className='text-sm font-semibold text-gray-900'>
+                      {group.departmentName} ({group.timetables.length}{' '}
+                      {group.timetables.length === 1 ? 'timetable' : 'timetables'})
+                    </h3>
+                  </div>
+                  <table className='w-full'>
+                    <thead className='bg-gray-50 border-b'>
+                      <tr>
+                        <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>
+                          Name
+                        </th>
+                        <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>
+                          Level
+                        </th>
+                        <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>
+                          Academic Year
+                        </th>
+                        <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>
+                          Status
+                        </th>
+                        <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className='divide-y'>
+                      {group.timetables.map((item) => (
+                        <tr key={item.id} className='hover:bg-gray-50'>
+                          <td className='px-6 py-4 text-sm text-gray-900 font-medium'>
+                            {item.name}
+                          </td>
+                          <td className='px-6 py-4 text-sm text-gray-600'>
+                            {item.level_name ||
+                              levels.find((l) => l.id === item.level_id)?.name ||
+                              'N/A'}
+                          </td>
+                          <td className='px-6 py-4 text-sm text-gray-600'>
+                            {item.academic_year || 'N/A'}
+                          </td>
+                          <td className='px-6 py-4 text-sm'>
+                            <span
+                              className={`px-2 py-1 rounded text-xs font-medium ${
+                                item.status === 'published'
+                                  ? 'bg-green-100 text-green-700'
+                                  : item.status === 'draft'
+                                  ? 'bg-yellow-100 text-yellow-700'
+                                  : 'bg-gray-100 text-gray-700'
+                              }`}
+                            >
+                              {item.status}
+                            </span>
+                          </td>
+                          <td className='px-6 py-4 text-sm'>
+                            <div className='flex items-center gap-3'>
+                              <button
+                                onClick={() => handleEditTimetable(item.id)}
+                                className='text-gray-900 hover:text-gray-700 text-sm font-medium hover:underline transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 rounded-md px-2 py-1 hover:bg-gray-100'
+                              >
+                                Edit
+                              </button>
+                              <button
+                                onClick={() => handleSelectTimetable(item.id)}
+                                className={`text-sm font-medium transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 rounded-md px-2 py-1 ${
+                                  selectedTimetableId === item.id
+                                    ? 'text-green-600 font-semibold hover:bg-green-50'
+                                    : 'text-blue-600 hover:bg-blue-50'
+                                }`}
+                              >
+                                {selectedTimetableId === item.id
+                                  ? 'Selected'
+                                  : 'Manage Slots'}
+                              </button>
+                              <button
+                                onClick={() => handleDeleteTimetable(item.id)}
+                                className='text-red-600 hover:text-red-700 text-sm font-medium hover:underline transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 rounded-md px-2 py-1 hover:bg-red-50'
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ))}
+            </div>
+
+            {/* Mobile & Tablet Card View */}
+            <div className='lg:hidden space-y-6 p-4'>
+              {groupedTimetables.map((group) => (
+                <div key={group.departmentId}>
+                  <div className='bg-gray-100 px-4 py-2 rounded-t-md border-b border-gray-200 mb-2'>
+                    <h3 className='text-sm font-semibold text-gray-900'>
+                      {group.departmentName} ({group.timetables.length}{' '}
+                      {group.timetables.length === 1 ? 'timetable' : 'timetables'})
+                    </h3>
+                  </div>
+                  <div className='space-y-4'>
+                    {group.timetables.map((item) => (
+                      <div
+                        key={item.id}
+                        className={`bg-white border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow ${
+                          selectedTimetableId === item.id
+                            ? 'border-green-500 bg-green-50'
+                            : 'border-gray-200'
+                        }`}
+                      >
+                        <div className='flex items-start justify-between mb-3'>
+                          <div className='flex-1'>
+                            <h3 className='text-base font-semibold text-gray-900 mb-1'>
+                              {item.name}
+                            </h3>
+                            <div className='flex items-center gap-2 mb-2'>
+                              <span
+                                className={`px-2 py-1 rounded text-xs font-medium ${
+                                  item.status === 'published'
+                                    ? 'bg-green-100 text-green-700'
+                                    : item.status === 'draft'
+                                    ? 'bg-yellow-100 text-yellow-700'
+                                    : 'bg-gray-100 text-gray-700'
+                                }`}
+                              >
+                                {item.status}
+                              </span>
+                              {selectedTimetableId === item.id && (
+                                <span className='px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700'>
+                                  Currently Selected
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4'>
+                          <div>
+                            <dt className='text-xs font-medium text-gray-500 uppercase tracking-wide'>
+                              Level
+                            </dt>
+                            <dd className='text-sm text-gray-900 mt-1'>
+                              {item.level_name ||
+                                levels.find((l) => l.id === item.level_id)?.name ||
+                                'N/A'}
+                            </dd>
+                          </div>
+                          <div className='sm:col-span-2'>
+                            <dt className='text-xs font-medium text-gray-500 uppercase tracking-wide'>
+                              Academic Year
+                            </dt>
+                            <dd className='text-sm text-gray-900 mt-1'>
+                              {item.academic_year || 'N/A'}
+                            </dd>
+                          </div>
+                        </div>
+
+                        <div className='flex flex-wrap gap-2 pt-3 border-t border-gray-100'>
                           <button
                             onClick={() => handleEditTimetable(item.id)}
-                            className='text-gray-900 hover:text-gray-700 text-sm font-medium hover:underline'
+                            className='flex-1 sm:flex-none px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95'
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => handleSelectTimetable(item.id)}
-                            className={`text-sm font-medium ${
+                            className={`flex-1 sm:flex-none px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 ${
                               selectedTimetableId === item.id
-                                ? 'text-green-600 font-semibold'
-                                : 'text-blue-600'
-                            } hover:underline`}
+                                ? 'text-green-700 bg-green-100 hover:bg-green-200'
+                                : 'text-blue-700 bg-blue-100 hover:bg-blue-200'
+                            }`}
                           >
                             {selectedTimetableId === item.id
                               ? 'Selected'
@@ -336,110 +493,13 @@ const TimetablesTab = ({
                           </button>
                           <button
                             onClick={() => handleDeleteTimetable(item.id)}
-                            className='text-red-600 hover:text-red-700 text-sm font-medium hover:underline'
+                            className='px-3 py-2 text-sm font-medium text-red-700 bg-red-100 hover:bg-red-200 rounded-md transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95'
                           >
                             Delete
                           </button>
                         </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Mobile & Tablet Card View */}
-            <div className='lg:hidden space-y-4 p-4'>
-              {timetables.map((item) => (
-                <div
-                  key={item.id}
-                  className={`bg-white border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow ${
-                    selectedTimetableId === item.id
-                      ? 'border-green-500 bg-green-50'
-                      : 'border-gray-200'
-                  }`}
-                >
-                  <div className='flex items-start justify-between mb-3'>
-                    <div className='flex-1'>
-                      <h3 className='text-base font-semibold text-gray-900 mb-1'>
-                        {item.name}
-                      </h3>
-                      <div className='flex items-center gap-2 mb-2'>
-                        <span
-                          className={`px-2 py-1 rounded text-xs font-medium ${
-                            item.status === 'published'
-                              ? 'bg-green-100 text-green-700'
-                              : item.status === 'draft'
-                              ? 'bg-yellow-100 text-yellow-700'
-                              : 'bg-gray-100 text-gray-700'
-                          }`}
-                        >
-                          {item.status}
-                        </span>
-                        {selectedTimetableId === item.id && (
-                          <span className='px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-700'>
-                            Currently Selected
-                          </span>
-                        )}
                       </div>
-                    </div>
-                  </div>
-
-                  <div className='grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4'>
-                    <div>
-                      <dt className='text-xs font-medium text-gray-500 uppercase tracking-wide'>
-                        Department
-                      </dt>
-                      <dd className='text-sm text-gray-900 mt-1'>
-                        {departments.find((d) => d.id === item.department_id)
-                          ?.name || 'N/A'}
-                      </dd>
-                    </div>
-                    <div>
-                      <dt className='text-xs font-medium text-gray-500 uppercase tracking-wide'>
-                        Level
-                      </dt>
-                      <dd className='text-sm text-gray-900 mt-1'>
-                        {item.level_name ||
-                          levels.find((l) => l.id === item.level_id)?.name ||
-                          'N/A'}
-                      </dd>
-                    </div>
-                    <div className='sm:col-span-2'>
-                      <dt className='text-xs font-medium text-gray-500 uppercase tracking-wide'>
-                        Academic Year
-                      </dt>
-                      <dd className='text-sm text-gray-900 mt-1'>
-                        {item.academic_year || 'N/A'}
-                      </dd>
-                    </div>
-                  </div>
-
-                  <div className='flex flex-wrap gap-2 pt-3 border-t border-gray-100'>
-                    <button
-                      onClick={() => handleEditTimetable(item.id)}
-                      className='flex-1 sm:flex-none px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors'
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleSelectTimetable(item.id)}
-                      className={`flex-1 sm:flex-none px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                        selectedTimetableId === item.id
-                          ? 'text-green-700 bg-green-100 hover:bg-green-200'
-                          : 'text-blue-700 bg-blue-100 hover:bg-blue-200'
-                      }`}
-                    >
-                      {selectedTimetableId === item.id
-                        ? 'Selected'
-                        : 'Manage Slots'}
-                    </button>
-                    <button
-                      onClick={() => handleDeleteTimetable(item.id)}
-                      className='px-3 py-2 text-sm font-medium text-red-700 bg-red-100 hover:bg-red-200 rounded-md transition-colors'
-                    >
-                      Delete
-                    </button>
+                    ))}
                   </div>
                 </div>
               ))}
@@ -464,7 +524,7 @@ const TimetablesTab = ({
             </div>
             <button
               onClick={() => handleOpenSlotModal()}
-              className='w-full sm:w-auto bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition text-sm font-medium flex items-center justify-center gap-2'
+              className='w-full sm:w-auto bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-all duration-200 ease-in-out text-sm font-medium flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95 hover:shadow-lg'
             >
               <span>+</span>
               <span>Add New Slot</span>
@@ -481,7 +541,7 @@ const TimetablesTab = ({
               <p className='text-gray-500 mb-4'>No slots have been added yet</p>
               <button
                 onClick={() => handleOpenSlotModal()}
-                className='bg-gray-900 text-white px-6 py-2 rounded-md hover:bg-gray-800 transition text-sm font-medium'
+                className='bg-gray-900 text-white px-6 py-2 rounded-md hover:bg-gray-800 transition-all duration-200 ease-in-out text-sm font-medium transform hover:scale-105 active:scale-95 hover:shadow-lg'
               >
                 Add First Slot
               </button>
@@ -560,13 +620,13 @@ const TimetablesTab = ({
                             <div className='flex items-center gap-3'>
                               <button
                                 onClick={() => handleOpenSlotModal(s)}
-                                className='text-blue-600 hover:text-blue-700 text-sm font-medium hover:underline'
+                                className='text-blue-600 hover:text-blue-700 text-sm font-medium hover:underline transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 rounded-md px-2 py-1 hover:bg-blue-50'
                               >
                                 Edit
                               </button>
                               <button
                                 onClick={() => handleDeleteSlot(s.id)}
-                                className='text-red-600 hover:text-red-700 text-sm font-medium hover:underline'
+                                className='text-red-600 hover:text-red-700 text-sm font-medium hover:underline transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 rounded-md px-2 py-1 hover:bg-red-50'
                               >
                                 Delete
                               </button>
@@ -612,13 +672,13 @@ const TimetablesTab = ({
                       <div className='flex flex-col sm:flex-row gap-2 ml-4'>
                         <button
                           onClick={() => handleOpenSlotModal(s)}
-                          className='px-3 py-1 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-md transition-colors'
+                          className='px-3 py-1 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-md transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95'
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => handleDeleteSlot(s.id)}
-                          className='px-3 py-1 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-md transition-colors'
+                          className='px-3 py-1 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-md transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95'
                         >
                           Delete
                         </button>

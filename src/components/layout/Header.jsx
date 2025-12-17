@@ -30,12 +30,8 @@ const Header = () => {
     <header className='fixed top-0 z-50 bg-gray-200 w-full py-4 px-4 sm:px-6 lg:px-12 rounded-t-lg mb-auto'>
       <div className='max-w-5xl w-full flex justify-between items-center mx-auto h-14'>
         {/* Logo and UNIVERSITY NAME */}
-        <div className='flex items-center space-x-2 sm:space-x-4 grow gap-2 sm:gap-3'>
-          <div
-            className='w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-gray-300 flex shrink-0 bg-cover bg-center'
-            style={{ backgroundImage: "url('/logo.jpg')" }}
-            aria-hidden='true'
-          />
+        <div className='flex items-center space-x-1 grow gap-1'>
+          <img src='/logo.png' alt='UniScheduler Logo' className='w-10 ' />
           <div className='flex flex-col'>
             <span className='text-gray-700 font-semibold text-xs sm:text-sm truncate max-w-32 sm:max-w-none'>
               {UNIVERSITY_INFO.name}
@@ -45,12 +41,12 @@ const Header = () => {
 
         {/* Mobile menu button */}
         <button
-          className='md:hidden text-gray-700 hover:text-gray-900 p-2'
+          className='md:hidden text-gray-700 hover:text-gray-900 p-2 transition-all duration-200 ease-in-out transform hover:scale-110 active:scale-95 rounded-md hover:bg-gray-300'
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label='Toggle mobile menu'
         >
           <svg
-            className='w-6 h-6'
+            className='w-6 h-6 transition-transform duration-200'
             fill='none'
             stroke='currentColor'
             viewBox='0 0 24 24'
@@ -82,13 +78,19 @@ const Header = () => {
             <Link
               key={link.to}
               to={link.to}
-              className={`hover:text-gray-900 transition-colors text-sm lg:text-base ${
+              className={`relative hover:text-gray-900 transition-all duration-200 ease-in-out text-sm lg:text-base transform hover:scale-105 ${
                 location.pathname === link.to
                   ? 'text-gray-900 font-semibold'
                   : ''
               }`}
             >
-              {link.label}
+              <span className='relative z-10'>{link.label}</span>
+              {location.pathname === link.to && (
+                <span className='absolute bottom-0 left-0 w-full h-0.5 bg-gray-900 transform transition-all duration-200'></span>
+              )}
+              {location.pathname !== link.to && (
+                <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-gray-900 transform transition-all duration-200 hover:w-full'></span>
+              )}
             </Link>
           ))}
 
@@ -98,7 +100,7 @@ const Header = () => {
               {!location.pathname.startsWith('/admin') && (
                 <Link
                   to='/admin'
-                  className='bg-gray-900 text-white px-3 lg:px-4 py-2 rounded-md hover:bg-gray-800 transition-colors text-xs lg:text-sm font-medium'
+                  className='bg-gray-900 text-white px-3 lg:px-4 py-2 rounded-md hover:bg-gray-800 transition-all duration-200 ease-in-out text-xs lg:text-sm font-medium transform hover:scale-105 active:scale-95 hover:shadow-lg'
                 >
                   Admin Dashboard
                 </Link>
@@ -116,10 +118,10 @@ const Header = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className={`block text-gray-700 hover:text-gray-900 transition-colors py-2 ${
+                className={`block text-gray-700 hover:text-gray-900 transition-all duration-200 ease-in-out py-2 transform hover:translate-x-1 hover:scale-105 rounded-md px-2 ${
                   location.pathname === link.to
-                    ? 'text-gray-900 font-semibold'
-                    : ''
+                    ? 'text-gray-900 font-semibold bg-gray-300'
+                    : 'hover:bg-gray-300'
                 }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
@@ -133,7 +135,7 @@ const Header = () => {
                 {!location.pathname.startsWith('/admin') && (
                   <Link
                     to='/admin'
-                    className='block bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors text-sm font-medium mt-4'
+                    className='block bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-all duration-200 ease-in-out text-sm font-medium mt-4 transform hover:scale-105 active:scale-95 hover:shadow-lg'
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Admin Dashboard

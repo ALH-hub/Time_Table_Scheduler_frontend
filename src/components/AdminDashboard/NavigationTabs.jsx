@@ -41,7 +41,7 @@ const NavigationTabs = ({ activeTab, setActiveTab }) => {
         <div className='md:hidden py-3' ref={dropdownRef}>
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className='w-full flex items-center justify-between px-4 py-3 text-left border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent'
+            className='w-full flex items-center justify-between px-4 py-3 text-left border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transform hover:scale-[1.01] active:scale-[0.99]'
           >
             <div className='flex items-center'>
               <span className='text-gray-900 font-medium text-base'>
@@ -80,7 +80,7 @@ const NavigationTabs = ({ activeTab, setActiveTab }) => {
                       setActiveTab(tab.id);
                       setIsMobileMenuOpen(false);
                     }}
-                    className={`w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors flex items-center justify-between group ${
+                    className={`w-full text-left px-4 py-3 hover:bg-gray-50 transition-all duration-200 ease-in-out flex items-center justify-between group transform hover:scale-[1.02] active:scale-[0.98] ${
                       activeTab === tab.id
                         ? 'bg-gray-100 text-gray-900 font-semibold border-l-4 border-gray-900'
                         : 'text-gray-600 hover:text-gray-900'
@@ -114,7 +114,7 @@ const NavigationTabs = ({ activeTab, setActiveTab }) => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`py-4 px-2 border-b-2 transition-all duration-200 whitespace-nowrap relative group ${
+                className={`py-4 px-2 border-b-2 transition-all duration-200 ease-in-out whitespace-nowrap relative group transform hover:scale-105 active:scale-95 ${
                   activeTab === tab.id
                     ? 'border-gray-900 text-gray-900 font-semibold'
                     : 'border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300'
