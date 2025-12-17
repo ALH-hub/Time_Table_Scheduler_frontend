@@ -85,7 +85,7 @@ const DepartmentsTab = ({
           </div>
           <button
             onClick={handleAddDepartment}
-            className='mt-4 bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition text-sm font-medium'
+            className='mt-4 bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-all duration-200 ease-in-out text-sm font-medium transform hover:scale-105 active:scale-95 hover:shadow-lg'
           >
             Save
           </button>
@@ -193,13 +193,13 @@ const DepartmentsTab = ({
                           <div className='flex space-x-4 whitespace-nowrap'>
                             <button
                               onClick={() => handleEditDepartment(item.id)}
-                              className='text-gray-900 hover:text-gray-700 text-sm font-medium'
+                              className='text-gray-900 hover:text-gray-700 text-sm font-medium transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 rounded-md px-2 py-1 hover:bg-gray-100'
                             >
                               Edit
                             </button>
                             <button
                               onClick={() => handleDeleteDepartment(item.id)}
-                              className='text-gray-400 hover:text-gray-700 text-sm font-medium'
+                              className='text-gray-400 hover:text-gray-700 text-sm font-medium transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 rounded-md px-2 py-1 hover:bg-gray-100'
                             >
                               Delete
                             </button>
@@ -325,13 +325,13 @@ const DepartmentsTab = ({
                   <div className='flex space-x-3 pt-3 border-t border-gray-200'>
                     <button
                       onClick={() => handleEditDepartment(item.id)}
-                      className='flex-1 bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition text-sm font-medium'
+                      className='flex-1 bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-all duration-200 ease-in-out text-sm font-medium transform hover:scale-105 active:scale-95 hover:shadow-lg'
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDeleteDepartment(item.id)}
-                      className='flex-1 bg-gray-100 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-200 transition text-sm font-medium'
+                      className='flex-1 bg-gray-100 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-200 transition-all duration-200 ease-in-out text-sm font-medium transform hover:scale-105 active:scale-95'
                     >
                       Delete
                     </button>

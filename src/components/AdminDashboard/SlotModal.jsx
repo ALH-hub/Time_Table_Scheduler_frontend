@@ -40,7 +40,7 @@ const SlotModal = ({
             </h2>
             <button
               onClick={handleCloseSlotModal}
-              className='text-white hover:text-gray-300 text-2xl'
+              className='text-white hover:text-gray-300 text-2xl transition-all duration-200 ease-in-out transform hover:scale-110 active:scale-95 rounded-md p-1 hover:bg-gray-800'
             >
               ×
             </button>
@@ -412,14 +412,14 @@ const SlotModal = ({
             <div className='flex justify-end gap-3 mt-6'>
               <button
                 onClick={handleCloseSlotModal}
-                className='px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition text-sm font-medium'
+                className='px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-all duration-200 ease-in-out text-sm font-medium transform hover:scale-105 active:scale-95'
               >
                 Cancel
               </button>
               <button
                 onClick={handleAddSlot}
                 disabled={isSubmitting}
-                className='px-6 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2'
+                className='px-6 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-all duration-200 ease-in-out text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:active:scale-100 flex items-center gap-2 transform hover:scale-105 active:scale-95 hover:shadow-lg'
               >
                 {isSubmitting ? (
                   <>

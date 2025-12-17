@@ -78,7 +78,7 @@ const TimetablesTab = ({
           </select>
           <button
             onClick={() => setShowAddForm(!showAddForm)}
-            className='bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition text-sm font-medium whitespace-nowrap'
+            className='bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-all duration-200 ease-in-out text-sm font-medium whitespace-nowrap transform hover:scale-105 active:scale-95 hover:shadow-lg'
           >
             {showAddForm ? 'Cancel' : 'Add New Timetable'}
           </button>
@@ -261,14 +261,14 @@ const TimetablesTab = ({
                 });
                 setError('');
               }}
-              className='px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition text-sm font-medium'
+              className='px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-all duration-200 ease-in-out text-sm font-medium transform hover:scale-105 active:scale-95'
             >
               Cancel
             </button>
             <button
               onClick={handleAddTimetable}
               disabled={isSubmitting}
-              className='px-6 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2'
+              className='px-6 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-all duration-200 ease-in-out text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:active:scale-100 flex items-center gap-2 transform hover:scale-105 active:scale-95 hover:shadow-lg'
             >
               {isSubmitting ? (
                 <>
@@ -373,17 +373,17 @@ const TimetablesTab = ({
                             <div className='flex items-center gap-3'>
                               <button
                                 onClick={() => handleEditTimetable(item.id)}
-                                className='text-gray-900 hover:text-gray-700 text-sm font-medium hover:underline'
+                                className='text-gray-900 hover:text-gray-700 text-sm font-medium hover:underline transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 rounded-md px-2 py-1 hover:bg-gray-100'
                               >
                                 Edit
                               </button>
                               <button
                                 onClick={() => handleSelectTimetable(item.id)}
-                                className={`text-sm font-medium ${
+                                className={`text-sm font-medium transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 rounded-md px-2 py-1 ${
                                   selectedTimetableId === item.id
-                                    ? 'text-green-600 font-semibold'
-                                    : 'text-blue-600'
-                                } hover:underline`}
+                                    ? 'text-green-600 font-semibold hover:bg-green-50'
+                                    : 'text-blue-600 hover:bg-blue-50'
+                                }`}
                               >
                                 {selectedTimetableId === item.id
                                   ? 'Selected'
@@ -391,7 +391,7 @@ const TimetablesTab = ({
                               </button>
                               <button
                                 onClick={() => handleDeleteTimetable(item.id)}
-                                className='text-red-600 hover:text-red-700 text-sm font-medium hover:underline'
+                                className='text-red-600 hover:text-red-700 text-sm font-medium hover:underline transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 rounded-md px-2 py-1 hover:bg-red-50'
                               >
                                 Delete
                               </button>
@@ -475,13 +475,13 @@ const TimetablesTab = ({
                         <div className='flex flex-wrap gap-2 pt-3 border-t border-gray-100'>
                           <button
                             onClick={() => handleEditTimetable(item.id)}
-                            className='flex-1 sm:flex-none px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors'
+                            className='flex-1 sm:flex-none px-3 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95'
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => handleSelectTimetable(item.id)}
-                            className={`flex-1 sm:flex-none px-3 py-2 text-sm font-medium rounded-md transition-colors ${
+                            className={`flex-1 sm:flex-none px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 ${
                               selectedTimetableId === item.id
                                 ? 'text-green-700 bg-green-100 hover:bg-green-200'
                                 : 'text-blue-700 bg-blue-100 hover:bg-blue-200'
@@ -493,7 +493,7 @@ const TimetablesTab = ({
                           </button>
                           <button
                             onClick={() => handleDeleteTimetable(item.id)}
-                            className='px-3 py-2 text-sm font-medium text-red-700 bg-red-100 hover:bg-red-200 rounded-md transition-colors'
+                            className='px-3 py-2 text-sm font-medium text-red-700 bg-red-100 hover:bg-red-200 rounded-md transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95'
                           >
                             Delete
                           </button>
@@ -524,7 +524,7 @@ const TimetablesTab = ({
             </div>
             <button
               onClick={() => handleOpenSlotModal()}
-              className='w-full sm:w-auto bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition text-sm font-medium flex items-center justify-center gap-2'
+              className='w-full sm:w-auto bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-all duration-200 ease-in-out text-sm font-medium flex items-center justify-center gap-2 transform hover:scale-105 active:scale-95 hover:shadow-lg'
             >
               <span>+</span>
               <span>Add New Slot</span>
@@ -541,7 +541,7 @@ const TimetablesTab = ({
               <p className='text-gray-500 mb-4'>No slots have been added yet</p>
               <button
                 onClick={() => handleOpenSlotModal()}
-                className='bg-gray-900 text-white px-6 py-2 rounded-md hover:bg-gray-800 transition text-sm font-medium'
+                className='bg-gray-900 text-white px-6 py-2 rounded-md hover:bg-gray-800 transition-all duration-200 ease-in-out text-sm font-medium transform hover:scale-105 active:scale-95 hover:shadow-lg'
               >
                 Add First Slot
               </button>
@@ -620,13 +620,13 @@ const TimetablesTab = ({
                             <div className='flex items-center gap-3'>
                               <button
                                 onClick={() => handleOpenSlotModal(s)}
-                                className='text-blue-600 hover:text-blue-700 text-sm font-medium hover:underline'
+                                className='text-blue-600 hover:text-blue-700 text-sm font-medium hover:underline transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 rounded-md px-2 py-1 hover:bg-blue-50'
                               >
                                 Edit
                               </button>
                               <button
                                 onClick={() => handleDeleteSlot(s.id)}
-                                className='text-red-600 hover:text-red-700 text-sm font-medium hover:underline'
+                                className='text-red-600 hover:text-red-700 text-sm font-medium hover:underline transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 rounded-md px-2 py-1 hover:bg-red-50'
                               >
                                 Delete
                               </button>
@@ -672,13 +672,13 @@ const TimetablesTab = ({
                       <div className='flex flex-col sm:flex-row gap-2 ml-4'>
                         <button
                           onClick={() => handleOpenSlotModal(s)}
-                          className='px-3 py-1 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-md transition-colors'
+                          className='px-3 py-1 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-md transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95'
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => handleDeleteSlot(s.id)}
-                          className='px-3 py-1 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-md transition-colors'
+                          className='px-3 py-1 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 rounded-md transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95'
                         >
                           Delete
                         </button>

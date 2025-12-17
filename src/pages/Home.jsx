@@ -41,16 +41,20 @@ const Home = () => {
       <section className='pt-24 pb-16 px-4 sm:px-6 lg:px-8'>
         <div className='max-w-7xl mx-auto'>
           <div className='text-center mb-16'>
-            <div className='inline-flex items-center justify-center w-20 h-20 bg-gray-900 rounded-2xl mb-6 shadow-lg'>
-              <span className='text-3xl font-extrabold text-white'>UY</span>
+            <div className='flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-6'>
+              <div className='inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-gray-900 rounded-2xl shadow-lg shrink-0'>
+                <span className='text-3xl sm:text-4xl font-extrabold text-white'>
+                  US
+                </span>
+              </div>
+              <h1 className='text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-tight'>
+                {APP_INFO?.name || 'UniScheduler'}
+              </h1>
             </div>
-            <h1 className='text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 mb-6 leading-tight'>
-              {APP_INFO?.name || 'UniScheduler'}
-            </h1>
-            <p className='text-xl md:text-2xl text-gray-700 font-semibold mb-4 max-w-3xl mx-auto'>
+            <p className='text-lg sm:text-xl md:text-2xl text-gray-700 font-semibold mb-4 max-w-3xl mx-auto px-4'>
               {APP_INFO?.tagline || 'Consultation des emplois du temps'}
             </p>
-            <p className='text-lg text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed'>
+            <p className='text-base sm:text-lg text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed px-4'>
               Le système de gestion des emplois du temps de l'Université de
               Yaoundé I permet aux étudiants, enseignants et parents de
               consulter facilement les horaires de cours, salles et informations
@@ -95,26 +99,26 @@ const Home = () => {
       {/* Features Section */}
       <section className='py-16 px-4 sm:px-6 lg:px-8 bg-white'>
         <div className='max-w-7xl mx-auto'>
-          <div className='text-center mb-12'>
-            <h2 className='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>
+          <div className='text-center mb-12 px-4'>
+            <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4'>
               Pourquoi choisir UniScheduler ?
             </h2>
-            <p className='text-lg text-gray-600 max-w-2xl mx-auto'>
+            <p className='text-base sm:text-lg text-gray-600 max-w-2xl mx-auto'>
               Une plateforme moderne et efficace pour gérer vos horaires
               académiques
             </p>
           </div>
 
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 px-4'>
             {features.map((feature, index) => (
               <div
                 key={index}
-                className='bg-white rounded-xl p-8 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-200'
+                className='bg-white rounded-xl p-6 sm:p-8 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-200'
               >
-                <h3 className='text-xl font-bold text-gray-900 mb-3'>
+                <h3 className='text-lg sm:text-xl font-bold text-gray-900 mb-3'>
                   {feature.title}
                 </h3>
-                <p className='text-gray-600 leading-relaxed'>
+                <p className='text-sm sm:text-base text-gray-600 leading-relaxed'>
                   {feature.description}
                 </p>
               </div>
@@ -126,24 +130,28 @@ const Home = () => {
       {/* Stats Section */}
       <section className='py-16 px-4 sm:px-6 lg:px-8 bg-gray-900'>
         <div className='max-w-7xl mx-auto'>
-          <div className='grid grid-cols-1 md:grid-cols-3 gap-8 text-center'>
+          <div className='grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-center px-4'>
             <div className='text-white'>
-              <div className='text-4xl md:text-5xl font-extrabold mb-2'>
+              <div className='text-3xl sm:text-4xl md:text-5xl font-extrabold mb-2'>
                 {UNIVERSITY_INFO.students || '15,000+'}
               </div>
-              <div className='text-gray-300 text-lg font-medium'>Étudiants</div>
+              <div className='text-gray-300 text-base sm:text-lg font-medium'>
+                Étudiants
+              </div>
             </div>
             <div className='text-white'>
-              <div className='text-4xl md:text-5xl font-extrabold mb-2'>
+              <div className='text-3xl sm:text-4xl md:text-5xl font-extrabold mb-2'>
                 {UNIVERSITY_INFO.faculties || '5'}
               </div>
-              <div className='text-gray-300 text-lg font-medium'>Facultés</div>
+              <div className='text-gray-300 text-base sm:text-lg font-medium'>
+                Facultés
+              </div>
             </div>
             <div className='text-white'>
-              <div className='text-4xl md:text-5xl font-extrabold mb-2'>
+              <div className='text-3xl sm:text-4xl md:text-5xl font-extrabold mb-2'>
                 24/7
               </div>
-              <div className='text-gray-300 text-lg font-medium'>
+              <div className='text-gray-300 text-base sm:text-lg font-medium'>
                 Disponibilité
               </div>
             </div>
@@ -152,24 +160,24 @@ const Home = () => {
       </section>
 
       {/* University Info Section */}
-      <section className='py-16 px-4 sm:px-6 lg:px-8 bg-white'>
+      <section className='py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-white'>
         <div className='max-w-4xl mx-auto text-center'>
-          <h2 className='text-3xl md:text-4xl font-bold text-gray-900 mb-6'>
+          <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6'>
             {UNIVERSITY_INFO.name}
           </h2>
-          <p className='text-lg text-gray-600 leading-relaxed mb-8'>
+          <p className='text-base sm:text-lg text-gray-600 leading-relaxed mb-6 sm:mb-8 px-4'>
             Système de gestion des emplois du temps conçu pour simplifier la
             consultation des horaires académiques. Accédez rapidement aux
             informations dont vous avez besoin, quand vous en avez besoin.
           </p>
-          <div className='flex flex-col sm:flex-row justify-center items-center gap-6 text-gray-700'>
-            <div className='flex items-center gap-2'>
+          <div className='flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 text-gray-700 px-4'>
+            <div className='flex items-center gap-2 text-sm sm:text-base'>
               <span>{UNIVERSITY_INFO.address}</span>
             </div>
-            <div className='flex items-center gap-2'>
+            <div className='flex items-center gap-2 text-sm sm:text-base'>
               <span>{UNIVERSITY_INFO.email}</span>
             </div>
-            <div className='flex items-center gap-2'>
+            <div className='flex items-center gap-2 text-sm sm:text-base'>
               <span>{UNIVERSITY_INFO.phone}</span>
             </div>
           </div>

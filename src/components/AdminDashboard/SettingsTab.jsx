@@ -126,7 +126,7 @@ const SettingsTab = forwardRef(({
             <div className='flex flex-wrap gap-3 mt-6 pt-6 border-t border-gray-200'>
               <button
                 onClick={handleOpenEditProfileModal}
-                className='px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition text-sm font-medium flex items-center gap-2'
+                className='px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-all duration-200 ease-in-out text-sm font-medium flex items-center gap-2 transform hover:scale-105 active:scale-95 hover:shadow-lg'
               >
                 <svg
                   className='w-4 h-4'
@@ -145,7 +145,7 @@ const SettingsTab = forwardRef(({
               </button>
               <button
                 onClick={handleOpenChangePasswordModal}
-                className='px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition text-sm font-medium flex items-center gap-2'
+                className='px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-all duration-200 ease-in-out text-sm font-medium flex items-center gap-2 transform hover:scale-105 active:scale-95'
               >
                 <svg
                   className='w-4 h-4'
@@ -180,7 +180,7 @@ const SettingsTab = forwardRef(({
               </div>
               <button
                 onClick={handleOpenAddAdminModal}
-                className='px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition text-sm font-medium flex items-center gap-2 whitespace-nowrap'
+                className='px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-all duration-200 ease-in-out text-sm font-medium flex items-center gap-2 whitespace-nowrap transform hover:scale-105 active:scale-95 hover:shadow-lg'
               >
                 <svg
                   className='w-4 h-4'
@@ -294,7 +294,7 @@ const SettingsTab = forwardRef(({
                               {currentAdmin?.id !== admin.id && (
                                 <button
                                   onClick={() => handleToggleAdminStatus(admin.id)}
-                                  className={`px-3 py-1 rounded text-xs font-medium transition ${
+                                  className={`px-3 py-1 rounded text-xs font-medium transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 ${
                                     admin.is_active !== false
                                       ? 'bg-red-100 text-red-700 hover:bg-red-200'
                                       : 'bg-green-100 text-green-700 hover:bg-green-200'
@@ -377,7 +377,7 @@ const SettingsTab = forwardRef(({
                           <div className='pt-3 border-t border-gray-200'>
                             <button
                               onClick={() => handleToggleAdminStatus(admin.id)}
-                              className={`w-full px-3 py-2 rounded text-sm font-medium transition ${
+                              className={`w-full px-3 py-2 rounded text-sm font-medium transition-all duration-200 ease-in-out transform hover:scale-105 active:scale-95 ${
                                 admin.is_active !== false
                                   ? 'bg-red-100 text-red-700 hover:bg-red-200'
                                   : 'bg-green-100 text-green-700 hover:bg-green-200'
