@@ -102,6 +102,11 @@ export const authAPI = {
     });
     return response.data;
   },
+
+  getAllAdmins: async () => {
+    const response = await api.get('/auth/admins');
+    return response.data;
+  },
 };
 
 // Departments API

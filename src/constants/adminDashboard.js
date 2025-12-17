@@ -45,6 +45,9 @@ export const ADMIN_TABS = [
   { id: 'overview', label: 'Overview' },
   { id: 'timetables', label: 'Timetables' },
   { id: 'faculty', label: 'Departments' },
+  { id: 'courses', label: 'Courses' },
+  { id: 'teachers', label: 'Teachers' },
+  { id: 'rooms', label: 'Rooms' },
   { id: 'timetable-view', label: 'Timetable View' },
   { id: 'settings', label: 'Settings' },
 ];
