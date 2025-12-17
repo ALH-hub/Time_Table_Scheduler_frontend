@@ -28,10 +28,7 @@ const SlotModal = ({
       className='fixed inset-0 z-50'
       key={`slot-modal-${selectedTimetableId}-${editingSlotId || 'new'}`}
     >
-      <div
-        className='fixed inset-0 bg-opacity-50 backdrop-blur-sm'
-        onClick={handleCloseSlotModal}
-      />
+      <div className='fixed inset-0 ' onClick={handleCloseSlotModal} />
       <div className='fixed inset-0 flex items-center justify-center p-4 pointer-events-none'>
         <div
           className='bg-white rounded-lg shadow-2xl max-w-2xl w-full border border-gray-200 transform transition-all max-h-[90vh] overflow-y-auto pointer-events-auto'

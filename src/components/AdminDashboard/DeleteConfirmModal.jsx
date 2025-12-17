@@ -16,7 +16,7 @@ const DeleteConfirmModal = ({
       key={`delete-confirm-modal-${deleteConfirm.id}-${deleteConfirm.type}`}
     >
       <div
-        className='fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm'
+        className='fixed inset-0 '
         onClick={() =>
           setDeleteConfirm({
             isOpen: false,
@@ -44,8 +44,8 @@ const DeleteConfirmModal = ({
             </p>
             {deleteConfirm.type === 'timetable' && (
               <p className='text-sm text-red-600 mb-4'>
-                ⚠️ Warning: All slots associated with this timetable will also
-                be deleted.
+                Warning: All slots associated with this timetable will also be
+                deleted.
               </p>
             )}
             {deleteConfirm.type === 'slot' && (
