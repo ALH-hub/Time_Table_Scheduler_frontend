@@ -6,6 +6,7 @@ const SettingsTab = forwardRef(({
   handleOpenEditProfileModal,
   handleOpenChangePasswordModal,
   handleOpenAddAdminModal,
+  handleToggleAdminStatus,
   refreshTrigger,
 }, ref) => {
   const [allAdmins, setAllAdmins] = useState([]);
@@ -231,6 +232,11 @@ const SettingsTab = forwardRef(({
                         <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>
                           Status
                         </th>
+                        {currentAdmin?.role === 'super_admin' && (
+                          <th className='px-6 py-3 text-left text-sm font-semibold text-gray-900'>
+                            Actions
+                          </th>
+                        )}
                       </tr>
                     </thead>
                     <tbody className='divide-y'>
@@ -273,10 +279,32 @@ const SettingsTab = forwardRef(({
                             {formatDate(admin.created_at)}
                           </td>
                           <td className='px-6 py-4 text-sm'>
-                            <span className='px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800'>
-                              Active
+                            <span
+                              className={`px-2 py-1 rounded text-xs font-medium ${
+                                admin.is_active !== false
+                                  ? 'bg-green-100 text-green-800'
+                                  : 'bg-red-100 text-red-800'
+                              }`}
+                            >
+                              {admin.is_active !== false ? 'Active' : 'Disabled'}
                             </span>
                           </td>
+                          {currentAdmin?.role === 'super_admin' && (
+                            <td className='px-6 py-4 text-sm'>
+                              {currentAdmin?.id !== admin.id && (
+                                <button
+                                  onClick={() => handleToggleAdminStatus(admin.id)}
+                                  className={`px-3 py-1 rounded text-xs font-medium transition ${
+                                    admin.is_active !== false
+                                      ? 'bg-red-100 text-red-700 hover:bg-red-200'
+                                      : 'bg-green-100 text-green-700 hover:bg-green-200'
+                                  }`}
+                                >
+                                  {admin.is_active !== false ? 'Disable' : 'Enable'}
+                                </button>
+                              )}
+                            </td>
+                          )}
                         </tr>
                       ))}
                     </tbody>
@@ -333,11 +361,32 @@ const SettingsTab = forwardRef(({
                           <label className='block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1'>
                             Status
                           </label>
-                          <span className='inline-flex px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800'>
-                            Active
+                          <span
+                            className={`inline-flex px-2 py-1 rounded text-xs font-medium ${
+                              admin.is_active !== false
+                                ? 'bg-green-100 text-green-800'
+                                : 'bg-red-100 text-red-800'
+                            }`}
+                          >
+                            {admin.is_active !== false ? 'Active' : 'Disabled'}
                           </span>
                         </div>
                       </div>
+                      {currentAdmin?.role === 'super_admin' &&
+                        currentAdmin?.id !== admin.id && (
+                          <div className='pt-3 border-t border-gray-200'>
+                            <button
+                              onClick={() => handleToggleAdminStatus(admin.id)}
+                              className={`w-full px-3 py-2 rounded text-sm font-medium transition ${
+                                admin.is_active !== false
+                                  ? 'bg-red-100 text-red-700 hover:bg-red-200'
+                                  : 'bg-green-100 text-green-700 hover:bg-green-200'
+                              }`}
+                            >
+                              {admin.is_active !== false ? 'Disable Account' : 'Enable Account'}
+                            </button>
+                          </div>
+                        )}
                     </div>
                   ))}
                 </div>

@@ -1543,6 +1543,26 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleToggleAdminStatus = async (adminId) => {
+    setError('');
+    setSuccess('');
+
+    setIsSubmitting(true);
+    try {
+      const result = await authAPI.toggleAdminStatus(adminId);
+      setSuccess(result.message || 'Admin status updated successfully!');
+      // Trigger refresh of admin list
+      setRefreshAdminsTrigger((prev) => prev + 1);
+    } catch (err) {
+      setError(
+        err.response?.data?.error ||
+          'Failed to update admin status. Please try again.',
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const handleLogout = () => {
     authAPI.logout();
     navigate('/login');
@@ -2071,6 +2091,7 @@ const AdminDashboard = () => {
                       handleOpenChangePasswordModal
                     }
                     handleOpenAddAdminModal={handleOpenAddAdminModal}
+                    handleToggleAdminStatus={handleToggleAdminStatus}
                     refreshTrigger={refreshAdminsTrigger}
                   />
                 )}

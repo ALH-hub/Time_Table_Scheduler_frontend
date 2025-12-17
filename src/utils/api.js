@@ -107,6 +107,11 @@ export const authAPI = {
     const response = await api.get('/auth/admins');
     return response.data;
   },
+
+  toggleAdminStatus: async (adminId) => {
+    const response = await api.put(`/auth/admins/${adminId}/toggle-status`);
+    return response.data;
+  },
 };
 
 // Departments API
