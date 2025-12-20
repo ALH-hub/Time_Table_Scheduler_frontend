@@ -4,7 +4,11 @@ import { saveToStorage, getFromStorage, removeFromStorage } from './storage';
 // API Base URL - adjust this to match your backend URL
 // In development, Vite proxy will forward /api requests to the backend
 // In production, set VITE_API_BASE_URL environment variable
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+if (!API_BASE_URL) {
+  throw new Error('VITE_API_BASE_URL is not defined in environment variables');
+}
 
 // Create axios instance
 const api = axios.create({
